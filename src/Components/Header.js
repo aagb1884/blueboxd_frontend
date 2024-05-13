@@ -1,8 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import { LoginButton } from "./Components/Buttons/login-button";
-import { LogoutButton } from "./Components/Buttons/logout-button";
-import { SignupButton } from "./Components/Buttons/signup-button";
+import { LoginButton } from "./Buttons/login-button";
+import { LogoutButton } from "./Buttons/logout-button";
+import { SignupButton } from "./Buttons/signup-button";
 
 const Header = () => {
 
