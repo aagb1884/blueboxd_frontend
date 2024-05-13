@@ -9,19 +9,25 @@ const Header = () => {
     const { isAuthenticated } = useAuth0();
     
     return ( 
-        <div className="nav-bar__buttons">
-        {!isAuthenticated && (
-          <>
-            <SignupButton />
-            <LoginButton />
-          </>
-        )}
-        {isAuthenticated && (
-          <>
-            <LogoutButton />
-          </>
-        )}
-      </div>
+        <header>
+          <div className="header-content">
+          <img src="./images/bluebox.png" alt="blue box logo" id="blue-box-logo"></img>
+          <h1>blueboxd</h1>
+              <div className="header-login-buttons">
+            {!isAuthenticated && (
+              <>
+                <SignupButton />
+                <LoginButton />
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <LogoutButton />
+              </>
+            )}
+            </div>
+        </div>
+      </header>
      );
 }
  

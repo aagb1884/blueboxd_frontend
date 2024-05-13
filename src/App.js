@@ -24,6 +24,7 @@ function App() {
   }
 
   return (
+    <div className="app">
     <Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/story" element={<Story />} />
@@ -38,6 +39,7 @@ function App() {
     />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
+  </div>
   );
 }
 
