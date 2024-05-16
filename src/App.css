@@ -48,7 +48,7 @@ footer {
   bottom: 0;
   width: 100%;
 }
-.footer-links{
+.footer-links, .footer-links-authenticated {
   list-style: none;
   display: flex;
   flex-direction: row;

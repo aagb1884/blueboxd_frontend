@@ -23,12 +23,28 @@ const Footer = () => {
                 </li>
                 </>
             )}
+            
                 {isAuthenticated && (
-                <li>
-                <NavLink to="/profile">Profile</NavLink>
-                </li>
+                    <>
+                    <li>
+                    <NavLink to="/">Home</NavLink>
+                    </li>
+                    
+                    <li>
+                    <NavLink to="/stories">Stories</NavLink>
+                    </li>
+                
+                    <li>
+                    <NavLink to="/credits">Credits</NavLink>
+                    </li>
+
+                    <li>
+                    <NavLink to="/profile">Profile</NavLink>
+                    </li>
+                    </>
                 )}
-            </ul>
+                </ul>
+            
         </footer>
      );
 }
