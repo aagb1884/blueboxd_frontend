@@ -107,3 +107,9 @@ ul{
 .stories-search-results {
   margin-top: 20px;
 }
+
+.search-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

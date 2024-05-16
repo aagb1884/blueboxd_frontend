@@ -46,6 +46,7 @@ const Story = ({stories}) => {
                 story.firstEpBroadcast.toLowerCase().includes(searchTermLower) ||
                 story.lastEpBroadcast.toLowerCase().includes(searchTermLower) ||
                 story.series.toLowerCase().includes(searchTermLower) ||
+                story.productionCode.includes(searchTermLower) ||
                 doctorMatch ||
                 companionMatch    
               );      
@@ -60,7 +61,7 @@ const Story = ({stories}) => {
             <h1>Story Page</h1>
             <section className="search-page">
          <h3>Search for specific stories.</h3>
-            
+            <p>Results will appear as you type.</p>
                <input  id="search" 
                 placeholder="Search..." 
                 onChange={handleSearch}
