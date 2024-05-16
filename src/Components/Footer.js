@@ -15,6 +15,10 @@ const Footer = () => {
                 </li>
                 
                 <li>
+                <NavLink to="/stories">Stories</NavLink>
+                </li>
+                
+                <li>
                 <NavLink to="/credits">Credits</NavLink>
                 </li>
                 </>

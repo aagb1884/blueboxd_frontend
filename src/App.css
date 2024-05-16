@@ -56,6 +56,41 @@ footer {
   background-color: rgb(6,63,170, 0.5);
 }
 
+.story-list {
+ display: flex;
+ flex-direction: column;
+}
 
+.story-item{
+  display: flex;
+  flex-direction: grid;
+  grid-template-columns: auto auto;
+  border-style: double;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: rgb(6,63,170, 0.1);
+  align-items: center;
+}
 
+.image-container img {
+  display: block;
+  max-width: 312px;
+  /* max-height: 400px; */
+  width: auto;
+  height: auto;
+  /* object-fit: contain; */
+}
+.text-container{
+ flex-grow: 3;
+ font-size: larger;
+ line-height: 1.3;
+ /* float: right; */
+ overflow: hidden;
+}
+
+ul{
+  list-style-type: none;
+}
 
