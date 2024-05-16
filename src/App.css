@@ -67,6 +67,7 @@ footer {
   grid-template-columns: auto auto;
   border-style: double;
   width: 90%;
+  margin: 10px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -94,3 +95,15 @@ ul{
   list-style-type: none;
 }
 
+.loader {
+  height: 5rem;
+  width: 5rem;
+
+  margin: auto;
+
+  /* animation: spin 2s infinite linear; */
+}
+
+.stories-search-results {
+  margin-top: 20px;
+}

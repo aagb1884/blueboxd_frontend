@@ -16,6 +16,10 @@ const Story = ({stories}) => {
             setSearchTerm(event.target.value);
           };
 
+        const clearSearch = () => {
+            setSearchTerm('')
+        };
+
           let filteredStories = stories;
           if (searchTerm.length > 0) {
             filteredStories = stories.filter((story) => {
@@ -53,9 +57,9 @@ const Story = ({stories}) => {
     return ( 
         <PageLayout>
         <section>
-            <h2>Story Page</h2>
+            <h1>Story Page</h1>
             <section className="search-page">
-         <h3>Please use the search bar to filter by title.</h3>
+         <h3>Search for specific stories.</h3>
             
                <input  id="search" 
                 placeholder="Search..." 
@@ -63,8 +67,12 @@ const Story = ({stories}) => {
                 type="text"
                 name="searchTerm"
                 value={searchTerm}/>
+                <button onClick={clearSearch}>
+                    Clear Search
+                </button>
+                <div className='stories-search-results'>
                <SearchResults filteredStories={filteredStories}/>
-          
+               </div>
         </section>
             {/* <div className="story-list">
                 {allStories}

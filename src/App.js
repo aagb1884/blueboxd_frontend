@@ -1,9 +1,9 @@
+import './App.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { PageLoader } from "./Components/page_loader";
 import { AuthenticationGuard } from "./Components/authentification_guard";
-import './App.css';
 import Credits from "./pages/credits_page";
 import HomePage from "./pages/home_page";
 import ProfilePage from "./pages/profile_page";
@@ -15,34 +15,46 @@ import { getDoctors } from "./Services/doctor_services";
 import { getCompanions } from "./Services/companion_services";
 import { getCastAndCrew } from "./Services/cast_crew_services";
 import { getPeople } from "./Services/people_services";
-import { getUserStories } from "./Services/story_connection_services";
+import { getUserStories, createUserStory } from "./Services/story_connection_services";
+import { getUsers, createUser } from "./Services/user_services";
 
 function App() {
+  const [users, setUsers] = useState([]);
   const [stories, setStories] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [companions, setCompanions] = useState([]);
   const [people, setPeople] = useState([]);
   const [castAndCrew, setCastAndCrew] = useState([]);
   const [userStories, setUserStories] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(null)
+
+  const { user, isLoading } = useAuth0();
 
   useEffect(() => {
-    fetchData()
-  }, []);
+    if (!user) return;
+    fetchData();
+  }, [user]); 
+
+  useEffect(() => {
+    if (isLoading) return;
+    fetchData();
+  }, [isLoading]);
+
   
   const fetchData = () => {
-          Promise.all([getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), getUserStories()])
-          .then(([storiesData, doctorsData, companionsData, peopleData, castAndCrewData, userStoriesData]) => {
+          Promise.all([getUsers(), getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), getUserStories()])
+          .then(([usersData, storiesData, doctorsData, companionsData, peopleData, castAndCrewData, userStoriesData]) => {
+          setUsers(usersData);
           setStories(storiesData);
           setDoctors(doctorsData);
           setCompanions(companionsData);
           setPeople(peopleData);
           setCastAndCrew(castAndCrewData);
           setUserStories(userStoriesData);
+          setLoggedInUser(user)
           }) 
         } 
-           
-    
-  const { isLoading } = useAuth0();
+            
 
   if (isLoading) {
     return (
@@ -50,6 +62,18 @@ function App() {
         <PageLoader />
       </div>
     );
+  }
+
+  if(!user) {
+    return null
+  }
+
+  const addUser = (newUser) => {
+    createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
+  }
+
+  const addUserStory = (newUserStory) => {
+    createUserStory(newUserStory, loggedInUser).then((savedUserStory) => setUserStories([...userStories, savedUserStory]));
   }
 
   return (

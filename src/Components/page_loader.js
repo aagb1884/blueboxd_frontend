@@ -1,7 +1,7 @@
 import React from "react";
 
 export const PageLoader = () => {
-  const loadingImg = "https://cdn.auth0.com/blog/hello-auth0/loader.svg";
+  const loadingImg = "images/SBB_railway_clock_animated.gif";
 
   return (
     <div className="loader">

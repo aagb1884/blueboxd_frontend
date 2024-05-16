@@ -10,7 +10,7 @@ const HomePage = () => {
             <section>
                 <h1>Home Page</h1>
                 {isAuthenticated && (
-                    <p>Hello {user.name}</p>
+                    <p>Hello {user.given_name}</p>
                 )}
             </section>
         </PageLayout>
