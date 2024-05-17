@@ -96,12 +96,12 @@ ul{
 }
 
 .loader {
-  height: 5rem;
-  width: 5rem;
-
+  height: 100vh;
+  width: 100vw;
   margin: auto;
-
-  /* animation: spin 2s infinite linear; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .stories-search-results {
