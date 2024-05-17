@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import PageLayout from "../Components/page_layout";
-import StoryItem from "./story_item";
 import SearchResults from './search-results';
+import StoryDetailPage from './story-detail-page';
 
 const Story = ({stories, loading, error}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
 
-        // const allStories = stories.map((story, index) => {
-        //     return <StoryItem key={index} story={story} />
-        // })
+  //   const allStories = stories.map((story, index) => {
+  //     return <StoryDetailPage key={index} story={story} storyID={story.id}/>
+  //  })
 
         const handleSearch = (event) => {
             event.preventDefault();

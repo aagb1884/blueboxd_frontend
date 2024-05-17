@@ -8,6 +8,7 @@ import Credits from "./pages/credits_page";
 import HomePage from "./pages/home_page";
 import ProfilePage from "./pages/profile_page";
 import Story from "./pages/story_page";
+import StoryDetailPage from './pages/story-detail-page';
 import AdminPage from "./pages/admin_page";
 import NotFoundPage from "./pages/not_found_page";
 import { getStories } from "./Services/story_services";
@@ -94,6 +95,10 @@ function App() {
             loading={loading}
             error={error}
             />} />
+    <Route path="stories/:id" 
+            element={<StoryDetailPage
+            />}
+            />
     <Route path="/credits" element={<Credits />} />
     <Route
       path="/profile"

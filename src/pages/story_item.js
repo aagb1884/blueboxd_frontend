@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const StoryItem = ({story}) => {
     // const [dropdown, setDropdown] = useState(false);
@@ -84,6 +85,7 @@ console.log(story)
         <button>Add Review</button>
         <button>Add to Watch List</button>
         </div>
+        <Link to={`/stories/${story.id}`}>Read More</Link>
         </section>
     );
 }
