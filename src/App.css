@@ -98,10 +98,7 @@ ul{
 .loader {
   height: 5rem;
   width: 5rem;
-
   margin: auto;
-
-  /* animation: spin 2s infinite linear; */
 }
 
 .stories-search-results {
@@ -112,4 +109,17 @@ ul{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.add-user-info-form, .userform-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.user-form-column-1, .user-form-column-2 {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }

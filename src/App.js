@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { PageLoader } from "./Components/page_loader";
-import { AuthenticationGuard } from "./Components/authentification_guard";
+import { AuthenticationGuard } from './auth0/authentification_guard';
 import Credits from "./pages/credits_page";
 import HomePage from "./pages/home_page";
 import ProfilePage from "./pages/profile_page";
@@ -26,7 +26,6 @@ function App() {
   const [people, setPeople] = useState([]);
   const [castAndCrew, setCastAndCrew] = useState([]);
   const [userStories, setUserStories] = useState([]);
-  const [loggedInUser, setLoggedInUser] = useState(null)
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -34,6 +33,7 @@ function App() {
 
   useEffect(() => {
     if (!user) return;
+
     fetchData();
   }, [user]); 
 
@@ -53,7 +53,6 @@ function App() {
           setPeople(peopleData);
           setCastAndCrew(castAndCrewData);
           setUserStories(userStoriesData);
-          setLoggedInUser(user)
           }).catch(err => {
             console.log(err)
             setError(err)
@@ -77,11 +76,11 @@ function App() {
   }
 
   const addUser = (newUser) => {
-    createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
+    createUser(newUser).then((savedUser) => setUsers([...users, savedUser]));
   }
 
   const addUserStory = (newUserStory) => {
-    createUserStory(newUserStory, loggedInUser).then((savedUserStory) => setUserStories([...userStories, savedUserStory]));
+    createUserStory(newUserStory, user).then((savedUserStory) => setUserStories([...userStories, savedUserStory]));
   }
 
   return (
@@ -97,7 +96,12 @@ function App() {
     <Route path="/credits" element={<Credits />} />
     <Route
       path="/profile"
-      element={<AuthenticationGuard component={ProfilePage} />}
+      element={<AuthenticationGuard 
+        component={() => <ProfilePage 
+          addUser={addUser} 
+          fetchData={fetchData}
+           />}      
+       />}
     />
     <Route
       path="/admin"

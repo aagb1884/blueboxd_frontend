@@ -2,8 +2,9 @@ import PageLayout from "../Components/page_layout";
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import { CodeSnippet } from "../auth0/code-snippet";
+import ProfileForm from "../Components/Forms/profile-form";
 
-const ProfilePage = () => {
+const ProfilePage = ({addUser, fetchData}) => {
     const { user } = useAuth0();
 
     if (!user) {
@@ -29,7 +30,7 @@ const ProfilePage = () => {
           <div className="profile-grid">
             <div className="profile__header">
               <img
-                src={user.picture}
+                src={user.picture ? user.picture : 'images/default_avatar.png'}
                 alt="Profile"
                 className="profile__avatar"
               />
@@ -49,6 +50,10 @@ const ProfilePage = () => {
                 code={JSON.stringify(user, null, 2)}
               />
             </div>
+            <ProfileForm 
+            addUser={addUser}
+            fetchData={fetchData} 
+            />
           </div>
         </div>
       </div>
