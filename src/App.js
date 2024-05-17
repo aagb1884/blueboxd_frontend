@@ -27,6 +27,8 @@ function App() {
   const [castAndCrew, setCastAndCrew] = useState([]);
   const [userStories, setUserStories] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null)
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { user, isLoading } = useAuth0();
 
@@ -52,6 +54,12 @@ function App() {
           setCastAndCrew(castAndCrewData);
           setUserStories(userStoriesData);
           setLoggedInUser(user)
+          }).catch(err => {
+            console.log(err)
+            setError(err)
+          })
+          .finally(() => {
+            setLoading(false)
           }) 
         } 
             
@@ -83,6 +91,8 @@ function App() {
     <Route  path="/stories" 
             element={<Story 
             stories={stories}
+            loading={loading}
+            error={error}
             />} />
     <Route path="/credits" element={<Credits />} />
     <Route
