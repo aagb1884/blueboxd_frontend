@@ -3,13 +3,14 @@ import PageLayout from "../Components/page_layout";
 import StoryItem from "./story_item";
 import SearchResults from './search-results';
 
-const Story = ({stories}) => {
+const Story = ({stories, loading, error}) => {
+  
     const [searchTerm, setSearchTerm] = useState("");
+    const [filterByMedia, setFilterByMedia] = useState('All');
 
-        const allStories = stories.map((story, index) => {
-            console.log(story)
-            return <StoryItem key={index} story={story} />
-        })
+        // const allStories = stories.map((story, index) => {
+        //     return <StoryItem key={index} story={story} />
+        // })
 
         const handleSearch = (event) => {
             event.preventDefault();
@@ -17,14 +18,19 @@ const Story = ({stories}) => {
           };
 
         const clearSearch = () => {
-            setSearchTerm('')
+            setSearchTerm('');
+            setFilterByMedia('All')
         };
 
+       
+
           let filteredStories = stories;
-          if (searchTerm.length > 0) {
+          if (searchTerm.length > 0 || filterByMedia !== 'All' || (searchTerm.length > 0 && filterByMedia !== 'All')) {
             filteredStories = stories.filter((story) => {
                 const searchTermLower = searchTerm.toLowerCase();
 
+                const mediaMatch = filterByMedia === 'All' || filterByMedia === story.media;
+               
                 const doctorMatch = story.doctors.some((doctor) => {
                     return (
                      doctor.name.toLowerCase().includes(searchTermLower) ||
@@ -41,19 +47,22 @@ const Story = ({stories}) => {
                 });
 
               return (
-                story.title.toLowerCase().includes(searchTermLower) ||
+                mediaMatch &&
+                (story.title.toLowerCase().includes(searchTermLower) ||
                 story.keywords.toLowerCase().includes(searchTermLower) ||
                 story.firstEpBroadcast.toLowerCase().includes(searchTermLower) ||
                 story.lastEpBroadcast.toLowerCase().includes(searchTermLower) ||
                 story.series.toLowerCase().includes(searchTermLower) ||
-                story.productionCode.includes(searchTermLower) ||
+                story.productionCode.toLowerCase().includes(searchTermLower) ||
                 doctorMatch ||
-                companionMatch    
-              );      
-            
-            });
-            
-         }
+                companionMatch )
+                
+              );    
+         
+                }
+          )}
+        
+          
 
     return ( 
         <PageLayout>
@@ -62,6 +71,7 @@ const Story = ({stories}) => {
             <section className="search-page">
          <h3>Search for specific stories.</h3>
             <p>Results will appear as you type.</p>
+            <div className='search-function'>
                <input  id="search" 
                 placeholder="Search..." 
                 onChange={handleSearch}
@@ -71,14 +81,36 @@ const Story = ({stories}) => {
                 <button onClick={clearSearch}>
                     Clear Search
                 </button>
+                </div>
+                <div className='search-filters'>
+                <select
+                    value={filterByMedia}
+                    onChange={(e) => {
+                    setFilterByMedia(e.target.value);
+                    }}
+                className="custom-select"
+                aria-label="Filter Stories by Foamat">`
+                <option value='All'>Filter By Format</option>
+                <option value='TV'>TV</option>
+                <option value='FILM'>Film</option>
+                <option value='AUDIO'>Audio</option>
+                <option value='PROSE'>Prose</option>
+                <option value='COMIC'>Comic</option>
+                <option value='OTHER'>Other</option>
+                </select>
+                <span className="focus"></span>
+                </div>
+                
                 <div className='stories-search-results'>
                <SearchResults filteredStories={filteredStories}/>
+               {loading && <h2>Loading...</h2>}
+               {error && <p>There was an error loading the stories.</p>}
+               {!loading && !error && filteredStories.length === 0 && (
+          <div>No results found.</div>
+        )}
                </div>
         </section>
-            {/* <div className="story-list">
-                {allStories}
-            </div> */}
-     
+               
         </section>
         </PageLayout>
      );

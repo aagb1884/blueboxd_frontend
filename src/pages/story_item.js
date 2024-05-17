@@ -28,7 +28,8 @@ const StoryItem = ({story}) => {
 
         <div className="text-container">
         <ul>
-            <li>{doctorInfo}: {story.series}, Story {story.storyNumber} - {story.title}</li>
+            <li><h3>{story.title}</h3></li>
+            <li>{doctorInfo}: {story.media} {story.series}, Story {story.storyNumber}</li>
             <li>Companions: {companionInfo}</li>
             <li>Originally broadcast: {story.firstEpBroadcast} - {story.lastEpBroadcast}</li>
             <li>{castCrewInfo}.</li>
