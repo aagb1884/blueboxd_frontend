@@ -73,9 +73,9 @@ function App() {
     );
   }
 
-  if(!user) {
-    return null
-  }
+  // if(!user) {
+  //   return null
+  // }
 
   const addUser = (newUser) => {
     createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
@@ -96,8 +96,11 @@ function App() {
             error={error}
             />} />
     <Route path="stories/:id" 
-            element={<StoryDetailPage
-            />}
+    element={<StoryDetailPage
+            stories={stories}
+            setLoading={setLoading}
+            setError={setError}
+            user={user}/>}
             />
     <Route path="/credits" element={<Credits />} />
     <Route
