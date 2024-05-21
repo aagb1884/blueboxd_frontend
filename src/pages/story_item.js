@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const StoryItem = ({story}) => {
-    // const [dropdown, setDropdown] = useState(false);
-console.log(story)
+
     const doctorInfo = story.doctors.map((doctor, index) => {
         return <span>{doctor.name}
         {index < story.doctors.length - 1 && <span>, </span>}</span> 
@@ -29,14 +28,14 @@ console.log(story)
     function formatSeries(series) {
        
         series = series.toLowerCase();
-
+    
         const firstNumberIndex = series.search(/\d/);
     
         if (firstNumberIndex !== -1) {
             series = series.slice(0, firstNumberIndex) + ' ' + series.slice(firstNumberIndex);
         }
     
-   
+    
         series = series.charAt(0).toUpperCase() + series.slice(1);
     
         return series;

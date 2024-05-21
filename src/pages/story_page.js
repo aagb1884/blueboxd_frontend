@@ -102,7 +102,9 @@ const Story = ({stories, loading, error}) => {
                 </div>
                 
                 <div className='stories-search-results'>
-               <SearchResults filteredStories={filteredStories}/>
+               <SearchResults 
+               filteredStories={filteredStories}
+               />
                {loading && <h2>Loading...</h2>}
                {error && <p>There was an error loading the stories.</p>}
                {!loading && !error && filteredStories.length === 0 && (

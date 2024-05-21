@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { baseURLstories } from "../Services/story_services";
 import PageLayout from "../Components/page_layout";
 
-const StoryDetailPage = ({setError, setLoading, user, stories}) => {   
+const StoryDetailPage = ({setError, setLoading, user, formatSeries}) => {   
    const [selectedStory, setSelectedStory] = useState([]);
    const { id } = useParams(); 
 
@@ -27,19 +27,56 @@ const StoryDetailPage = ({setError, setLoading, user, stories}) => {
       getSelectedStory(id);
     }, [id]); 
 
-   //  useEffect(() => {
-   //    if (!user) return;
-   //    fetchSelectedStoryData();
-   //  }, [user]); 
+    function formatSeries(series) {
+       
+      series = series.toLowerCase();
+  
+      const firstNumberIndex = series.search(/\d/);
+  
+      if (firstNumberIndex !== -1) {
+          series = series.slice(0, firstNumberIndex) + ' ' + series.slice(firstNumberIndex);
+      }
+  
+  
+      series = series.charAt(0).toUpperCase() + series.slice(1);
+  
+      return series;
+  }
 
-
+    const episodeText = selectedStory.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
  console.log(selectedStory)
 
     return ( 
         <PageLayout>
-        <h1>{selectedStory.title}</h1>
-        <p>Story ID: {id}</p>
-        
+        <h1>{selectedStory.title} ({selectedStory.media})</h1>
+        <div className="image-container">
+        <img src={selectedStory.imgURL} alt="title_logo" width="175" height="200"/>
+        </div>
+
+        <ul>
+            <div className="selected-story-column-1">
+            
+            <li>{selectedStory.series}, Story {selectedStory.storyNumber}</li>
+            {/* <li><b>Companions:</b> {companionInfo}</li> */}
+            <li>Originally broadcast: {selectedStory.firstEpBroadcast == selectedStory.lastEpBroadcast ? selectedStory.firstEpBroadcast : selectedStory.firstEpBroadcast + ' - ' + selectedStory.lastEpBroadcast}
+            {' (' + selectedStory.noOfEpisodes + episodeText + ')'}</li>
+            <li></li>
+            <br />
+            <li>{selectedStory.synopsis}</li>
+            </div>
+        </ul>
+        <ul>
+            <div className="selected-story-column-2">
+                <b>Cast and Crew:</b>
+            {/* <li>{castCrewInfo} </li>  */}
+            <br />
+            <li> {selectedStory.productionCode && selectedStory.productionCode.length > 0
+              ? 'Production Code: ' + selectedStory.productionCode
+              : ''}</li>
+            <li>Releases: {selectedStory.releases}</li>
+            <li><a href={selectedStory.wikiLink}>TARDIS Wiki</a></li>
+            </div>
+        </ul>
         </PageLayout>
      );
 }
