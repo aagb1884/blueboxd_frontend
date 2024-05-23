@@ -1,15 +1,12 @@
-const baseURL = "http://localhost:8080/stories";
+export const baseURLstories = "http://localhost:8080/stories";
 
 export const getStories = () => {
-  return fetch(baseURL).then((res) => res.json());
+  return fetch(baseURLstories).then((res) => res.json());
 };
 
-export const getSelectedStory = (id) => {
-  return fetch(baseURL + '/' + id).then(res => res.json())
-}
 
 export const updateStory = (id, payload) => {
-  return fetch(baseURL + id, {
+  return fetch(baseURLstories + id, {
     method: "PUT",
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
@@ -17,14 +14,14 @@ export const updateStory = (id, payload) => {
 };
 
 export const deleteStory = (id) => {
-  return fetch(baseURL + '/' + id, {
+  return fetch(baseURLstories + '/' + id, {
     method: "DELETE",
   })
   .then(res => res.json())
 };
 
 export const createStory = (newStory) => {
-    return fetch(baseURL, {
+    return fetch(baseURLstories, {
         method: 'POST',
         body: JSON.stringify(newStory),
         headers: { 'Content-Type': "application/json" }
@@ -33,25 +30,25 @@ export const createStory = (newStory) => {
     .then(data => {
         return {
         ...data,
-        ...newStory
+        ...newStory     
         }
     })
 }
 
 export const getStoriesByUserId =  (userId) => {
-    return fetch(baseURL + "users?id=" + userId).then(res => res.json())};
+    return fetch(baseURLstories + "users?id=" + userId).then(res => res.json())};
 
 export const getStoriesWantToRead = (userId) => {
-    return fetch(baseURL + "users/" + userId + "/wanttoread")
+    return fetch(baseURLstories + "users/" + userId + "/wanttoread")
       .then(res => res.json())};
 
 export const getStoriesCurrentlyReading = (userId) => {
-    return fetch(baseURL + "users/" + userId + "/currentlyreading").then(res => res.json())};
+    return fetch(baseURLstories + "users/" + userId + "/currentlyreading").then(res => res.json())};
  
 export const getStoriesHaveRead = (userId) => {
-    return fetch(baseURL + "users/" + userId + "/haveread").then(res => res.json())};
+    return fetch(baseURLstories + "users/" + userId + "/haveread").then(res => res.json())};
 
 export const getStoriesBystoryId =  (storyId) => {
-    return fetch(baseURL + "stories?id=" + storyId).then(res => res.json())};
+    return fetch(baseURLstories + "stories?id=" + storyId).then(res => res.json())};
 
 

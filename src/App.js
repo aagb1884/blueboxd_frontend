@@ -8,6 +8,7 @@ import Credits from "./pages/credits_page";
 import HomePage from "./pages/home_page";
 import ProfilePage from "./pages/profile_page";
 import Story from "./pages/story_page";
+import StoryDetailPage from './pages/story-detail-page';
 import AdminPage from "./pages/admin_page";
 import NotFoundPage from "./pages/not_found_page";
 import { getStories } from "./Services/story_services";
@@ -17,6 +18,7 @@ import { getCastAndCrew } from "./Services/cast_crew_services";
 import { getPeople } from "./Services/people_services";
 import { getUserStories, createUserStory } from "./Services/story_connection_services";
 import { getUsers, createUser } from "./Services/user_services";
+import AboutPage from './pages/about-page';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -72,9 +74,11 @@ function App() {
     );
   }
 
-  if(!user) {
-    return null
-  }
+  // if(!user) {
+  //   return null
+  // }
+
+  
 
   const addUser = (newUser) => {
     createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
@@ -88,12 +92,22 @@ function App() {
     <div className="app">
     <Routes>
     <Route path="/" element={<HomePage />} />
+    <Route path="/about" element={<AboutPage />} />
     <Route  path="/stories" 
             element={<Story 
             stories={stories}
             loading={loading}
             error={error}
+
             />} />
+    <Route path="stories/:id" 
+    element={<StoryDetailPage
+            isLoading={isLoading}
+            setLoading={setLoading}
+            setError={setError}
+            user={user}
+            />}
+            />
     <Route path="/credits" element={<Credits />} />
     <Route
       path="/profile"

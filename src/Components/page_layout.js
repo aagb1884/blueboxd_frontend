@@ -1,4 +1,3 @@
-import Footer from "./Footer";
 import Header from "./Header";
 
 const PageLayout = ({children}) => {
@@ -9,7 +8,6 @@ const PageLayout = ({children}) => {
             
             <div className="page-layout__content">{children}</div>
         
-            <Footer />
             
         </div>
      );
