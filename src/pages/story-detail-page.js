@@ -59,22 +59,6 @@ const StoryDetailPage = ({setError, setLoading, isLoading, user}) => {
       );
   });
 
-  function formatSeries(series) {
-     
-      series = series.toLowerCase();
-  
-      const firstNumberIndex = series.search(/\d/);
-  
-      if (firstNumberIndex !== -1) {
-          series = series.slice(0, firstNumberIndex) + ' ' + series.slice(firstNumberIndex);
-      }
-  
-  
-      series = series.charAt(0).toUpperCase() + series.slice(1);
-  
-      return series;
-  }
-
   const episodeText = selectedStory.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
  
   console.log(selectedStory.doctors)
@@ -94,7 +78,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, user}) => {
         <ul>
             <div className="story-column-1">
             
-            <li>{storyDoctorInfo}: {formatSeries(selectedStory.series)}, Story {selectedStory.storyNumber}</li>
+            <li>{storyDoctorInfo}: {selectedStory.series}, Story {selectedStory.storyNumber}</li>
             <li><b>Companions:</b> {storyCompanionInfo}</li>
             <li>Originally broadcast: {selectedStory.firstEpBroadcast == selectedStory.lastEpBroadcast ? selectedStory.firstEpBroadcast : selectedStory.firstEpBroadcast + ' - ' + selectedStory.lastEpBroadcast}
             {' (' + selectedStory.noOfEpisodes + episodeText + ')'}</li>

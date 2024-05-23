@@ -25,21 +25,21 @@ const StoryItem = ({story}) => {
         );
     });
 
-    function formatSeries(series) {
+    // function formatSeries(series) {
        
-        series = series.toLowerCase();
+    //     series = series.toLowerCase();
     
-        const firstNumberIndex = series.search(/\d/);
+    //     const firstNumberIndex = series.search(/\d/);
     
-        if (firstNumberIndex !== -1) {
-            series = series.slice(0, firstNumberIndex) + ' ' + series.slice(firstNumberIndex);
-        }
+    //     if (firstNumberIndex !== -1) {
+    //         series = series.slice(0, firstNumberIndex) + ' ' + series.slice(firstNumberIndex);
+    //     }
     
     
-        series = series.charAt(0).toUpperCase() + series.slice(1);
+    //     series = series.charAt(0).toUpperCase() + series.slice(1);
     
-        return series;
-    }
+    //     return series;
+    // }
 
 
     const episodeText = story.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
@@ -58,7 +58,7 @@ const StoryItem = ({story}) => {
         <ul>
             <div className="story-column-1">
             
-            <li>{doctorInfo}: {formatSeries(story.series)}, Story {story.storyNumber}</li>
+            <li>{doctorInfo}: {story.series}, Story {story.storyNumber}</li>
             <li><b>Companions:</b> {companionInfo}</li>
             <li>Originally broadcast: {story.firstEpBroadcast == story.lastEpBroadcast ? story.firstEpBroadcast : story.firstEpBroadcast + ' - ' + story.lastEpBroadcast}
             {' (' + story.noOfEpisodes + episodeText + ')'}</li>

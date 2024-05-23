@@ -12,7 +12,7 @@ const Footer = () => {
                 <>
                 <NavLink to="/">Home</NavLink>
             <br />
-                <NavLink to="/about">About</NavLink> 
+                <NavLink to="/about">Read Me</NavLink> 
             <br />
                 <NavLink to="/stories">Stories</NavLink>
             <br />
@@ -25,7 +25,7 @@ const Footer = () => {
                     <>
                     <NavLink to="/">Home</NavLink>
                     <br />
-                    <NavLink to="/about">About</NavLink> 
+                    <NavLink to="/about">Read Me</NavLink> 
                     <br />
                     <NavLink to="/stories">Stories</NavLink>
                     <br />

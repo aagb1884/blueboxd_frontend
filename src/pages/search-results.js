@@ -9,6 +9,7 @@ const SearchResults = ({filteredStories, formatSeries}) => {
     formatSeries={formatSeries} />})
 
     return ( 
+
         <div className="search-results">
             {storyList}
         </div>

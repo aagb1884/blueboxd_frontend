@@ -8,10 +8,6 @@ const Story = ({stories, loading, error}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
 
-  //   const allStories = stories.map((story, index) => {
-  //     return <StoryDetailPage key={index} story={story} storyID={story.id}/>
-  //  })
-
         const handleSearch = (event) => {
             event.preventDefault();
             setSearchTerm(event.target.value);
@@ -67,9 +63,9 @@ const Story = ({stories, loading, error}) => {
     return ( 
         <PageLayout>
         <section>
-            <h1>Story Page</h1>
+            <h1>All the stories. In the end.</h1>
             <section className="search-page">
-         <h3>Search for specific stories.</h3>
+         <h4>Search for specific stories.</h4>
             <p>Results will appear as you type.</p>
             <div className='search-function'>
                <input  id="search" 
@@ -92,11 +88,11 @@ const Story = ({stories, loading, error}) => {
                 aria-label="Filter Stories by Foamat">`
                 <option value='All'>Filter By Format</option>
                 <option value='TV'>TV</option>
-                <option value='FILM'>Film</option>
-                <option value='AUDIO'>Audio</option>
-                <option value='PROSE'>Prose</option>
-                <option value='COMIC'>Comic</option>
-                <option value='OTHER'>Other</option>
+                <option value='Film'>Film</option>
+                <option value='Audio'>Audio</option>
+                <option value='Prose'>Prose</option>
+                <option value='Comic'>Comic</option>
+                <option value='Other'>Other</option>
                 </select>
                 <span className="focus"></span>
                 </div>

@@ -21,7 +21,8 @@ header {
     display: flex;
     flex-direction: row;  
     padding: 10px;
-    background-color: rgb(33, 28, 1, 0.3);
+    background: rgb(168,10,84);
+background: linear-gradient(90deg, rgba(168,10,84,0.008) 1%, rgba(162,10,81,1) 4%, rgba(33,1,16,0.01) 100%);
     text-align: center;
 }
 
@@ -45,8 +46,9 @@ header {
   display: flex;
   flex-direction: column;
   text-align: center;
+  justify-content: center;
   width: 90%;
-  padding-left: 10%;
+  margin-left: 10%;
   padding-bottom: 5%;
 }
 
@@ -59,16 +61,13 @@ header {
   padding: 20px;
 }
 
-.story-list {
- display: flex;
- flex-direction: column;
-}
 
 .story-item{
   border-style: double;
   margin: 10px;
   width: 90%;
-  justify-content: center;
+  flex: 3;
+  
 }
 
 .story-item-container{
@@ -78,7 +77,7 @@ header {
   margin-left: auto;
   margin-right: auto;
   padding: 20px;
-  background-color: rgb(6,63,170, 0.1);
+  /* background-color: rgb(6,63,170, 0.1); */
   align-items: center;
 }
 
@@ -114,19 +113,13 @@ header {
 }
 
 .story-buttons{
-  background: #211C01;
+  background: rgb(168,10,84);
   color: antiquewhite;
   font: inherit;
   border-radius: 5px;
   min-width: 200px;
   height: 80px;
 }
-
-/* .read-more {
-  border: 2px;
-  border-color: antiquewhite;
-  border-radius: 2px;
-} */
 
 ul{
   list-style-type: none;
@@ -143,10 +136,29 @@ ul{
 
 .stories-search-results {
   margin-top: 20px;
+  justify-content: center;
+}
+
+.search-results{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-bar{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.about{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 10px;
+  background-color: rgb(6,63,170, 0.1);
+  width: 90%;
+  align-items: center;
+  justify-content: center;
 }
