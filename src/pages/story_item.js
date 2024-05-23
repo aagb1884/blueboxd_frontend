@@ -41,6 +41,7 @@ const StoryItem = ({story}) => {
         return series;
     }
 
+
     const episodeText = story.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
 
     return ( 

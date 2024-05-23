@@ -100,7 +100,7 @@ function App() {
             />} />
     <Route path="stories/:id" 
     element={<StoryDetailPage
-           
+            isLoading={isLoading}
             setLoading={setLoading}
             setError={setError}
             user={user}
