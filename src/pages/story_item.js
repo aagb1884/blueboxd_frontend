@@ -67,25 +67,21 @@ const StoryItem = ({story}) => {
             <li>{story.synopsis}</li>
             </div>
         </ul>
-            
-        <ul>
-            <div className="story-column-2">
-                <b>Cast and Crew:</b>
-            <li>{castCrewInfo} </li> 
-            <br />
-            <li>{story.productionCode.length > 0 ? 'Production Code: ' + story.productionCode : ''}</li>
-            <li>Releases: {story.releases}</li>
-            <li><a href={story.wikiLink}>TARDIS Wiki</a></li>
-            </div>
-        </ul>
-        
+
+            <div className="add-user-story-buttons">
+                <button className="story-buttons">Add Review</button>
+                <button className="story-buttons"> Add to Watch List</button>
+                <Link to={`/stories/${story.id}`}>
+                    <button className="story-buttons" >Read More</button>
+                </Link>
              </div>
+                
         </div>
-        <div className="add-user-story-buttons">
-        <button>Add Review</button>
-        <button>Add to Watch List</button>
+        
+        
+             
         </div>
-        <Link to={`/stories/${story.id}`}>Read More</Link>
+       
         </section>
     );
 }

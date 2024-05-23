@@ -11,7 +11,7 @@ a {
 }
 
 #blue-box-logo{
-  max-height: 80px;
+  max-height: 90px;
 }
 header {
     position: absolute;
@@ -21,13 +21,14 @@ header {
     display: flex;
     flex-direction: row;  
     padding: 10px;
-    background-color: rgba(110, 125, 151, 0.5);
+    background-color: rgb(33, 28, 1, 0.3);
     text-align: center;
 }
 
 .header-login-buttons{
-  margin: 10px;
-  background-color: rgb(6,63,170, 0.5);
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .page-layout{
@@ -39,25 +40,23 @@ header {
 }
 
 .page-layout__content{
+  flex: 1;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
   width: 90%;
   padding-left: 10%;
+  padding-bottom: 5%;
 }
 
-footer {
-  height: 5%;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
 .footer-links, .footer-links-authenticated {
   list-style: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
-  background-color: rgb(6,63,170, 0.5);
+  text-align: center;
+  padding: 20px;
 }
 
 .story-list {
@@ -109,8 +108,25 @@ footer {
 .add-user-story-buttons{
   margin: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
+  text-align: center;
 }
+
+.story-buttons{
+  background: #211C01;
+  color: antiquewhite;
+  font: inherit;
+  border-radius: 5px;
+  min-width: 200px;
+  height: 80px;
+}
+
+/* .read-more {
+  border: 2px;
+  border-color: antiquewhite;
+  border-radius: 2px;
+} */
 
 ul{
   list-style-type: none;

@@ -122,6 +122,9 @@ const StoryDetailPage = ({setError, setLoading, isLoading, user}) => {
         <button>Add to Watch List</button>
         </div>
         </section>
+        <section className="story-reviews">
+          <h2>Reviews will go here</h2>
+        </section>
         </PageLayout>
      );
 }

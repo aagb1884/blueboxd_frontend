@@ -18,6 +18,7 @@ import { getCastAndCrew } from "./Services/cast_crew_services";
 import { getPeople } from "./Services/people_services";
 import { getUserStories, createUserStory } from "./Services/story_connection_services";
 import { getUsers, createUser } from "./Services/user_services";
+import AboutPage from './pages/about-page';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -91,6 +92,7 @@ function App() {
     <div className="app">
     <Routes>
     <Route path="/" element={<HomePage />} />
+    <Route path="/about" element={<AboutPage />} />
     <Route  path="/stories" 
             element={<Story 
             stories={stories}

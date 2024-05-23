@@ -7,43 +7,35 @@ const Footer = () => {
 
     return ( 
         <footer>
-            <ul className="footer-links">
+            <div className="footer-links">
             {!isAuthenticated && (
                 <>
-                <li>
                 <NavLink to="/">Home</NavLink>
-                </li>
-                
-                <li>
+            <br />
+                <NavLink to="/about">About</NavLink> 
+            <br />
                 <NavLink to="/stories">Stories</NavLink>
-                </li>
-                
-                <li>
-                <NavLink to="/credits">Credits</NavLink>
-                </li>
+            <br />
+                <NavLink to="/credits">Credits</NavLink>  
+        
                 </>
             )}
             
                 {isAuthenticated && (
                     <>
-                    <li>
                     <NavLink to="/">Home</NavLink>
-                    </li>
-                    
-                    <li>
+                    <br />
+                    <NavLink to="/about">About</NavLink> 
+                    <br />
                     <NavLink to="/stories">Stories</NavLink>
-                    </li>
-                
-                    <li>
+                    <br />
                     <NavLink to="/credits">Credits</NavLink>
-                    </li>
-
-                    <li>
+                    <br />
                     <NavLink to="/profile">Profile</NavLink>
-                    </li>
+                    
                     </>
                 )}
-                </ul>
+                </div>
             
         </footer>
      );
