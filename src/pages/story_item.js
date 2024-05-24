@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const StoryItem = ({story}) => {
@@ -13,34 +12,6 @@ const StoryItem = ({story}) => {
         {index < story.companions.length - 1 && <span>, </span>}</span> 
         </li>
     })
-    
-       
-    const castCrewInfo = story.castAndCrew.map((castCrewMember) => {
-        const { role, person } = castCrewMember; 
-    
-        return (
-            <li key={person.id}>
-            <span>{role}: {person.name} </span>
-            </li>
-        );
-    });
-
-    // function formatSeries(series) {
-       
-    //     series = series.toLowerCase();
-    
-    //     const firstNumberIndex = series.search(/\d/);
-    
-    //     if (firstNumberIndex !== -1) {
-    //         series = series.slice(0, firstNumberIndex) + ' ' + series.slice(firstNumberIndex);
-    //     }
-    
-    
-    //     series = series.charAt(0).toUpperCase() + series.slice(1);
-    
-    //     return series;
-    // }
-
 
     const episodeText = story.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
 
