@@ -1,7 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ProfileForm = ({addUser, fetchData}) => {
+    const [uuid, setUuid] = useState("")
+    const [userType, setUserType] = useState("")
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
@@ -10,13 +12,26 @@ const ProfileForm = ({addUser, fetchData}) => {
     const [userImgURL, setUserImgURL] = useState("");
     const [userBio, setUserBio] = useState("");
     const [userWebsite, setUserWebsite] = useState("");
+    const { user, isAuthenticated, isLoading } = useAuth0();
+    const [userData, setUserData] = useState(null);
+  
+    useEffect(() => {
+      if (isAuthenticated && user) {
+        const { given_name, family_name, picture, email, sub } = user;
+        setUserData({ given_name, family_name, picture, email, sub });
+        setUuid(sub);
+        setFirstname(given_name || "");
+        setLastname(family_name || "");
+        setEmail(email || "");
+        setUserImgURL(picture || "");
+      }
+    }, [isAuthenticated, user]);
+  
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
 
-    const { user } = useAuth0();
-    
-        if (!user) {
-          return null;
-        }
-   
+
     const handleFirstNameChange = (e) => {
         setFirstname(e.target.value);
       };
@@ -42,10 +57,17 @@ const ProfileForm = ({addUser, fetchData}) => {
         setUserWebsite(e.target.value);
       };
 
+      
+
       const handleNewUserSubmit = e => {
+        setUserType("REVIEWER");
         e.preventDefault();
 
+        
+
       addUser({
+        auth0_unique_id: {uuid},
+        user_type: {userType},
         first_name: {firstname},
         last_name: {lastname},
         email: {email},
@@ -77,6 +99,10 @@ const ProfileForm = ({addUser, fetchData}) => {
             setUserWebsite("");
     }
 
+    if (!isAuthenticated || !userData) {
+      return <div>Please log in to view this form.</div>;
+    }
+
     return ( 
         <form onSubmit={handleNewUserSubmit}>
             <h2>Enter User Info</h2>
@@ -93,7 +119,7 @@ const ProfileForm = ({addUser, fetchData}) => {
                 name="user-first-name"
                 size="50"
                 required
-                value={user.given_name ? user.given_name : firstname}
+                value={firstname}
                 onChange={handleFirstNameChange}
                 
                     />
@@ -108,7 +134,7 @@ const ProfileForm = ({addUser, fetchData}) => {
                 name="user-last-name"
                 size="50"
                 required
-                value={user.family_name ? user.family_name : lastname}
+                value={lastname}
         
                 onChange={handleLastNameChange}
                     />
@@ -123,7 +149,7 @@ const ProfileForm = ({addUser, fetchData}) => {
                 name="user-email"
                 size="50"
                 required
-                value={user.email ? user.email : email}
+                value={email}
                 onChange={handleEmailChange}
                     />
                     </div>
@@ -164,7 +190,7 @@ const ProfileForm = ({addUser, fetchData}) => {
                 id="user-avatar-img-url"
                 name="user-avatar-img-url"
                 size="50"
-                value={user.picture? user.picture : userImgURL}
+                value={userImgURL}
                 onChange={handleUserImgURLChange}
                     />
                     </div>
@@ -202,7 +228,7 @@ const ProfileForm = ({addUser, fetchData}) => {
                     <button type="submit">Update User Profile</button>
                 </div>
                 <div className="clear-form-data-button">
-                    <button onClick={clearFormData}>Clear Form Data</button>
+                    <button type="button" onClick={clearFormData}>Clear Form Data</button>
                 </div>
                 </div>
         </form>
