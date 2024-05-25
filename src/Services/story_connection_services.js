@@ -8,7 +8,7 @@ export const getSelectedUserStory = (id) => {
   return fetch(baseURL + '/' + id).then(res => res.json())
 }
 
-export const updatedUserStory = (id, payload) => {
+export const updateUserStory = (id, payload) => {
   return fetch(baseURL + id, {
     method: "PUT",
     body: JSON.stringify(payload),

@@ -16,7 +16,7 @@ import { getDoctors } from "./Services/doctor_services";
 import { getCompanions } from "./Services/companion_services";
 import { getCastAndCrew } from "./Services/cast_crew_services";
 import { getPeople } from "./Services/people_services";
-import { getUserStories, createUserStory } from "./Services/story_connection_services";
+import { getUserStories, createUserStory, getUserStoryByUserStoryId } from "./Services/story_connection_services";
 import { getUsers, createUser } from "./Services/user_services";
 import AboutPage from './pages/about-page';
 
@@ -31,6 +31,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userStoryByID, setUserStoryByID] = useState(null)
 
   const { user, isLoading } = useAuth0();
 
@@ -46,8 +47,13 @@ function App() {
 
   
   const fetchData = () => {
-          Promise.all([getUsers(), getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), getUserStories()])
-          .then(([usersData, storiesData, doctorsData, companionsData, peopleData, castAndCrewData, userStoriesData]) => {
+    getUsers()
+        .then(users => {
+          setLoggedInUser(users[0])
+          const userId = users[0].id
+          
+          Promise.all([getUsers(), getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), getUserStories(), getUserStoryByUserStoryId()])
+          .then(([usersData, storiesData, doctorsData, companionsData, peopleData, castAndCrewData, userStoriesData, userStoriesByUserIdData]) => {
           setUsers(usersData);
           setStories(storiesData);
           setDoctors(doctorsData);
@@ -55,7 +61,7 @@ function App() {
           setPeople(peopleData);
           setCastAndCrew(castAndCrewData);
           setUserStories(userStoriesData);
-          setLoggedInUser(user)
+          setUserStoryByID(userStoriesByUserIdData)
           }).catch(err => {
             console.log(err)
             setError(err)
