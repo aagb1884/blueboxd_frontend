@@ -24,19 +24,13 @@ export const deleteUser = (id) => {
 };
 
 export const createUser = (newUser) => {
-    return fetch(baseURL, {
-        method: 'POST',
-        body: JSON.stringify(newUser),
-        headers: { 'Content-Type': "application/json" }
-    })
-    .then(res => res.json())
-    .then(data => {
-        return {
-        ...data,
-        ...newUser
-        }
-    })
-}
+  return fetch(baseURL, {
+    method: 'POST',
+    body: JSON.stringify(newUser),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((res) => res.json()); 
+};
 
 export const getUserById =  (userId) => {
     return fetch(baseURL + "users?id=" + userId).then(res => res.json())};

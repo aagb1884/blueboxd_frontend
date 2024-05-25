@@ -76,8 +76,14 @@ function App() {
   }
 
   const addUser = (newUser) => {
-    createUser(newUser).then((savedUser) => setUsers([...users, savedUser]));
-  }
+    createUser(newUser)
+      .then((savedUser) => {
+        setUsers([...users, savedUser]);
+      })
+      .catch((error) => {
+        console.error("Error creating user:", error);
+      });
+  };
 
   const addUserStory = (newUserStory) => {
     createUserStory(newUserStory, user).then((savedUserStory) => setUserStories([...userStories, savedUserStory]));

@@ -59,34 +59,39 @@ const ProfileForm = ({addUser, fetchData}) => {
 
       
 
-      const handleNewUserSubmit = e => {
-        setUserType("REVIEWER");
+      const handleNewUserSubmit = (e) => {
         e.preventDefault();
-
+        setUserType("REVIEWER"); 
         
+        const newUser = {
+          auth0uniqueID: uuid,
+          userType: userType,
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          display_name: displayName,
+          location: location,
+          userImgURL: userImgURL,
+          userBio: userBio,
+          userWebsite: userWebsite,
+        };
+      
+          addUser(newUser)
 
-      addUser({
-        auth0_unique_id: {uuid},
-        user_type: {userType},
-        first_name: {firstname},
-        last_name: {lastname},
-        email: {email},
-        display_name: {displayName},
-        location: {location},
-        user_img_URL: {userImgURL},
-        user_bio: {userBio},
-        user_website: {userWebsite},
-      })
-      setFirstname("");
-      setLastname("");
-      setEmail("");
-      setDisplayName("");
-      setLocation("");
-      setUserImgURL("");
-      setUserBio("");
-      setUserWebsite("");
-      fetchData()
-    };
+          setFirstname("");
+          setLastname("");
+          setEmail("");
+          setDisplayName("");
+          setLocation("");
+          setUserImgURL("");
+          setUserBio("");
+          setUserWebsite("");
+
+          fetchData(); 
+          console.log(newUser)
+      };
+
+      
 
     function clearFormData() {
             setFirstname("");
