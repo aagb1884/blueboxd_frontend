@@ -1,12 +1,14 @@
 import React from "react";
 import StoryItem from "./story_item";
 
-const SearchResults = ({filteredStories, formatSeries}) => {
+const SearchResults = ({filteredStories, loggedInUser, addUserStory}) => {
 
    const storyList = filteredStories.map((filteredStory, index) => {
     return <StoryItem 
     story={filteredStory}
-    formatSeries={formatSeries} />})
+    loggedInUser={loggedInUser} 
+    addUserStory={addUserStory}
+    />})
 
     return ( 
 

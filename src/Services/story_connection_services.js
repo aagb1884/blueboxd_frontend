@@ -39,7 +39,13 @@ export const createUserStory = (newUserStory) => {
 }
 
 
-export const getUserStoryByUserStoryId =  (UserStoryId) => {
-    return fetch(baseURL + "UserStory?id=" + UserStoryId).then(res => res.json())};
+export const getUserStoryByUserId =  (userId) => {
+    return fetch(baseURL + "/users?id=" + userId).then(res => res.json())};
 
+export const getUserStoryByUserReviews =  (userID) => {
+    return fetch(baseURL + "/users/" + userID + "/reviews")
+    .then(res => res.json())};
 
+export const getUserStoryByUserWatchlist =  (userID) => {
+    return fetch(baseURL + "/users/" + userID + "/watchlist")
+    .then(res => res.json())};
