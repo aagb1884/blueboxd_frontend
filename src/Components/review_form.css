@@ -1,0 +1,53 @@
+.review-form{
+    text-align: center;
+    line-height: 2;
+    background-color: rgba(168, 10, 79, 0.2);
+    border-radius: 10% 30% 50% 70%;
+}
+
+.aside{
+    font-size: smaller;
+}
+
+.story-rating {
+    display: inline-block;
+    height: 46px;
+    justify-content: center;
+}
+.story-rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.story-rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.story-rating:not(:checked) > label:before {
+    content: '★ ';
+}
+.story-rating > input:checked ~ label {
+    color: #ffc700;    
+}
+.story-rating:not(:checked) > label:hover,
+.story-rating:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.story-rating > input:checked + label:hover,
+.story-rating > input:checked + label:hover ~ label,
+.story-rating > input:checked ~ label:hover,
+.story-rating > input:checked ~ label:hover ~ label,
+.story-rating > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+.review{
+    width: 145px;
+    vertical-align: top;
+    padding-bottom: 80px;
+    word-wrap: break-word;
+}

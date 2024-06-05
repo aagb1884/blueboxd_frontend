@@ -61,8 +61,6 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
       );
   });
 
-  console.log(selectedStory.imgURL)
-
   const storyReviews = selectedStory.storyConnections.map((reviewData) => {
     const { review, rating, user, creationOfReviewDateTime } = reviewData;
     const displayName = user?.display_name || 'Unknown User';
@@ -136,6 +134,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
         loggedInUser={loggedInUser}
         addUserStory={addUserStory}
         storyID={selectedStory.id}
+        storyTitle={selectedStory.title}
         />
         <AddToWatchlist 
         loggedInUser={loggedInUser}

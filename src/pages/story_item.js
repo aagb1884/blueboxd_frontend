@@ -46,6 +46,7 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
                 loggedInUser={loggedInUser}
                 addUserStory={addUserStory}
                 storyID={story.id}
+                storyTitle={story.title}
                  />
                 <AddToWatchlist 
                 loggedInUser={loggedInUser}

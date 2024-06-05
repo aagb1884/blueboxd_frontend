@@ -94,9 +94,6 @@ function App() {
   //   return null
   // }
 
-  
-  console.log(userStories)
-
   const addUser = (newUser) => {
     createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
   }
@@ -144,9 +141,9 @@ function App() {
       element={<AuthenticationGuard component={ProfileForm} />}
     />
     <Route
-      path="/addreview"
+      path="/add_review"
       element={<AuthenticationGuard component={ReviewForm} 
-      data={{addUserStory, loggedInUser}}
+      data={{fetchData, addUserStory}}
       />}
     />
     <Route
