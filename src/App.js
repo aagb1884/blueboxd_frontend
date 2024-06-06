@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { PageLoader } from "./Components/page_loader";
-import { AuthenticationGuard } from "./Components/authentification_guard";
+import { AuthenticationGuard } from './auth0/authentification_guard';
 import Credits from "./pages/credits_page";
 import HomePage from "./pages/home_page";
 import ProfilePage from "./pages/profile_page";
@@ -22,6 +22,7 @@ getUserStoryByUserReviews, getUserStoryByUserWatchlist } from "./Services/story_
 import { getUsers, createUser } from "./Services/user_services";
 import AboutPage from './pages/about-page';
 import ReviewForm from './Components/Forms/ReviewForm';
+import ReviewPage from './pages/review-page';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -30,8 +31,8 @@ function App() {
   const [companions, setCompanions] = useState([]);
   const [people, setPeople] = useState([]);
   const [castAndCrew, setCastAndCrew] = useState([]);
-  const [userStoriesReviewed, setUserStoriesReviewed] = useState([]);
-  const [userStoriesWatchlist, setUserStoriesWatchlist] = useState([]);
+  // const [userStoriesReviewed, setUserStoriesReviewed] = useState([]);
+  // const [userStoriesWatchlist, setUserStoriesWatchlist] = useState([]);
   const [userStories, setUserStories] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [error, setError] = useState(null);
@@ -59,7 +60,9 @@ function App() {
           Promise.all([getUsers(), getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), 
             getUserStories(), getUserStoryByUserId(userId), getUserStoryByUserReviews(userId), getUserStoryByUserWatchlist(userId)])
             .then(([usersData, storiesData, doctorsData, companionsData, peopleData, castAndCrewData, 
-            userStoriesData, userStoriesByUserIdData, userStoriesByReviewsData, userStoriesByWatchlistData]) => {
+            userStoriesData, userStoriesByUserIdData, 
+            // userStoriesByReviewsData, userStoriesByWatchlistData
+          ]) => {
           setUsers(usersData);
           setStories(storiesData);
           setDoctors(doctorsData);
@@ -68,8 +71,8 @@ function App() {
           setCastAndCrew(castAndCrewData);
           setUserStories(userStoriesData);
           setUserStoryByID(userStoriesByUserIdData)
-          setUserStoriesReviewed(userStoriesByReviewsData)
-          setUserStoriesWatchlist(userStoriesByWatchlistData)
+          // setUserStoriesReviewed(userStoriesByReviewsData)
+          // setUserStoriesWatchlist(userStoriesByWatchlistData)
           }).catch(err => {
             console.log(err)
             setError(err)
@@ -94,13 +97,19 @@ function App() {
   //   return null
   // }
 
+  
+
   const addUser = (newUser) => {
     createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
   }
 
   const addUserStory = (newUserStory) => {
-    createUserStory(newUserStory, loggedInUser).then((savedUserStory) => setUserStories([...userStories, savedUserStory]));
-  }
+    return createUserStory(newUserStory, loggedInUser).then((savedUserStory) => {
+      setUserStories([...userStories, savedUserStory]);
+      return savedUserStory;
+    });
+  };
+  
 
   return (
     <div className="app">
@@ -130,21 +139,26 @@ function App() {
             loggedInUser={loggedInUser}
             userData={users}
             userStories={userStories}
-            reviews={userStoriesReviewed}
-            watchlist={userStoriesWatchlist}
+            // reviews={userStoriesReviewed}
+            // watchlist={userStoriesWatchlist}
             loading={loading}
             error={error}
       />} 
       />
+    <Route path="/reviews/:id"
+            element={<ReviewPage
+            isLoading={isLoading}
+            setLoading={setLoading}
+            setError={setError} 
+            />}
+    />
     <Route
       path="/edit_profile"
       element={<AuthenticationGuard component={ProfileForm} />}
     />
     <Route
       path="/add_review"
-      element={<AuthenticationGuard component={ReviewForm} 
-      data={{fetchData, addUserStory}}
-      />}
+      element={<AuthenticationGuard component={ReviewForm} fetchData={fetchData} addUserStory={addUserStory} />}
     />
     <Route
       path="/admin"

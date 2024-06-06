@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import { CodeSnippet } from "../auth0/code-snippet";
 
-const ProfilePage = (loggedInUser, userData, userStories, reviews, watchlist, loading, error) => {
+const ProfilePage = (loggedInUser, userData, userStories, loading, error) => {
     const { user } = useAuth0();
 
     if (!user) {
@@ -18,18 +18,42 @@ const ProfilePage = (loggedInUser, userData, userStories, reviews, watchlist, lo
       return <p>There was an error loading the stories.</p>;
     }
 
-    // const reviewedStoriesData = reviews.map((userStory) => {
-    //   const {story, type, rating, review} = userStory
+    // console.log(loggedInUser.userStories);
 
-    //   return (
-    //     <li key = {userStory.id}>
-    //     <span>{story}</span>
+    const watchlistStoriesData = loggedInUser.userStories.map((watchlistStory) => {
+      const {story, type} = watchlistStory
+      console.log(watchlistStory.story.title);
+      if (watchlistStory.type === 'WATCHLIST') {
+        return (
+      
+              <div className="watchlist">
+              <ul>
+              <li key = {watchlistStory.id}/>
+                <li className="story-title">{watchlistStory.story.title}</li>
+            </ul>
+            </div>
+          
+        )
+    }})
 
-    //     </li>
-    //   )
-    // })
-
-    // console.log(reviewedStoriesData)
+    const reviewedStoriesData = loggedInUser.userStories.map((reviewedStory) => {
+      const {story, type, rating, review} = reviewedStory
+      if (reviewedStory.type === 'REVIEW') {
+        return (
+      
+              <div className="review">
+              <ul>
+              <li key = {reviewedStory.id}/>
+                <li className="story-title">{reviewedStory.story.title}</li>
+                <li className="rating">{reviewedStory.rating}/10</li>
+                <li className="review-text">{reviewedStory.review}</li>
+                <li className="date-of-review">{new Date(reviewedStory.creationOfReviewDateTime).toLocaleString()}</li>
+            </ul>
+            </div>
+          
+        )
+    }})
+   
 
     return ( 
         <PageLayout>
@@ -71,6 +95,14 @@ const ProfilePage = (loggedInUser, userData, userStories, reviews, watchlist, lo
                 code={JSON.stringify(user, null, 2)}
               />
             </div> */}
+            <div>
+            <h3>{user.given_name}'s Watchlist</h3>
+            {watchlistStoriesData}
+            </div>
+            <div>
+            <h3>{user.given_name}'s Reviews</h3>
+            {reviewedStoriesData}
+            </div>
           </div>
         </div>
       </div>
