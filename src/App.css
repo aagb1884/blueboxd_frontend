@@ -211,13 +211,7 @@ ul{
   padding: 10px;
 }
 
-.review{
-  list-style: none;
-  text-align: left;
-  border: 1px solid white;
-  padding: 10px;
-  line-height: 2;
-}
+
 
 .review ul, .review li {
   margin: 0; padding: 0;

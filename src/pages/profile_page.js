@@ -1,7 +1,8 @@
 import PageLayout from "../Components/page_layout";
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import { CodeSnippet } from "../auth0/code-snippet";
+import { NavLink } from "react-router-dom";
+import './profile.css'
 
 const ProfilePage = (loggedInUser, userData, userStories, loading, error) => {
     const { user } = useAuth0();
@@ -20,21 +21,18 @@ const ProfilePage = (loggedInUser, userData, userStories, loading, error) => {
 
     // console.log(loggedInUser.userStories);
 
-    const watchlistStoriesData = loggedInUser.userStories.map((watchlistStory) => {
-      const {story, type} = watchlistStory
-      console.log(watchlistStory.story.title);
-      if (watchlistStory.type === 'WATCHLIST') {
-        return (
-      
-              <div className="watchlist">
-              <ul>
-              <li key = {watchlistStory.id}/>
-                <li className="story-title">{watchlistStory.story.title}</li>
-            </ul>
-            </div>
-          
-        )
-    }})
+    const watchlistStoriesData = loggedInUser.userStories
+  .filter(watchlistStory => watchlistStory.type === 'WATCHLIST') 
+  .sort((a, b) => a.story.id - b.story.id) 
+  .map(watchlistStory => (
+    <div className="watchlist" key={watchlistStory.story.id}>
+      <p className="story-title">
+        <NavLink to={`/stories/${watchlistStory.story.id}`} >
+          {watchlistStory.story.title}
+        </NavLink>
+      </p>
+    </div>
+  ));
 
     const reviewedStoriesData = loggedInUser.userStories.map((reviewedStory) => {
       const {story, type, rating, review} = reviewedStory
@@ -95,11 +93,13 @@ const ProfilePage = (loggedInUser, userData, userStories, loading, error) => {
                 code={JSON.stringify(user, null, 2)}
               />
             </div> */}
-            <div>
+            <div className="user-watchlist-container">
             <h3>{user.given_name}'s Watchlist</h3>
-            {watchlistStoriesData}
+              <div className="watchlist-stories">
+                {watchlistStoriesData}
+              </div>
             </div>
-            <div>
+            <div className="user-reviews-container">
             <h3>{user.given_name}'s Reviews</h3>
             {reviewedStoriesData}
             </div>
