@@ -4,27 +4,36 @@
     font-weight: 400;
     font-style: normal;
   }
-  
 
 a {
   color: pink;
+  font-weight: bold;
+}
+
+
+button:hover, a:hover{
+  cursor: pointer;
 }
 
 #blue-box-logo{
   max-height: 90px;
 }
+
 header {
-    position: absolute;
-    flex: 0 0 10%;
-    height: 100%;
-    top: 0;
-    display: flex;
-    flex-direction: row;  
-    padding: 10px;
-    background: rgb(168,10,84);
-background: linear-gradient(90deg, rgba(168,10,84,0.008) 1%, rgba(162,10,81,1) 4%, rgba(33,1,16,0.01) 100%);
-    text-align: center;
+  position: fixed; 
+  width: 10%; 
+  height: 100vh; 
+  top: 0;
+  left: 0; 
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  /* background: rgb(168,10,84); */
+  background: linear-gradient(90deg, rgba(168, 10, 79, 0.008) 1%, rgb(162, 10, 101) 4%, rgba(1, 20, 33, 0.01) 100%);
+  text-align: center;
+  z-index: 1000; 
 }
+
 
 .header-login-buttons{
   margin: 20px;
@@ -61,31 +70,6 @@ background: linear-gradient(90deg, rgba(168,10,84,0.008) 1%, rgba(162,10,81,1) 4
   padding: 20px;
 }
 
-
-.story-item{
-  border-style: double;
-  margin: 10px;
-  width: 90%;
-  flex: 3;
-  
-}
-
-.story-item-container{
-  display: flex;
-  flex-direction: grid;
-  grid-template-columns: auto auto;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  /* background-color: rgb(6,63,170, 0.1); */
-  align-items: center;
-}
-
-.cast-crew-info {
-  display: flex;
-  flex-direction: column;
-}
-
 .image-container img {
   display: block;
   max-width: 312px;
@@ -94,6 +78,7 @@ background: linear-gradient(90deg, rgba(168,10,84,0.008) 1%, rgba(162,10,81,1) 4
   height: auto;
   /* object-fit: contain; */
 }
+
 .text-container{
   display: flex;
  flex-grow: 3;
@@ -104,22 +89,7 @@ background: linear-gradient(90deg, rgba(168,10,84,0.008) 1%, rgba(162,10,81,1) 4
  overflow: hidden;
 }
 
-.add-user-story-buttons{
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  text-align: center;
-}
 
-.story-buttons{
-  background: rgb(168,10,84);
-  color: antiquewhite;
-  font: inherit;
-  border-radius: 5px;
-  min-width: 200px;
-  height: 80px;
-}
 
 ul{
   list-style-type: none;
@@ -134,12 +104,75 @@ ul{
   align-items: center;
 }
 
-.stories-search-results {
+.about{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 10px;
+  background-color: rgb(6,63,170, 0.1);
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* stories */
+.story-item, .story-detail{
+  border-style: double;
+  margin: 10px;
+  width: 90%;
+  flex: 3;
+}
+
+.story-detail{
+  justify-content: center;
+  padding: 10px;
+}
+
+.story-item-container {
+  display: flex;
+  flex-direction: grid;
+  grid-template-columns: auto auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  /* background-color: rgb(6,63,170, 0.1); */
+  align-items: center;
+}
+
+.story-detail-container{
+  display: flex;
+  justify-content: center;
+}
+
+.cast-crew-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.story-item-image-container{
+  display: flex;
+  justify-content: center;
+}
+
+.story-item-image-container img{
+  display: block;
+}
+
+.stories-search-results{
   margin-top: 20px;
   justify-content: center;
 }
 
 .search-results{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.story-detail{
+  border: white solid 1px;
+  max-width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,13 +185,44 @@ ul{
   justify-content: space-around;
 }
 
-.about{
+.add-user-story-buttons{
+  margin: 10px;
   display: flex;
   flex-direction: column;
-  margin: 20px;
-  padding: 10px;
-  background-color: rgb(6,63,170, 0.1);
-  width: 90%;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  text-align: center;
 }
+
+.story-buttons{
+  background: rgb(162, 10, 101);
+  color: antiquewhite;
+  font: inherit;
+  border-radius: 5px;
+  border: 2px solid rgba(1, 20, 33);
+  min-width: 200px;
+  height: 80px;
+}
+
+.story-reviews{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+
+
+.review ul, .review li {
+  margin: 0; padding: 0;
+}
+
+.name-avatar{
+  display: flex;
+  flex-direction: row;
+}
+
+.date-of-review{
+  font-size: small;
+}
+

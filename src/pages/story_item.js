@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import AddReview from "../Components/Buttons/add-review-button";
+import AddToWatchlist from "../Components/Buttons/add-to-watchlist-button";
 
-const StoryItem = ({story}) => {
+const StoryItem = ({story, loggedInUser, addUserStory}) => {
 
     const doctorInfo = story.doctors.map((doctor, index) => {
         return <span>{doctor.name}
@@ -40,8 +42,17 @@ const StoryItem = ({story}) => {
         </ul>
 
             <div className="add-user-story-buttons">
-                <button className="story-buttons">Add Review</button>
-                <button className="story-buttons"> Add to Watch List</button>
+                <AddReview
+                loggedInUser={loggedInUser}
+                addUserStory={addUserStory}
+                storyID={story.id}
+                storyTitle={story.title}
+                 />
+                <AddToWatchlist 
+                loggedInUser={loggedInUser}
+                addUserStory={addUserStory}
+                storyID={story.id}
+                />
                 <Link to={`/stories/${story.id}`}>
                     <button className="story-buttons" >Read More</button>
                 </Link>

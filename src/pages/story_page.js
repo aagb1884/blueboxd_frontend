@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PageLayout from "../Components/page_layout";
 import SearchResults from './search-results';
 
-const Story = ({stories, loading, error}) => {
+const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
@@ -98,7 +98,9 @@ const Story = ({stories, loading, error}) => {
                 
                 <div className='stories-search-results'>
                <SearchResults 
+                loggedInUser={loggedInUser}
                filteredStories={filteredStories}
+               addUserStory={addUserStory}
                />
                {loading && <h2>Loading...</h2>}
                {error && <p>There was an error loading the stories.</p>}
