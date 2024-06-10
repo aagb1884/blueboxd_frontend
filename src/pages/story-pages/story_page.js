@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PageLayout from "../Components/page_layout";
-import SearchResults from './search-results';
+import PageLayout from "../../Components/page_layout";
+import SearchResults from '../search-results';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
   

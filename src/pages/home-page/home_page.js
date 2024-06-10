@@ -1,4 +1,4 @@
-import PageLayout from "../Components/page_layout";
+import PageLayout from "../../Components/page_layout";
 import { useAuth0 } from "@auth0/auth0-react";
 import './home.css';
 import { NavLink } from "react-router-dom";
@@ -115,7 +115,7 @@ const HomePage = ({stories, userStories, loading, error}) => {
 
     return ( 
         <PageLayout>
-            <section>
+            <section className="greeting">
                 {isAuthenticated && (
                     <p>Hello {user.given_name}</p>
                 )}

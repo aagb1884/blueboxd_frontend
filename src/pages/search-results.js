@@ -1,5 +1,5 @@
 import React from "react";
-import StoryItem from "./story_item";
+import StoryItem from "./story-pages/story_item";
 
 const SearchResults = ({filteredStories, loggedInUser, addUserStory}) => {
 

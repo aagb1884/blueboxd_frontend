@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { baseURLstories } from "../Services/story_services";
-import PageLayout from "../Components/page_layout";
-import AddReview from "../Components/Buttons/add-review-button";
-import AddToWatchlist from "../Components/Buttons/add-to-watchlist-button";
+import { baseURLstories } from "../../Services/story_services";
+import PageLayout from "../../Components/page_layout";
+import AddReview from "../../Components/Buttons/add-review-button";
+import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 
 const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUserStory}) => {   
    const [selectedStory, setSelectedStory] = useState(null);
@@ -61,7 +61,9 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
       );
   });
 
-  const storyReviews = selectedStory.storyConnections.map((reviewData) => {
+  const storyReviews = selectedStory.storyConnections
+  .filter(watchlistStory => watchlistStory.type === 'REVIEW') 
+  .map((reviewData) => {
     const { review, rating, user, creationOfReviewDateTime } = reviewData;
     const displayName = user?.display_name || 'Unknown User';
     const userImgUrl = user?.userImgURL || 'images/default-image-url.png';
@@ -145,7 +147,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
         <section className="story-reviews">
           <h2>Reviews:</h2>
           <ul>
-          {storyReviews}
+          {storyReviews.length > 0 ? storyReviews : 'No-one has reviewed this story yet'}
           </ul>
           
         </section>

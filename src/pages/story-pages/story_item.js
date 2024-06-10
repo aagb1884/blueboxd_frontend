@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import AddReview from "../Components/Buttons/add-review-button";
-import AddToWatchlist from "../Components/Buttons/add-to-watchlist-button";
+import AddReview from "../../Components/Buttons/add-review-button";
+import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 
 const StoryItem = ({story, loggedInUser, addUserStory}) => {
 
