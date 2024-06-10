@@ -3,17 +3,22 @@ import { useAuth0 } from "@auth0/auth0-react";
 import './home.css';
 import { NavLink } from "react-router-dom";
 
+
 const HomePage = ({stories, userStories, loading, error}) => {
     const { isAuthenticated } = useAuth0();
     const { user } = useAuth0();
+
+   
 
     if (loading) {
         return <h2>Loading...</h2>;
       }
     
       if (error) {
-        return <p>There was an error loading the stories.</p>;
+        return <p>There was an error loading the Home Page. Please refresh.</p>;
       }
+
+   
 
     const today = new Date()
     const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
