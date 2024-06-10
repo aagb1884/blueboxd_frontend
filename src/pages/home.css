@@ -1,0 +1,42 @@
+.home-story-image, .recent-story-image, .recent-release-image {
+    display: flex;
+    justify-content: center;
+}
+
+.home-story-image img, .recent-story-image img, .recent-release-image img {
+    display: block;
+    max-width: 200px;
+    width: auto;
+    height: auto;
+}
+
+.home-reviewed-stories, .home-recent-stories, .home-released-stories {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.home-page-review, .recently-broadcast-stories, .recent-spin-off-stories {
+    list-style: none;
+    text-align: left;
+    border: 2px dotted white;
+    padding: 10px;
+    line-height: 2;
+    min-width: 300px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recently-broadcast, .recently-reviewed, .recently-released{
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    background: radial-gradient(circle, rgba(168, 10, 79, 0.008) 17%, rgb(162, 10, 101, 0.5) 63%, rgba(1, 20, 33, 0.01) 100%);
+}
+
+
+.home-date-of-review {
+    font-size: small;
+}

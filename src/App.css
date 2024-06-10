@@ -28,7 +28,7 @@ header {
   display: flex;
   flex-direction: row;
   padding: 10px;
-  /* background: rgb(168,10,84); */
+  
   background: linear-gradient(90deg, rgba(168, 10, 79, 0.008) 1%, rgb(162, 10, 101) 4%, rgba(1, 20, 33, 0.01) 100%);
   text-align: center;
   z-index: 1000; 

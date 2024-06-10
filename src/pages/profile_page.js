@@ -4,7 +4,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import './profile.css'
 
-const ProfilePage = (loggedInUser, userData, userStories, loading, error) => {
+const ProfilePage = (loggedInUser, loading, error) => {
     const { user } = useAuth0();
 
     if (!user) {

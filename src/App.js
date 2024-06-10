@@ -114,7 +114,12 @@ function App() {
   return (
     <div className="app">
     <Routes>
-    <Route path="/" element={<HomePage />} />
+    <Route path="/" element={<HomePage
+            stories={stories}
+            userStories={userStories}
+            loading={loading}
+            error={error}
+    />} />
     <Route path="/about" element={<AboutPage />} />
     <Route  path="/stories" 
             element={<Story 
