@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import PageLayout from "../../Components/page_layout";
+import PageLayout from "../../Components/Navigation/page_layout";
 import SearchResults from '../search-results';
+import { NavLink } from 'react-router-dom';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
   
@@ -105,7 +106,11 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
                {loading && <h2>Loading...</h2>}
                {error && <p>There was an error loading the stories.</p>}
                {!loading && !error && filteredStories.length === 0 && (
-          <div>No results found.</div>
+          <div>
+            <p>No results found.</p>
+            <p>If you cannot find the story you are looking for, logged-in users can add it <NavLink to="/add_story">here</NavLink>.</p>
+          </div>
+          
         )}
                </div>
         </section>

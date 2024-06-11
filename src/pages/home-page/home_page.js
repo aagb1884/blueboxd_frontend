@@ -1,4 +1,4 @@
-import PageLayout from "../../Components/page_layout";
+import PageLayout from "../../Components/Navigation/page_layout";
 import { useAuth0 } from "@auth0/auth0-react";
 import './home.css';
 import { NavLink } from "react-router-dom";
@@ -110,7 +110,7 @@ const HomePage = ({stories, userStories, loading, error}) => {
                 <img alt="story_image" src={recentRelease.imgURL} />
             </div>
             <p className="date-of-release">
-            Originally released: {recentRelease.firstEpBroadcast == recentRelease.lastEpBroadcast ? recentRelease.firstEpBroadcast : recentRelease.firstEpBroadcast + ' - ' + recentRelease.lastEpBroadcast}
+            Released: {recentRelease.firstEpBroadcast == recentRelease.lastEpBroadcast ? recentRelease.firstEpBroadcast : recentRelease.firstEpBroadcast + ' - ' + recentRelease.lastEpBroadcast}
             </p>
             <NavLink to={`/stories/${recentRelease.id}`}>
                 <b>Read More...</b>

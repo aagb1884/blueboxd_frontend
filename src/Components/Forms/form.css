@@ -1,4 +1,4 @@
-.review-form{
+.review-form, .new-story-form{
     text-align: center;
     line-height: 2;
     background-color: rgba(168, 10, 79, 0.2);

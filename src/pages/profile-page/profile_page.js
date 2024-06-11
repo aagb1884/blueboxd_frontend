@@ -1,4 +1,4 @@
-import PageLayout from "../../Components/page_layout";
+import PageLayout from "../../Components/Navigation/page_layout";
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 import { NavLink } from "react-router-dom";

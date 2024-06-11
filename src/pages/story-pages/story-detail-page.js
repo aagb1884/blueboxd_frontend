@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { baseURLstories } from "../../Services/story_services";
-import PageLayout from "../../Components/page_layout";
+import PageLayout from "../../Components/Navigation/page_layout";
 import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 

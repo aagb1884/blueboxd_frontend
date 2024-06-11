@@ -1,4 +1,4 @@
-import PageLayout from "../Components/page_layout";
+import PageLayout from "../Components/Navigation/page_layout";
 
 const AboutPage = () => {
     return ( 

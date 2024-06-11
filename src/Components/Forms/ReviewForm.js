@@ -1,11 +1,9 @@
 import { useState, useEffect} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import '../review_form.css'
-import PageLayout from "../page_layout";
+import './form.css'
+import PageLayout from "../Navigation/page_layout";
 
 const ReviewForm = ({fetchData, addUserStory}) => {
-    // console.log("fetchData:", fetchData);
-    // console.log("addUserStory:", addUserStory);
     const location = useLocation();
     const navigate = useNavigate();
     const { storyID, title } = location.state || {}
@@ -67,7 +65,6 @@ const ReviewForm = ({fetchData, addUserStory}) => {
               }
       };
 
-console.log(rating)
     return ( 
         <PageLayout>
 
@@ -126,7 +123,7 @@ console.log(rating)
         </div>
         <br />
         <div>
-          <label htmlFor="shelf">Make review private</label> <select 
+          <label htmlFor="privacy-selector">Make review private</label> <select 
           id="privacy"
           name="privacy"
           value={reviewPrivate}

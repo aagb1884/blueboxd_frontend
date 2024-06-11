@@ -2,9 +2,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import React from "react";
 import Footer from "./Footer";
-import { LoginButton } from "./Buttons/login-button";
-import { LogoutButton } from "./Buttons/logout-button";
-import { SignupButton } from "./Buttons/signup-button";
+import { LoginButton } from "../Buttons/login-button";
+import { LogoutButton } from "../Buttons/logout-button";
+import { SignupButton } from "../Buttons/signup-button";
 
 const Header = () => {
 

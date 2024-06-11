@@ -1,4 +1,4 @@
-import PageLayout from "../Components/page_layout";
+import PageLayout from "../Components/Navigation/page_layout";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { baseUserStoryURL } from '../Services/story_connection_services';
