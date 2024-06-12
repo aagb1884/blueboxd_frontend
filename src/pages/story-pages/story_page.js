@@ -18,7 +18,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
             setFilterByMedia('All')
         };
 
-       
+      
 
           let filteredStories = stories;
           if (searchTerm.length > 0 || filterByMedia !== 'All' || (searchTerm.length > 0 && filterByMedia !== 'All')) {

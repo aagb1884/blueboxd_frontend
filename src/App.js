@@ -162,19 +162,29 @@ function App() {
     />
     <Route
       path="/edit_profile"
-      element={<AuthenticationGuard component={ProfileForm} />}
+      element={<AuthenticationGuard 
+      component={ProfileForm} />}
     />
     <Route
       path="/add_review"
-      element={<AuthenticationGuard component={ReviewForm} fetchData={fetchData} addUserStory={addUserStory} />}
+      element={<AuthenticationGuard 
+      component={ReviewForm} 
+      fetchData={fetchData} 
+      addUserStory={addUserStory} />}
     />
     <Route
       path="/add_story"
-      element={<AuthenticationGuard component={AddStory} fetchData={fetchData} addStory={addNewStory} />}
+      element={<AuthenticationGuard 
+      component={AddStory} 
+      fetchData={fetchData} 
+      addStory={addNewStory} 
+      doctorData={doctors}
+      companionData={companions}/>}
     />
     <Route
       path="/admin"
-      element={<AuthenticationGuard component={AdminPage} />}
+      element={<AuthenticationGuard 
+      component={AdminPage} />}
     />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>

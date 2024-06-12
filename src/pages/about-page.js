@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import PageLayout from "../Components/Navigation/page_layout";
 
 const AboutPage = () => {
@@ -7,7 +8,7 @@ const AboutPage = () => {
             <h1>About blueboxd</h1>
             <h2>What it is and how it works</h2>
             <p>This is a website where you can review Doctor Who stories. These reviews can be a simple rating out of ten, one line of text, or a whole essay. That's up to you.</p>
-            <p>We have an increasingly large list of stories, which users can add to if they can't find the one they want.</p>
+            <p>We have an increasingly large list of stories, <NavLink to="/add_story">which users can add to</NavLink> if they can't find the one they want.</p>
             <p>You can also maintain a list of stories you want to watch/listen to/read.</p>
             <p>You can follow other users if you want to read their reviews.</p>
             <br />
