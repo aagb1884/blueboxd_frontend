@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const AddCompanion = () => {
+const AddCompanion = ({fetchData, addCompanion, companionData}) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [nickname, setNickname] = useState("");
     const [primaryEra, setPrimaryEra] = useState("");
     const [mainActor, setMainActor] = useState("");
     const [bio, setBio] = useState("");
+    const navigate = useNavigate();
 
     const handleFirstNameChange = (e) => {
         setFirstName(e.target.value);
@@ -28,6 +30,14 @@ const AddCompanion = () => {
         setBio(e.target.value);
     }
 
+    function resetForm(){
+        setFirstName("");
+        setLastName("");
+        setNickname("");
+        setPrimaryEra("");
+        setMainActor("");
+        setBio("");
+    }
 
     const handleCompanionSubmit = async (e) => {
         e.preventDefault();
@@ -49,19 +59,27 @@ const AddCompanion = () => {
             setPrimaryEra("");
             setMainActor("");
             setBio("");
-            // fetchData("")
+            fetchData("")
+            navigate('/add_story')
         } catch (error) {
             console.error("Error adding companion:", error)
         }
     }
 
     return ( 
-
+        <div
+        className="modal-wrapper"
+        onClick={() => navigate('/add_story')}
+      >
+        <div
+          className="modal"
+          onClick={e => e.stopPropagation()}
+        >
         <form className="new-companion-form" onSubmit={handleCompanionSubmit}>
             <h2>Add New Companion</h2>
-            <p>Required fields marked with *</p>
+            <p>Required fields underlined.</p>
             <div>
-                    <label htmlFor="new-companion-firstname">First Name*:</label>
+                    <label htmlFor="new-companion-firstname"><u>First Name:</u></label>
                     <br/>
                     <input
                     type="text"
@@ -98,7 +116,7 @@ const AddCompanion = () => {
                         />
             </div>
             <div>
-                    <label htmlFor="new-companion-primary-era">Primary Era*:</label>
+                    <label htmlFor="new-companion-primary-era"><u>Primary Era:</u></label>
                     <aside>The years this companion regularly appeared in stories (put start year only if companion is current).</aside>
                     <input
                     type="text"
@@ -115,7 +133,7 @@ const AddCompanion = () => {
                     <aside>The main actor to play this companion, if applicable.</aside>
                     <input
                     type="text"
-                    placeholder="Firstname"
+                    placeholder="Firstname Lastname"
                     id="new-companion-main-actor"
                     name="new-companion-main-actor"
                     value={mainActor}
@@ -123,7 +141,7 @@ const AddCompanion = () => {
                         />
             </div>
             <div>
-                    <label htmlFor="new-companion-bio">Bio*:</label>
+                    <label htmlFor="new-companion-bio"><u>Bio:</u></label>
                     <br/>
                     <input
                     type="text"
@@ -136,11 +154,13 @@ const AddCompanion = () => {
                         />
             </div>
             <br />
-                <div className="form-button">
-                <button type="submit">Add Story</button>
-                <input type="reset" value="Reset"></input>
+                <div className="new-companion-form-button">
+                <button type="submit">Add New Companion</button>
+                <input type="reset" onClick={resetForm} value="Reset"></input>
                 </div>
         </form>
+        </div>
+    </div>
      );
 }
  

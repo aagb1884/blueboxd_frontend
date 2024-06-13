@@ -1,7 +1,7 @@
 import './App.css';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { PageLoader } from "./Components/Navigation/page_loader";
 import { AuthenticationGuard } from './auth0/authentification_guard';
 import Credits from "./pages/credits_page";
@@ -14,7 +14,7 @@ import AdminPage from "./pages/admin_page";
 import NotFoundPage from "./pages/not_found_page";
 import { createStory, getStories } from "./Services/story_services";
 import { getDoctors } from "./Services/doctor_services";
-import { getCompanions } from "./Services/companion_services";
+import { createCompanion, getCompanions } from "./Services/companion_services";
 import { getCastAndCrew } from "./Services/cast_crew_services";
 import { getPeople } from "./Services/people_services";
 import { getUserStories, createUserStory, getUserStoryByUserId, 
@@ -24,6 +24,7 @@ import AboutPage from './pages/about-page';
 import ReviewForm from './Components/Forms/ReviewForm';
 import ReviewPage from './pages/review-page';
 import AddStory from './Components/Forms/AddStoryForm';
+import AddCompanion from './Components/Forms/AddCompanion';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -37,6 +38,9 @@ function App() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userStoryByID, setUserStoryByID] = useState(null)
+
+  const location = useLocation();
+  const previousLocation = location.state?.previousLocation;
 
   const { user, isLoading } = useAuth0();
 
@@ -112,11 +116,17 @@ function App() {
       return savedUserStory;
     });
   };
+
+  const addNewCompanion = (newCompanion) => {
+    return createCompanion(newCompanion, loggedInUser).then((savedCompanion) => {
+      setCompanions([...companions, savedCompanion]);
+    })
+  }
   
 
   return (
     <div className="app">
-    <Routes>
+    <Routes location={previousLocation || location}>
     <Route path="/" element={<HomePage
             stories={stories}
             userStories={userStories}
@@ -188,6 +198,18 @@ function App() {
     />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
+  {previousLocation && (
+    <Routes>
+      <Route
+      path="/add_companion"
+      element={<AuthenticationGuard 
+      component={AddCompanion} 
+      fetchData={fetchData} 
+      addCompanion={addNewCompanion} 
+      companionData={companions}/>}
+    />
+    </Routes>
+  )}
   </div>
   );
 }

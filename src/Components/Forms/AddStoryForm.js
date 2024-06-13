@@ -1,6 +1,6 @@
 import PageLayout from "../Navigation/page_layout";
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const [title, setTitle] = useState("");
@@ -20,6 +20,7 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const [wikiLink, setWikiLink] = useState("");
     const [companionSearchTerm, setCompanionSearchTerm] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
 
     const formats = [
         { label: 'Audio', value: "AUDIO" },
@@ -178,11 +179,12 @@ console.log(companions);
             <form className="new-story-form">
                 <h2>Add A Story</h2>
                 <p>Please read <NavLink to="/about">our guidance </NavLink>before submitting new stories.</p>
+                <p>Required fields underlined.</p>
                 <p>Don't worry about 100% accuracy. All stories added are subject to fact checks and editing.</p>
                 <br />
                 <div className="title-format">
                 <div className="new-story-title-container">
-                    <label htmlFor="new-story-title">Title: </label>
+                    <label htmlFor="new-story-title"><u>Title:</u> </label>
                     <input
                     type="text"
                     placeholder="Story Title (Format)"
@@ -193,7 +195,7 @@ console.log(companions);
                         />
                 </div>
                 <div className="new-story-format-container">
-                    <label htmlFor="format-selector">Format: </label> <select 
+                    <label htmlFor="format-selector"><u>Format:</u> </label> <select 
                     id="format-selector"
                     name="format-selector"
                     value={media}
@@ -225,8 +227,8 @@ console.log(companions);
                 <div>
                     <br />
                     <p><b>Broadcast/Publication Dates</b></p>
-                    <aside>If you are adding a single story/a multi-part story released in one go (e.g. a Big Finish story) please use same date for 'First Broadcast' and 'Last Broadcast'.</aside>
-                    <label htmlFor="first-ep-broadcast">First Part Broadcast/Released:</label>
+                    <aside>For stories where all parts are released on the same date (eg. a single episode story, a novel, or Big Finish story) please use same date for 'First Part Broadcast' and 'Last Part Broadcast'.</aside>
+                    <label htmlFor="first-ep-broadcast"><u>First Part Broadcast/Released:</u></label>
                     <br/>
                     <input
                     type="date"
@@ -237,7 +239,7 @@ console.log(companions);
                         />
                 </div>
                 <div>
-                    <label htmlFor="last-ep-broadcast">Last Part Broadcast/Released:</label>
+                    <label htmlFor="last-ep-broadcast"><u>Last Part Broadcast/Released:</u></label>
                     <br/>
                     <input
                     type="date"
@@ -298,7 +300,14 @@ console.log(companions);
             </div>
             <button onClick={clearSearch}>Clear Search</button>
             {storyCompanionInfo}
-        </div>
+            <aside>Can't find the companion you're looking for? <NavLink
+                        className="frontpage-job"
+                        to="/add_companion"
+                        state={{ previousLocation: location }}
+                        > Add a new companion here.
+                        </NavLink> 
+                        </aside>
+                        </div>
 
                 <div>
                 <br/>
@@ -316,11 +325,12 @@ console.log(companions);
                 <div>
                 <br/>
                     <label htmlFor="synopsis">Synopsis:</label>
-                    <br/>
+                    <aside>200 Character Limit</aside>
                     <input
                     type="text"
                     id="synopsis"
                     name="synopsis"
+                    maxLength="200"
                     placeholder="Spoiler free summary"
                     value={synopsis}
                     onChange={handleSynopsisChange}
@@ -342,7 +352,7 @@ console.log(companions);
                 </div>
                 <div>
                 <br/>
-                    <label htmlFor="series">Series:</label>
+                    <label htmlFor="series">Series/Range:</label>
                     <br/>
                     <input
                     type="text"
