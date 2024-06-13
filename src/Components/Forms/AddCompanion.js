@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AddCompanion = ({fetchData, addCompanion, companionData}) => {
+const AddCompanion = ({fetchData, addCompanion}) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [nickname, setNickname] = useState("");
@@ -59,7 +59,7 @@ const AddCompanion = ({fetchData, addCompanion, companionData}) => {
             setPrimaryEra("");
             setMainActor("");
             setBio("");
-            fetchData("")
+            fetchData()
             navigate('/add_story')
         } catch (error) {
             console.error("Error adding companion:", error)

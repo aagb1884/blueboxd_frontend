@@ -15,8 +15,8 @@ import NotFoundPage from "./pages/not_found_page";
 import { createStory, getStories } from "./Services/story_services";
 import { getDoctors } from "./Services/doctor_services";
 import { createCompanion, getCompanions } from "./Services/companion_services";
-import { getCastAndCrew } from "./Services/cast_crew_services";
-import { getPeople } from "./Services/people_services";
+import { getCastAndCrew, createCastAndCrew } from "./Services/cast_crew_services";
+import { getPeople, createPerson } from "./Services/people_services";
 import { getUserStories, createUserStory, getUserStoryByUserId, 
 getUserStoryByUserReviews, getUserStoryByUserWatchlist } from "./Services/story_connection_services";
 import { getUsers, createUser } from "./Services/user_services";
@@ -25,6 +25,7 @@ import ReviewForm from './Components/Forms/ReviewForm';
 import ReviewPage from './pages/review-page';
 import AddStory from './Components/Forms/AddStoryForm';
 import AddCompanion from './Components/Forms/AddCompanion';
+import AddCastCrew from './Components/Forms/AddCastCrew';
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -122,6 +123,18 @@ function App() {
       setCompanions([...companions, savedCompanion]);
     })
   }
+
+  const addPeople = (newPerson) => {
+    return createPerson(newPerson, loggedInUser).then((savedPerson) => {
+      setPeople([...people, savedPerson]);
+    })
+  }
+
+  const addCastAndCrew = (newCastAndCrew) => {
+    return createCastAndCrew(newCastAndCrew, loggedInUser).then((savedCastAndCrew) => {
+      setCastAndCrew([...castAndCrew, savedCastAndCrew]);
+    })
+  }
   
 
   return (
@@ -157,8 +170,6 @@ function App() {
             loggedInUser={loggedInUser}
             userData={users}
             userStories={userStories}
-            // reviews={userStoriesReviewed}
-            // watchlist={userStoriesWatchlist}
             loading={loading}
             error={error}
       />} 
@@ -206,7 +217,17 @@ function App() {
       component={AddCompanion} 
       fetchData={fetchData} 
       addCompanion={addNewCompanion} 
-      companionData={companions}/>}
+      />}
+    />
+      <Route
+      path="/add_cast_crew"
+      element={<AuthenticationGuard 
+      component={AddCastCrew} 
+      fetchData={fetchData} 
+      people={people}
+      addCastAndCrew={addCastAndCrew}
+      addPeople={addPeople}
+      />}
     />
     </Routes>
   )}

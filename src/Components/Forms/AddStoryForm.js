@@ -4,6 +4,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const [title, setTitle] = useState("");
+    const [storyCastAndCrew, setStoryCastAndCrew] = useState([]);
     const [media, setMedia] = useState(" ");
     const [firstEpBroadcast, setFirstEpBroadcast] = useState("");
     const [lastEpBroadcast, setLastEpBroadcast] = useState("");
@@ -68,6 +69,7 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
         setCompanions(updatedCompanions);
     };
 
+
     const storyCompanionInfo = companions.map((companion, index) => (
         <li key={index}>
             <span>{companion.nickname ? companion.nickname : `${companion.firstName} ${companion.lastName}`}</span>
@@ -127,13 +129,14 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
         setWikiLink(e.target.value);
       };     
 
-
+      console.log(companions);
     
       const handleStorySubmit = async (e) => {
         e.preventDefault();
         
         const newStory = {
             title: title,
+            castCrew: storyCastAndCrew,
             format: media,
             firstEpBroadcast: firstEpBroadcast,
             lastEpBroadcast: lastEpBroadcast,
@@ -152,12 +155,13 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
             try {
                 const savedStory = await addStory(newStory);
                 setTitle("");
+                setStoryCastAndCrew([]);
                 setMedia("");
                 setFirstEpBroadcast("");
                 setLastEpBroadcast("");
                 setReleases("");
-                setDoctors("");
-                setCompanions("");
+                setDoctors([]);
+                setCompanions([]);
                 setImgURL("");
                 setSynopsis("");
                 setKeywords("");
@@ -171,8 +175,7 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
                 console.error("Error adding review:", error);
               }
       };
-console.log(doctors);
-console.log(companions);
+
     return ( 
         <PageLayout>
 
@@ -296,7 +299,7 @@ console.log(companions);
                     onClick={() => addCompanionToStory(companion)}
                     className="dropdown-row">
                     {companion.nickname ? companion.nickname : `${companion.firstName} ${companion.lastName}`}
-                                    </div>))}
+              </div>))}
             </div>
             <button onClick={clearSearch}>Clear Search</button>
             {storyCompanionInfo}

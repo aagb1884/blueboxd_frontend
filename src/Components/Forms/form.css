@@ -134,6 +134,8 @@
     justify-content: space-between;
   }
 
+  /* new companion form + new cast and crew form */
+
   .modal-wrapper {
     position: fixed;
     left: 0;
@@ -162,7 +164,7 @@
     font-size: small;
   }
 
-  .new-companion-form {
+  .new-companion-form, .new-person-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,4 +172,18 @@
 
   #new-companion-bio {
     width: 400px;
+  }
+
+  /* new person form */
+
+  #new-person-info {
+    width: 400px;
+  }
+
+  .new-person-form-button {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-between;
+    margin: 10px;
   }
