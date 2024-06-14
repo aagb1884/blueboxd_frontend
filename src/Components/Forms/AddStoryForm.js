@@ -20,6 +20,8 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const [productionCode, setProductionCode] = useState("");
     const [wikiLink, setWikiLink] = useState("");
     const [companionSearchTerm, setCompanionSearchTerm] = useState("");
+    
+    const [alert, setAlert] = useState({ type: '', message: '' });
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -128,16 +130,19 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
       const handleWikiLinkChange = (e) => {
         setWikiLink(e.target.value);
       };     
-
-      console.log(companions);
     
       const handleStorySubmit = async (e) => {
         e.preventDefault();
+
+        if (!title || !media ) {
+          setAlert({ type: 'error', message: 'Required fields not completed' });
+          return;
+        }
         
         const newStory = {
             title: title,
-            castCrew: storyCastAndCrew,
-            format: media,
+            castAndCrew: storyCastAndCrew,
+            media: media,
             firstEpBroadcast: firstEpBroadcast,
             lastEpBroadcast: lastEpBroadcast,
             releases: releases,
@@ -147,9 +152,10 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
             synopsis: synopsis,
             keywords: keywords,
             series: series,
+            storyNumber: storyNumber,
             noOfEpisodes: noOfEpisodes,
             productionCode: productionCode,
-            wikiLink: wikiLink,
+            wikiLink: wikiLink
         };
         
             try {
@@ -165,16 +171,22 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
                 setImgURL("");
                 setSynopsis("");
                 setKeywords("");
-                setSeries(0);
+                setSeries("");
+                setStoryNumber(0);
                 setNoOfEpisodes(0);
                 setProductionCode("");
                 setWikiLink("");
                 fetchData();
-                navigate(`/stories/${newStory.id}`);
+                setAlert({ type: 'success', message: 'Story added successfully! Redirecting...' });
+                setTimeout(() => {
+                  navigate(`/stories/${newStory.id}`);
+                }, 5000); 
               } catch (error) {
-                console.error("Error adding review:", error);
+                console.error("Error adding story:", error);
+                setAlert({ type: "error", message: "Failed to add story." });
               }
-      };
+            };
+      
 
     return ( 
         <PageLayout>
@@ -416,6 +428,11 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
                     onChange={handleWikiLinkChange}
                         />
                 </div>
+                {alert.message && (
+          <div className={`alert ${alert.type}`}>
+            {alert.message}
+          </div>
+        )}
                 <br />
                 <div className="companion-form-button">
                 <button type="submit" onClick={handleStorySubmit}>Add Story</button>

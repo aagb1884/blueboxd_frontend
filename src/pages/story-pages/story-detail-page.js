@@ -56,7 +56,9 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
     <p>No Info. <NavLink
     className="frontpage-job"
     to="/add_cast_crew"
-    state={{ previousLocation: location }}
+    state={{  previousLocation: location, 
+              storyInfo: selectedStory,
+              castAndCrew: selectedStory.castAndCrew }}
     >Add Cast and Crew?
     </NavLink> </p>
   ) : (

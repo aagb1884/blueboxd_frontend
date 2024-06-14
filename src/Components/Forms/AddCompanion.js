@@ -8,6 +8,9 @@ const AddCompanion = ({fetchData, addCompanion}) => {
     const [primaryEra, setPrimaryEra] = useState("");
     const [mainActor, setMainActor] = useState("");
     const [bio, setBio] = useState("");
+
+    const [alert, setAlert] = useState({ type: '', message: '' });
+
     const navigate = useNavigate();
 
     const handleFirstNameChange = (e) => {
@@ -42,6 +45,11 @@ const AddCompanion = ({fetchData, addCompanion}) => {
     const handleCompanionSubmit = async (e) => {
         e.preventDefault();
 
+        if (!firstName || !lastName || !primaryEra || !bio) {
+            setAlert({ type: 'error', message: 'Required fields not completed' });
+            return;
+          }
+
         const newCompanion = {
             firstName: firstName,
             lastName: lastName,
@@ -60,11 +68,15 @@ const AddCompanion = ({fetchData, addCompanion}) => {
             setMainActor("");
             setBio("");
             fetchData()
-            navigate('/add_story')
-        } catch (error) {
-            console.error("Error adding companion:", error)
-        }
-    }
+            setAlert({ type: 'success', message: 'Companion added successfully! Redirecting...' });
+            setTimeout(() => {
+                navigate("/add_story");
+              }, 5000); 
+            } catch (error) {
+              console.error("Error adding companion:", error);
+              setAlert({ type: "error", message: "Failed to add companion." });
+            }
+          };
 
     return ( 
         <div
@@ -153,6 +165,11 @@ const AddCompanion = ({fetchData, addCompanion}) => {
                     onChange={handleBioChange}
                         />
             </div>
+            {alert.message && (
+          <div className={`alert ${alert.type}`}>
+            {alert.message}
+          </div>
+        )}
             <br />
                 <div className="new-companion-form-button">
                 <button type="submit">Add New Companion</button>

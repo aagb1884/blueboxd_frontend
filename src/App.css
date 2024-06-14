@@ -226,3 +226,10 @@ ul{
   font-size: small;
 }
 
+.alert.success{
+  background-color: lightgreen;
+}
+
+.alert.error {
+  background-color: red;
+}
