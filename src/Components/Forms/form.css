@@ -69,7 +69,7 @@
     align-items: center;
 }
 
-#new-story-title, #imgURL, #wiki-link {
+#new-story-title, #imgURL, #wiki-link, #new-cast-crew-role, #person-search {
     width: 200px;
 }
 
@@ -102,7 +102,7 @@
     padding: 5px;
 }
 
-#remove-companion {
+#remove-companion, #remove-person {
     margin-left: 5px;
 }
 
@@ -134,6 +134,8 @@
     justify-content: space-between;
   }
 
+  /* new companion form + new cast and crew form */
+
   .modal-wrapper {
     position: fixed;
     left: 0;
@@ -162,7 +164,7 @@
     font-size: small;
   }
 
-  .new-companion-form {
+  .new-companion-form, .new-person-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,4 +172,25 @@
 
   #new-companion-bio {
     width: 400px;
+  }
+
+  /* new person form */
+
+  #new-person-info {
+    width: 400px;
+  }
+
+  .new-person-form-button {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-between;
+    margin: 10px;
+  }
+
+  .line {
+    width: 112px;
+    height: 47px;
+    border-bottom: 1px solid black;
+    position: absolute;
   }

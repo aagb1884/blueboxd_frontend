@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { baseURLstories } from "../../Services/story_services";
 import PageLayout from "../../Components/Navigation/page_layout";
@@ -8,6 +8,7 @@ import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUserStory}) => {   
    const [selectedStory, setSelectedStory] = useState(null);
    const { id } = useParams(); 
+   const location = useLocation();
 
    const getSelectedStory = async (id) => {
       try {
@@ -51,15 +52,28 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
   })
   
      
-  const storyCastCrewInfo = selectedStory.castAndCrew.map((castCrewMember) => {
-      const { role, person } = castCrewMember; 
+  const storyCastCrewInfo = selectedStory.castAndCrew.length === 0 ? (
+    <p>No Info. <NavLink
+    className="frontpage-job"
+    to="/add_cast_crew"
+    state={{  previousLocation: location, 
+              storyInfo: selectedStory,
+              castAndCrew: selectedStory.castAndCrew }}
+    >Add Cast and Crew?
+    </NavLink> </p>
+  ) : (
+    <ul>
+      {selectedStory.castAndCrew.map((castCrewMember) => {
+        const { role, person } = castCrewMember;
   
-      return (
+        return (
           <li key={person.id}>
-          <span>{role}: {person.name} </span>
+            <span>{role}: {person.name}</span>
           </li>
-      );
-  });
+        );
+      })}
+    </ul>
+  );
 
   const storyReviews = selectedStory.storyConnections
   .filter(watchlistStory => watchlistStory.type === 'REVIEW') 

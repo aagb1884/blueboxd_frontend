@@ -4,6 +4,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const [title, setTitle] = useState("");
+    const [storyCastAndCrew, setStoryCastAndCrew] = useState([]);
     const [media, setMedia] = useState(" ");
     const [firstEpBroadcast, setFirstEpBroadcast] = useState("");
     const [lastEpBroadcast, setLastEpBroadcast] = useState("");
@@ -19,6 +20,8 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const [productionCode, setProductionCode] = useState("");
     const [wikiLink, setWikiLink] = useState("");
     const [companionSearchTerm, setCompanionSearchTerm] = useState("");
+    
+    const [alert, setAlert] = useState({ type: '', message: '' });
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -67,6 +70,7 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
         const updatedCompanions = companions.filter((_, i) => i !== index);
         setCompanions(updatedCompanions);
     };
+
 
     const storyCompanionInfo = companions.map((companion, index) => (
         <li key={index}>
@@ -126,15 +130,19 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
       const handleWikiLinkChange = (e) => {
         setWikiLink(e.target.value);
       };     
-
-
     
       const handleStorySubmit = async (e) => {
         e.preventDefault();
+
+        if (!title || !media ) {
+          setAlert({ type: 'error', message: 'Required fields not completed' });
+          return;
+        }
         
         const newStory = {
             title: title,
-            format: media,
+            castAndCrew: storyCastAndCrew,
+            media: media,
             firstEpBroadcast: firstEpBroadcast,
             lastEpBroadcast: lastEpBroadcast,
             releases: releases,
@@ -144,35 +152,42 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
             synopsis: synopsis,
             keywords: keywords,
             series: series,
+            storyNumber: storyNumber,
             noOfEpisodes: noOfEpisodes,
             productionCode: productionCode,
-            wikiLink: wikiLink,
+            wikiLink: wikiLink
         };
         
             try {
                 const savedStory = await addStory(newStory);
                 setTitle("");
+                setStoryCastAndCrew([]);
                 setMedia("");
                 setFirstEpBroadcast("");
                 setLastEpBroadcast("");
                 setReleases("");
-                setDoctors("");
-                setCompanions("");
+                setDoctors([]);
+                setCompanions([]);
                 setImgURL("");
                 setSynopsis("");
                 setKeywords("");
-                setSeries(0);
+                setSeries("");
+                setStoryNumber(0);
                 setNoOfEpisodes(0);
                 setProductionCode("");
                 setWikiLink("");
                 fetchData();
-                navigate(`/stories/${newStory.id}`);
+                setAlert({ type: 'success', message: 'Story added successfully! Redirecting...' });
+                setTimeout(() => {
+                  navigate(`/stories/${newStory.id}`);
+                }, 5000); 
               } catch (error) {
-                console.error("Error adding review:", error);
+                console.error("Error adding story:", error);
+                setAlert({ type: "error", message: "Failed to add story." });
               }
-      };
-console.log(doctors);
-console.log(companions);
+            };
+      
+
     return ( 
         <PageLayout>
 
@@ -296,7 +311,7 @@ console.log(companions);
                     onClick={() => addCompanionToStory(companion)}
                     className="dropdown-row">
                     {companion.nickname ? companion.nickname : `${companion.firstName} ${companion.lastName}`}
-                                    </div>))}
+              </div>))}
             </div>
             <button onClick={clearSearch}>Clear Search</button>
             {storyCompanionInfo}
@@ -413,6 +428,11 @@ console.log(companions);
                     onChange={handleWikiLinkChange}
                         />
                 </div>
+                {alert.message && (
+          <div className={`alert ${alert.type}`}>
+            {alert.message}
+          </div>
+        )}
                 <br />
                 <div className="companion-form-button">
                 <button type="submit" onClick={handleStorySubmit}>Add Story</button>
