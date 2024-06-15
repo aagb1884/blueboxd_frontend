@@ -17,9 +17,22 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
 
     const episodeText = story.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
 
+    const storyConnections = story.storyConnections;
+
+    const reviews = storyConnections.filter(sc => sc.type === 'REVIEW');
+  
+    const ratingsTotalArray = reviews.map(review => review.rating);
+  
+    const sum = ratingsTotalArray.reduce((partialSum, rating) => partialSum + rating, 0);
+  
+    const numberOfReviews = reviews.length;
+  
+    const averageRating = (numberOfReviews > 0) ? 'Average Rating: ' + (sum / numberOfReviews).toFixed(2) : 'No Ratings Yet';
+
     return ( 
         <section className='story-item'>
         <h3>{story.title} ({story.media})</h3>
+        <p>{averageRating} </p>
         <div className="story-item-container"> 
         
         <div className="image-container">

@@ -44,13 +44,29 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
       return <span>{doctor.name}
       {index < selectedStory.doctors.length - 1 && <span>, </span>}</span> 
   })
+
   const storyCompanionInfo = selectedStory.companions.map((companion, index) => {
       return <li>
       <span>{companion.firstName} {companion.lastName}
       {index < selectedStory.companions.length - 1 && <span>, </span>}</span> 
       </li>
   })
-  
+ 
+// average rating
+
+  const storyConnections = selectedStory.storyConnections;
+
+  const reviews = storyConnections.filter(sc => sc.type === 'REVIEW');
+
+  const ratingsTotalArray = reviews.map(review => review.rating);
+
+  const sum = ratingsTotalArray.reduce((partialSum, rating) => partialSum + rating, 0);
+
+  const numberOfReviews = reviews.length;
+
+  const averageRating = (numberOfReviews > 0) ? 'Average Rating: ' + (sum / numberOfReviews).toFixed(2) : 'No Ratings Yet';
+
+  // cast and crew
      
   const storyCastCrewInfo = selectedStory.castAndCrew.length === 0 ? (
     <p>No Info. <NavLink
@@ -113,6 +129,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
         <div className="story-item-image-container">
         <img src={selectedStory.imgURL} id='selected-story-logo' alt="title_logo" width="175" height="200"/>
         </div>
+        <p>{averageRating}</p>
         <div className="story-item-container"> 
         
         

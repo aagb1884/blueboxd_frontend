@@ -26,12 +26,13 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
     const location = useLocation();
 
     const formats = [
-        { label: 'Audio', value: "AUDIO" },
+        { label: 'Choose Media Type', value: "" },
+        { label: 'Audio', value: "Audio" },
         { label: 'TV', value: "TV" },
-        { label: 'Film', value: "FILM" },
-        { label: 'Prose', value: "PROSE" },
-        { label: 'Comic', value: "COMIC" },
-        { label: 'Other', value: "OTHER" }
+        { label: 'Film', value: "Film" },
+        { label: 'Prose', value: "Prose" },
+        { label: 'Comic', value: "Comic" },
+        { label: 'Other', value: "Other" }
       ];
 
       function reset() {
@@ -98,6 +99,16 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
       const handleReleasesChange = (e) => {
         setReleases(e.target.value);
       };
+
+      const handleDoctorChange = (doctor) => {
+        setDoctors((prevDoctors) => {
+            if (prevDoctors.some((dr) => dr.id === doctor.id)) {
+                return prevDoctors.filter((dr) => dr.id !== doctor.id);
+            } else {
+                return [...prevDoctors, doctor];
+            }
+        });
+    };
 
       const handleImgURLChange = (e) => {
         setImgURL(e.target.value);
@@ -186,7 +197,7 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
                 setAlert({ type: "error", message: "Failed to add story." });
               }
             };
-      
+      console.log(title);
 
     return ( 
         <PageLayout>
@@ -268,20 +279,20 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
           <p><b>Doctors</b></p>
           <aside>Select as many Doctors as appear in the story</aside>
           <div className="doctors-checkbox">
-          {doctorData.map((dr) => (
-            <label htmlFor="doctors" key={dr.id} className="doctor-label">
-              <input type="checkbox"
-                id="doctors"
-                name="doctors"
-                value={dr.name}
-                onChange={(e) => setDoctors([...doctors, e.target.value])} />
-              {dr.name}
-            </label>
-          ))
-          }
-        </div>
+            {doctorData.map((dr) => (
+                <label htmlFor={`doctor-${dr.id}`} key={dr.id} className="doctor-label">
+                    <input
+                        type="checkbox"
+                        id={`doctor-${dr.id}`}
+                        name="doctors"
+                        value={dr.id}
+                        onChange={() => handleDoctorChange(dr)}
+                    />
+                    {dr.name}
+                </label>
+            ))}
+          </div>
 <br />
-
         <div className="companion-search-container">
           <br />
           <label htmlFor="companion-search">Companion Search</label>
