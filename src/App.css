@@ -219,7 +219,8 @@ ul{
 
 .name-avatar{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  text-align: center;
 }
 
 .date-of-review{

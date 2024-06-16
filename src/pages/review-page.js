@@ -1,5 +1,5 @@
 import PageLayout from "../Components/Navigation/page_layout";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { baseUserStoryURL } from '../Services/story_connection_services';
 
@@ -44,6 +44,8 @@ const ReviewPage = ({setError, setLoading, isLoading}) => {
             <div className="review">
         <ul>
           <div className="name-avatar">
+          <li><NavLink to={`/stories/${selectedReview.story.id}`}>{selectedReview.story.title}</NavLink></li>
+          <br/>
           <li>{selectedReview.user.display_name}</li>
           <br />
           <li>
