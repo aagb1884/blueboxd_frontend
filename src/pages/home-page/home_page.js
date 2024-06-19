@@ -26,8 +26,8 @@ const HomePage = ({stories, userStories, loading, error}) => {
     const getRecentTVStories = stories
     .map(story => {
     if (story.media === "TV") {
-        const [day, month, year] = story.lastEpBroadcast.split('/');
-        const storyDate = new Date(year, month - 1, day); 
+        const [day, month, year] = story.lastEpBroadcast.split('-');
+        const storyDate = new Date(day, month - 1, year); 
 
         if (storyDate < todayWithoutTime) {
           const difference = todayWithoutTime - storyDate;
@@ -83,8 +83,8 @@ const HomePage = ({stories, userStories, loading, error}) => {
     const getRecentSpinOffStories = stories
     .map(story => {
         if (story.media !== "TV" && story.media !== "All") {
-        const [day, month, year] = story.lastEpBroadcast.split('/');
-        const storyDate = new Date(year, month - 1, day); 
+        const [day, month, year] = story.lastEpBroadcast.split('-');
+        const storyDate = new Date(day, month - 1, year); 
 
         if (storyDate < todayWithoutTime) {
           const difference = todayWithoutTime - storyDate;

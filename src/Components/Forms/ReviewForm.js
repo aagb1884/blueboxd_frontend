@@ -12,6 +12,8 @@ const ReviewForm = ({fetchData, addUserStory}) => {
     const [rating, setRating] = useState(0);
     const [reviewPrivate, setReviewPrivate] = useState(false);
 
+    const [alert, setAlert] = useState({ type: '', message: '' });
+
     const privacyOptions = [
         { label: 'Public', value: false },
         { label: 'Private', value: true }
@@ -59,6 +61,7 @@ const ReviewForm = ({fetchData, addUserStory}) => {
                 setRating(0);
                 setReviewPrivate(false);
                 fetchData();
+                setAlert({ type: 'success', message: 'Companion added successfully! Redirecting...' });
                 navigate(`/reviews/${savedUserStory.id}`);
               } catch (error) {
                 console.error("Error adding review:", error);
