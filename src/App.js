@@ -18,7 +18,7 @@ import { createCompanion, getCompanions } from "./Services/companion_services";
 import { getCastAndCrew, createCastAndCrew } from "./Services/cast_crew_services";
 import { getPeople, createPerson } from "./Services/people_services";
 import { getUserStories, createUserStory, getUserStoryByUserId, 
-getUserStoryByUserReviews, getUserStoryByUserWatchlist } from "./Services/story_connection_services";
+getUserStoryByUserReviews, getUserStoryByUserWatchlist, deleteUserStory } from "./Services/story_connection_services";
 import { getUsers, createUser } from "./Services/user_services";
 import AboutPage from './pages/about-page';
 import ReviewForm from './Components/Forms/ReviewForm';
@@ -38,7 +38,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState(null)
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userStoryByID, setUserStoryByID] = useState(null)
+  const [userStoryByID, setUserStoryByID] = useState(null);
 
   const location = useLocation();
   const previousLocation = location.state?.previousLocation;
@@ -59,8 +59,8 @@ function App() {
   const fetchData = () => {
         getUsers()
         .then(users => {
-          setLoggedInUser(users[0])
-          const userId = users[0].id
+          setLoggedInUser(users[1])
+          const userId = users[1].id
           Promise.all([getUsers(), getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), 
             getUserStories(), getUserStoryByUserId(userId), getUserStoryByUserReviews(userId), getUserStoryByUserWatchlist(userId)])
             .then(([usersData, storiesData, doctorsData, companionsData, peopleData, castAndCrewData, 
@@ -99,6 +99,7 @@ function App() {
   // }
 
   
+  // CRUD functions
 
   const addUser = (newUser) => {
     createUser(newUser, loggedInUser).then((savedUser) => setUsers([...users, savedUser]));
@@ -117,6 +118,17 @@ function App() {
       return savedUserStory;
     });
   };
+
+  const deleteUserStoryByID = async (id) => {
+    const deletionResult = await deleteUserStory(id)
+    if (deletionResult.acknowledged) {
+      const newUserStoryArray = userStories.filter((userStory) => userStory._id !== id)
+      setUserStories(newUserStoryArray);
+      alert("Story removed from watchlist.");
+    } else {
+      alert("Failed to delete from watchlist. Please try again.");
+    }
+  }
 
   const addNewCompanion = (newCompanion) => {
     return createCompanion(newCompanion, loggedInUser).then((savedCompanion) => {
@@ -170,6 +182,7 @@ function App() {
             loggedInUser={loggedInUser}
             userData={users}
             userStories={userStories}
+            deleteUserStoryByID={deleteUserStoryByID}
             loading={loading}
             error={error}
       />} 

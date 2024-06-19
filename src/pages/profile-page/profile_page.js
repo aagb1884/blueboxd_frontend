@@ -4,7 +4,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import './profile.css'
 
-const ProfilePage = (loggedInUser, loading, error) => {
+const ProfilePage = ({loggedInUser, loading, error, deleteUserStoryByID}) => {
     const { user } = useAuth0();
 
     if (!user) {
@@ -19,20 +19,22 @@ const ProfilePage = (loggedInUser, loading, error) => {
       return <p>There was an error loading the stories.</p>;
     }
 
-    // console.log(loggedInUser.userStories);
-
     const watchlistStoriesData = loggedInUser.userStories
-  .filter(watchlistStory => watchlistStory.type === 'WATCHLIST') 
-  .sort((a, b) => a.story.id - b.story.id) 
-  .map(watchlistStory => (
-    <div className="watchlist" key={watchlistStory.story.id}>
-      <p className="story-title">
-        <NavLink to={`/stories/${watchlistStory.story.id}`} >
-          {watchlistStory.story.title}
-        </NavLink>
-      </p>
-    </div>
-  ));
+    .filter(watchlistStory => watchlistStory.type === 'WATCHLIST')
+    .sort((a, b) => a.story.id - b.story.id);
+  
+  const displayWatchlistStories = watchlistStoriesData.length === 0 
+    ? <p>No stories in watchlist.</p> 
+    : watchlistStoriesData.map(watchlistStory => (
+      <div className="watchlist" key={watchlistStory.story.id}>
+        <p className="story-title">
+          <NavLink to={`/stories/${watchlistStory.story.id}`} >
+            {watchlistStory.story.title}
+          </NavLink>
+        </p>
+        <button type="button" id="remove-from-watchlist" onClick={() => deleteUserStoryByID(watchlistStory.id)}>Remove</button>
+      </div>
+    ));
 
     const reviewedStoriesData = loggedInUser.userStories.map((reviewedStory) => {
       const {story, type, rating, review} = reviewedStory
@@ -96,7 +98,7 @@ const ProfilePage = (loggedInUser, loading, error) => {
             <div className="user-watchlist-container">
             <h3>{user.given_name}'s Watchlist</h3>
               <div className="watchlist-stories">
-                {watchlistStoriesData}
+                {displayWatchlistStories}
               </div>
             </div>
             <div className="user-reviews-container">

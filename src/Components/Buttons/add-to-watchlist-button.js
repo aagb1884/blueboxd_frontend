@@ -15,6 +15,7 @@ const watchlist = 'WATCHLIST';
             reviewPrivate: false,
             creationOfReviewDateTime: new Date().toISOString()
         })
+        alert("Story added to watchlist.")
     }
 
     return ( 

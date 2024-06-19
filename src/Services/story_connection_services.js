@@ -17,11 +17,21 @@ export const updateUserStory = (id, payload) => {
 };
 
 export const deleteUserStory = (id) => {
-  return fetch(baseUserStoryURL + '/' + id, {
+  return fetch(`${baseUserStoryURL}/${id}`, {
     method: "DELETE",
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    if (res.status !== 204 && res.headers.get('content-length') !== '0') {
+      return res.json();
+    } else {
+      return { acknowledged: true };
+    }
+  });
 };
+
 
 export const createUserStory = (newUserStory) => {
     return fetch(baseUserStoryURL, {

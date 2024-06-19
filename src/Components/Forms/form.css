@@ -194,3 +194,9 @@
     border-bottom: 1px solid black;
     position: absolute;
   }
+
+  /* profile form   */
+
+  #remove-from-watchlist {
+    margin: 5px;
+  }
