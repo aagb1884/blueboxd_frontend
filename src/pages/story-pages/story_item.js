@@ -36,7 +36,7 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
         <div className="story-item-container"> 
         
         <div className="image-container">
-        <img src={story.imgURL} alt="title_logo" width="175" height="200"/>
+        <img src={`../${story.imgURL}`} alt="title_logo" width="175" height="200"/>
         </div>
         
         <div className="text-container">

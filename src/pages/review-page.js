@@ -46,7 +46,7 @@ const ReviewPage = ({setError, setLoading, isLoading}) => {
           <div className="name-avatar">
           <li><NavLink to={`/stories/${selectedReview.story.id}`}>{selectedReview.story.title}</NavLink></li>
           <br/>
-          <li>{selectedReview.user.display_name}</li>
+          <li><NavLink to={`/profile/${selectedReview.user.id}`}>{selectedReview.user.display_name}</NavLink></li>
           <br />
           <li>
             {selectedReview.user.userImgURL && <img id='user' src={selectedReview.user.userImgURL} alt={`${selectedReview.user.display_name}'s avatar`} width="50" height="50" />}

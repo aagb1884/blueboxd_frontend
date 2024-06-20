@@ -96,14 +96,14 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
   .map((reviewData) => {
     const { review, rating, user, creationOfReviewDateTime } = reviewData;
     const displayName = user?.display_name || 'Unknown User';
-    const userImgUrl = user?.userImgURL || 'images/default-image-url.png';
+    const userImgUrl = user?.userImgURL || '../images/default-image-url.png';
   
     return (
       <div className="review">
       <li key={reviewData.id}>
         <ul>
           <div className="name-avatar">
-          <li>{displayName}</li>
+          <li><NavLink to={`/profile/${user.id}`}>{displayName}</NavLink></li>
           <br />
           <li>
             {userImgUrl && <img id='user' src={userImgUrl} alt={`${displayName}'s avatar`} width="50" height="50" />}
@@ -127,7 +127,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
        <div className='story-detail'>
         <h3>{selectedStory.title} ({selectedStory.media})</h3>
         <div className="story-item-image-container">
-        <img src={selectedStory.imgURL} id='selected-story-logo' alt="title_logo" width="175" height="200"/>
+        <img src={`../${selectedStory.imgURL}`} id='selected-story-logo' alt="title_logo" width="175" height="200"/>
         </div>
         <p>{averageRating}</p>
         <div className="story-item-container"> 

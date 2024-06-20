@@ -4,9 +4,14 @@
     width: 80%;
 } */
 
-.user-watchlist-container {
+.user-watchlist-container, .user-following-container {
     border: solid 1px white;
-    
+}
+
+.following-users {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .watchlist-stories {
@@ -31,3 +36,17 @@
     min-width: 500px;
     margin: 10px;
   }
+
+.profile__headline{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.profile__avatar {
+    max-width: 200px;
+}
+
+#follow-user {
+    margin: 5px;
+}

@@ -177,14 +177,16 @@ function App() {
             />}
             />
     <Route path="/credits" element={<Credits />} />
-    <Route path="/profile"
+    <Route path="/profile/:id"
             element={<ProfilePage
             loggedInUser={loggedInUser}
             userData={users}
             userStories={userStories}
             deleteUserStoryByID={deleteUserStoryByID}
-            loading={loading}
-            error={error}
+            setLoading={setLoading}
+            setError={setError} 
+            isLoading={isLoading}
+            setLoggedInUser={setLoggedInUser}
       />} 
       />
     <Route path="/reviews/:id"
