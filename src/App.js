@@ -12,6 +12,7 @@ import Story from "./pages/story-pages/story_page";
 import StoryDetailPage from './pages/story-pages/story-detail-page';
 import AdminPage from "./pages/admin_page";
 import NotFoundPage from "./pages/not_found_page";
+import Header from './Components/Navigation/Header';
 import { createStory, getStories } from "./Services/story_services";
 import { getDoctors } from "./Services/doctor_services";
 import { createCompanion, getCompanions } from "./Services/companion_services";
@@ -224,6 +225,9 @@ function App() {
     />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
+  <Header 
+  loggedInUser={loggedInUser}
+  />
   {previousLocation && (
     <Routes>
       <Route

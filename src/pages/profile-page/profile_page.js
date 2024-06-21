@@ -7,8 +7,29 @@ import './profile.css'
 
 const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedInUser, deleteUserStoryByID}) => {
   const [selectedProfile, setSelectedProfile] = useState(null)  
+  const [isWatchlistVisible, setIsWatchListVisible] = useState(false);
+  const [areReviewsVisible, setAreReviewsVisible] = useState(false);
+  const [areFollowersVisible, setAreFollowersVisible] = useState(false);
+  const [visibleReviewIds, setVisibleReviewIds] = useState([]);
   const { user } = useAuth0();
   const { id } = useParams(); 
+
+  const toggleWatchlistVisibility = () => {
+    setIsWatchListVisible(!isWatchlistVisible);
+  }; 
+  const toggleReviewsVisibility = () => {
+    setAreReviewsVisible(!areReviewsVisible);
+  }; 
+  const toggleFollowersVisibility = () => {
+    setAreFollowersVisible(!areFollowersVisible);
+  }; 
+  const toggleIndividualReviewVisibility = (reviewId) => {
+    setVisibleReviewIds((prevVisibleReviewIds) =>
+      prevVisibleReviewIds.includes(reviewId)
+        ? prevVisibleReviewIds.filter((id) => id !== reviewId)
+        : [...prevVisibleReviewIds, reviewId]
+    );
+  };
 
   const getSelectedProfile = async (id) => {
     try {
@@ -52,8 +73,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
             {watchlistStory.story.title}
           </NavLink>
         </p>
-        {loggedInUser.id === selectedProfile.id ? null :
-        <button type="button" id="remove-from-watchlist" onClick={() => deleteUserStoryByID(watchlistStory.id)}>Remove</button>}
+        <button type="button" id="remove-from-watchlist" onClick={() => deleteUserStoryByID(watchlistStory.id)}>Remove</button>
       </div>
     ));
 
@@ -63,19 +83,38 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     const displayReviewedStories = reviewedStoriesData.length === 0 
     ? <p>No stories reviewed yet.</p>
     : reviewedStoriesData.map(reviewedStory => (
-      <div className="review">
+      <div className="review" key = {reviewedStory.id}>
         <ul>
-        <li key = {reviewedStory.id}/>
-                 <li className="story-title">{reviewedStory.story.title}</li>
-                 <li className="rating">{reviewedStory.rating}/10</li>
+             <div className="header-and-toggle">
+                <div>
+                <li className="story-title">{reviewedStory.story.title}</li>
+                <li className="date-of-review">{new Date(reviewedStory.creationOfReviewDateTime).toLocaleString()}</li>
+                <li className="rating">{reviewedStory.rating}/10</li>
+                </div>
+                  <img id="visible-toggle" 
+                  alt="toggle-view-button" 
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png" 
+                  onClick={() => toggleIndividualReviewVisibility(reviewedStory.id)}/>
+                 </div>
+                 { visibleReviewIds.includes(reviewedStory.id) && (
+                  <div>
+                 
                  <li className="review-text">{reviewedStory.review}</li>
-                 <li className="date-of-review">{new Date(reviewedStory.creationOfReviewDateTime).toLocaleString()}</li>
-        </ul>
+                 </div>
+                )}
+                </ul>
       </div>
     ))
 
     const followUser = async () => {
       try {
+
+        const isAlreadyFollowing = loggedInUser.following.some(user => user.id === selectedProfile.id);
+        
+        if (isAlreadyFollowing) {
+          alert("You are already following this user");
+          return;
+        }
         const updatedFollowing = [...loggedInUser.following, selectedProfile];
         const updatedUser = { ...loggedInUser, following: updatedFollowing };
         const response = await updateUser(loggedInUser.id, updatedUser);
@@ -98,8 +137,24 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
         </ul>
       </div>
     ));
+
+    const unfollowUser = async (userId) => {
+      try {
+        const updatedFollowing = loggedInUser.following.filter(user => user.id !== userId);
+        const updatedUser = { ...loggedInUser, following: updatedFollowing };
+        const response = await updateUser(loggedInUser.id, updatedUser);
+        if (response.ok) {
+          const data = await response.json();
+          setLoggedInUser(data);
+          alert("User removed from follow list.");
+        } else {
+          throw new Error('Failed to update user');
+        }
+      } catch (error) {
+        console.error("Failed to unfollow user", error);
+      }
+    };
    
-    console.log(followersData);
     return ( 
         <PageLayout>
        <div className="content-layout">
@@ -128,7 +183,6 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
                 <h2 className="profile__title">{selectedProfile.firstname} {selectedProfile.lastname}</h2>
                 <span className="profile__description">Username: {selectedProfile.display_name}</span>
                 <span className="profile__description">Location: {selectedProfile.location}</span>
-                {/* <span className="profile__description">{user.userImgURL}</span> */}
                 <span className="profile__description">Biography: {selectedProfile.userBio}</span>
                 <span className="profile__description">{selectedProfile.userWebsite === null ? "" : <a href={selectedProfile.userWebsite}>Website</a>}</span>
               </div>
@@ -144,34 +198,53 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
                 code={JSON.stringify(user, null, 2)}
               />
             </div> */}
-      
+     <section className="profile-components-container">
       <div className="user-following-container">
-              <h3>{selectedProfile.firstname} is following:</h3>
+              <div className="header-and-toggle">
+              <h3>{selectedProfile.firstname} is following</h3>
+              <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleFollowersVisibility}/>
+              </div>
               <div className="following-users">
               {selectedProfile.following.length === 0 ? (
                 <p>{selectedProfile.firstname} isn't following anyone.</p>
               ) : (
+                
                 selectedProfile.following.map((followingUser) => (
+                
                   <div className="following" key={followingUser.id}>
+                      {areFollowersVisible && (
                     <ul>
-                      <li className="story-title"><NavLink to={`/profile/${followingUser.id}`}>{followingUser.display_name}</NavLink></li>
-                      <li><button type="button" id="remove-from-follow-list">Unfollow</button></li>
+                      <li className="user-name"><NavLink to={`/profile/${followingUser.id}`}>{followingUser.display_name}</NavLink></li>
+                      <li><button type="button" id="remove-from-follow-list" onClick={() => unfollowUser(followingUser.id)}>Unfollow</button></li>
                     </ul>
+                    )}
                   </div>
                 ))
               )}
               </div>
             </div>
             <div className="user-watchlist-container">
-            <h3>{selectedProfile.firstname}'s Watchlist</h3>
+              <div className="header-and-toggle">
+            <h3>{selectedProfile.firstname}'s Watchlist </h3>
+            <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleWatchlistVisibility}/>
+              </div>
+              {isWatchlistVisible && (
               <div className="watchlist-stories">
                 {displayWatchlistStories}
               </div>
-            </div>
+            )}</div>
             <div className="user-reviews-container">
+              <div className="header-and-toggle">
             <h3>{selectedProfile.firstname}'s Reviews</h3>
+            <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleReviewsVisibility}/>
+            </div>
+            {areReviewsVisible && (
+              <div className="reviewed-stories">
             {displayReviewedStories}
             </div>
+            )}
+            </div>
+            </section> 
           </div>
         </div>
       </div>

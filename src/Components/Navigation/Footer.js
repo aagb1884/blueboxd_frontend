@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Footer = () => {
+const Footer = ({loggedInUser}) => {
 
     const { isAuthenticated } = useAuth0();
 
@@ -31,7 +31,7 @@ const Footer = () => {
                     <br />
                     <NavLink to="/credits">Credits</NavLink>
                     <br />
-                    <NavLink to="/profile">Profile</NavLink>
+                    <NavLink to={`/profile/${loggedInUser?.id}`}>Profile</NavLink>
                     
                     </>
                 )}
