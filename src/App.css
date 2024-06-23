@@ -188,13 +188,7 @@ ul{
   justify-content: space-around;
 }
 
-.add-user-story-buttons{
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  text-align: center;
-}
+
 
 .story-buttons{
   background: rgb(162, 10, 101);

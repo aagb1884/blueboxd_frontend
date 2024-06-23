@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageLayout from "../../Components/Navigation/page_layout";
 import SearchResults from '../search-results';
 import { NavLink } from 'react-router-dom';
+import { PageLoader } from '../../Components/Navigation/page_loader';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
   
@@ -103,7 +104,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
                filteredStories={filteredStories}
                addUserStory={addUserStory}
                />
-               {loading && <h2>Loading...</h2>}
+               {loading && <PageLoader />}
                {error && <p>There was an error loading the stories.</p>}
                {!loading && !error && filteredStories.length === 0 && (
           <div>

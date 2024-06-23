@@ -2,6 +2,7 @@ import PageLayout from "../../Components/Navigation/page_layout";
 import { useAuth0 } from "@auth0/auth0-react";
 import './home.css';
 import { NavLink } from "react-router-dom";
+import { PageLoader } from "../../Components/Navigation/page_loader";
 
 
 const HomePage = ({stories, userStories, loading, error}) => {
@@ -11,7 +12,7 @@ const HomePage = ({stories, userStories, loading, error}) => {
    
 
     if (loading) {
-        return <h2>Loading...</h2>;
+        return <PageLoader />;
       }
     
       if (error) {

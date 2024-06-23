@@ -4,11 +4,21 @@ import { baseURLstories } from "../../Services/story_services";
 import PageLayout from "../../Components/Navigation/page_layout";
 import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
+import './story.css';
 
 const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUserStory}) => {   
    const [selectedStory, setSelectedStory] = useState(null);
+   const [visibleReviewIds, setVisibleReviewIds] = useState([]);
    const { id } = useParams(); 
    const location = useLocation();
+
+   const toggleIndividualReviewVisibility = (reviewId) => {
+    setVisibleReviewIds((prevVisibleReviewIds) =>
+      prevVisibleReviewIds.includes(reviewId)
+        ? prevVisibleReviewIds.filter((id) => id !== reviewId)
+        : [...prevVisibleReviewIds, reviewId]
+    );
+  };
 
    const getSelectedStory = async (id) => {
       try {
@@ -102,17 +112,30 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
       <div className="review">
       <li key={reviewData.id}>
         <ul>
+        <div className="story-item-header-and-toggle">
+          <div className="name-avatar-date">
           <div className="name-avatar">
           <li><NavLink to={`/profile/${user.id}`}>{displayName}</NavLink></li>
-          <br />
           <li>
             {userImgUrl && <img id='user' src={userImgUrl} alt={`${displayName}'s avatar`} width="50" height="50" />}
           </li>
           </div>
-          <li className="rating">{rating}/10</li>
-          <li className="review-text">{review}</li>
           <li className="date-of-review">{new Date(creationOfReviewDateTime).toLocaleString()}</li>
+          </div>
+          <div className="unit">
+          <li className="rating"><b>{rating}/10</b></li>
+          <img id="visible-toggle" 
+                  alt="toggle-view-button" 
+                  title="Hide/Expand View"
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png" 
+                  onClick={() => toggleIndividualReviewVisibility(reviewData.id)}/>
+          </div>   
+        </div>
+          { visibleReviewIds.includes(reviewData.id) && (
+          <li className="review-text">{review}</li>
+          )}
         </ul>
+          
       </li>
       </div>
     );
@@ -169,6 +192,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
         storyID={selectedStory.id}
         storyTitle={selectedStory.title}
         />
+        <br />
         <AddToWatchlist 
         loggedInUser={loggedInUser}
         addUserStory={addUserStory}
