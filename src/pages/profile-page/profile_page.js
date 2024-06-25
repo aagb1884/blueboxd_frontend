@@ -12,6 +12,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
   const [areFollowersVisible, setAreFollowersVisible] = useState(false);
   const [visibleReviewIds, setVisibleReviewIds] = useState([]);
   const { user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const { id } = useParams(); 
 
   const toggleWatchlistVisibility = () => {
@@ -182,15 +183,21 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
               <div className="profile__headline">
                 <h2 className="profile__title">{selectedProfile.firstname} {selectedProfile.lastname}</h2>
                 <span className="profile__description">Username: {selectedProfile.display_name}</span>
+                {isAuthenticated && (
                 <span className="profile__description">Location: {selectedProfile.location}</span>
+                )}
                 <span className="profile__description">Biography: {selectedProfile.userBio}</span>
+                {isAuthenticated && (
                 <span className="profile__description">{selectedProfile.userWebsite === null ? "" : <a href={selectedProfile.userWebsite}>Website</a>}</span>
+                )}
               </div>
+              {isAuthenticated && (
               <div>
                 {loggedInUser.id === selectedProfile.id ? null : (
                   <button type="button" id="follow-user" onClick={followUser}>Follow {selectedProfile.display_name}</button>
                 )}
               </div>
+              )}
             </div>
             {/* <div className="profile__details">
               <CodeSnippet
@@ -199,6 +206,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
               />
             </div> */}
      <section className="profile-components-container">
+     {isAuthenticated && (
       <div className="user-following-container">
               <div className="header-and-toggle">
               <h3>{selectedProfile.firstname} is following</h3>
@@ -223,6 +231,8 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
               )}
               </div>
             </div>
+            )}
+
             <div className="user-watchlist-container">
               <div className="header-and-toggle">
             <h3>{selectedProfile.firstname}'s Watchlist </h3>

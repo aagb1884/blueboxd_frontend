@@ -1,5 +1,6 @@
 import { useParams, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { baseURLstories } from "../../Services/story_services";
 import PageLayout from "../../Components/Navigation/page_layout";
 import AddReview from "../../Components/Buttons/add-review-button";
@@ -11,6 +12,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
    const [visibleReviewIds, setVisibleReviewIds] = useState([]);
    const { id } = useParams(); 
    const location = useLocation();
+   const { isAuthenticated } = useAuth0();
 
    const toggleIndividualReviewVisibility = (reviewId) => {
     setVisibleReviewIds((prevVisibleReviewIds) =>
@@ -185,6 +187,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
         
              </div>
         </div>
+        {isAuthenticated && (
         <div className="add-user-story-buttons">
         <AddReview
         loggedInUser={loggedInUser}
@@ -199,6 +202,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
        storyID={selectedStory.id}
         />
         </div>
+        )}
         <section className="story-reviews">
           <h2>Reviews:</h2>
           <ul>

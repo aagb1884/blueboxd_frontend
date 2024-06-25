@@ -10,7 +10,7 @@
     height: auto;
 }
 
-.home-reviewed-stories, .home-recent-stories, .home-released-stories {
+.home-reviewed-stories, .home-recent-stories, .home-released-stories, .home-recent-review-following {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -29,7 +29,7 @@
     align-items: center;
 }
 
-.recently-broadcast, .recently-reviewed, .recently-released{
+.recently-broadcast, .recently-reviewed, .recently-released, .recently-reviewed-by-following{
     display: flex;
     flex-direction: column;
     padding: 50px;
@@ -38,4 +38,8 @@
 
 .home-date-of-review {
     font-size: small;
+}
+
+.error-message {
+    text-align: center;
 }

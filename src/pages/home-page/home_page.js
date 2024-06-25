@@ -3,26 +3,64 @@ import { useAuth0 } from "@auth0/auth0-react";
 import './home.css';
 import { NavLink } from "react-router-dom";
 import { PageLoader } from "../../Components/Navigation/page_loader";
+import { useState } from "react";
 
 
-const HomePage = ({stories, userStories, loading, error}) => {
+const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
+  const [recentFollowerReviews, setRecentFollowerReviews] = useState([]);
     const { isAuthenticated } = useAuth0();
     const { user } = useAuth0();
-
-   
 
     if (loading) {
         return <PageLoader />;
       }
     
       if (error) {
-        return <p>There was an error loading the Home Page. Please refresh.</p>;
+        return <h1 className="error-message">There was an error loading the Home Page. Please refresh.</h1>;
       }
 
-   
+      //get reviews from users you're following
+      const getFollowers = loggedInUser.following.map(userFollowing => {
+        return userFollowing.id
+      })
+
+      const getReviewerIDs = userStories.map(userStory => {
+        return userStory.user.id
+      })
+
+      function haveCommonItems(arr1, arr2) {
+        const set1 = new Set(arr1);
+        const commonItems = arr2.filter(item => set1.has(item));
+        return commonItems
+      }
+
+      const getFilteredUserStories = (userStories, haveCommonItems) => {
+        return userStories.filter(userStory => 
+          haveCommonItems(getFollowers, getReviewerIDs).includes(userStory.user.id)
+        );
+      };
+      
+      const filteredUserStories = getFilteredUserStories(userStories, haveCommonItems);
 
     const today = new Date()
     const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const getRecentlyReviewedByFollowing = filteredUserStories
+    .sort((a, b) => new Date(b.creationOfReviewDateTime) - new Date(a.creationOfReviewDateTime)) 
+    .slice(0, 3) 
+    .map(reviewedStory => ( 
+        <div className="home-page-review" key={reviewedStory.id}>
+          <p className="home-story-title"><b>{reviewedStory.story.title}</b></p>
+          <p className="home-story-username">Reviewed by {reviewedStory.user.display_name}</p>
+          <div className="home-story-image">
+            <img alt="story_image" src={reviewedStory.story.imgURL}></img>
+          </div>
+          <p className="home-date-of-review">{new Date(reviewedStory.creationOfReviewDateTime).toLocaleString()}</p>
+          <NavLink to={`/reviews/${reviewedStory.id}`}>
+            <b>Read Review...</b>
+          </NavLink>
+        </div>
+      ));
 
     const getRecentTVStories = stories
     .map(story => {
@@ -134,6 +172,15 @@ const HomePage = ({stories, userStories, loading, error}) => {
                 </div>
             </section>
 
+            {isAuthenticated && (
+            <section className="recently-reviewed-by-following">
+                <h3>Recently Reviewed by People You Follow</h3>
+                <div className="home-recent-review-following">
+                {getRecentlyReviewedByFollowing}
+                </div>
+            </section>
+            )}
+            
             <section className="recently-reviewed">
                 <h3>Recently Reviewed</h3>
                 <div className="home-reviewed-stories">
