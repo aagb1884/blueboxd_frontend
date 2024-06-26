@@ -2,6 +2,8 @@ import { useState, useEffect} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import './form.css'
 import PageLayout from "../Navigation/page_layout";
+import TextEditor from "../../tiptap/text-editor";
+import StarRating from "../star_rating";
 
 const ReviewForm = ({fetchData, addUserStory}) => {
     const location = useLocation();
@@ -24,17 +26,21 @@ const ReviewForm = ({fetchData, addUserStory}) => {
           navigate('/stories');
         }
     
-      }, [storyID]);
+      }, [storyID, navigate]);
 
   
   
-      const handleReviewChange = (e) => {
-        setReview(e.target.value);
+      // const handleReviewChange = (e) => {
+      //   setReview(e.target.value);
+      // };
+
+      const handleRatingChange = (newRating) => {
+        setRating(parseInt(newRating));
       };
 
-      const handleRatingChange = (e) => {
-        setRating(parseInt(e.target.value));
-      };
+      function clearRating () {
+        setRating(0)
+      }
   
       const handleReviewPrivacyChange = (e) => {
         setReviewPrivate(e.target.value);
@@ -61,22 +67,23 @@ const ReviewForm = ({fetchData, addUserStory}) => {
                 setRating(0);
                 setReviewPrivate(false);
                 fetchData();
-                setAlert({ type: 'success', message: 'Companion added successfully! Redirecting...' });
+                console.log(savedUserStory.id)
+                setAlert({ type: 'success', message: 'Review saved successfully! Redirecting...' });
                 navigate(`/reviews/${savedUserStory.id}`);
               } catch (error) {
                 console.error("Error adding review:", error);
               }
       };
 
+      console.log(review);
+
     return ( 
         <PageLayout>
-
-        <form className="review-form" onSubmit={handleSubmit}>
+          <section className="review-form">
             <h2>You are reviewing <i>{title}</i></h2>
             <div>
-          <label htmlFor="review">Your Review</label>
-          <br/>
-          <textarea
+         
+          {/* <textarea
           type="text"
           id="review"
           name="review"
@@ -84,47 +91,21 @@ const ReviewForm = ({fetchData, addUserStory}) => {
           onChange={handleReviewChange}
           className="review"
           required
-            />
+            /> */}
+          <TextEditor setReview={setReview} />
           </div>
           <br />
-            <label htmlFor="story-rating">What rating would you give it out of 10?</label>
-          <br />
-            <div className="story-rating">
-            <input type="radio" id="star10" name="story-rating" value="10" checked={rating === 10}
-          onChange={handleRatingChange}/>
-          <label for="star10" title="10">10 stars</label>
-          <input type="radio" id="star9" name="story-rating" value="9" checked={rating === 9}
-          onChange={handleRatingChange}/>
-          <label for="star9" title="9">9 stars</label>
-          <input type="radio" id="star8" name="story-rating" value="8" checked={rating === 8}
-          onChange={handleRatingChange}/>
-          <label for="star8" title="8">8 stars</label>
-          <input type="radio" id="star7" name="story-rating" value="7" checked={rating === 7}
-          onChange={handleRatingChange}/>
-          <label for="star7" title="7">7 stars</label>
-          <input type="radio" id="star6" name="story-rating" value="6" checked={rating === 6}
-          onChange={handleRatingChange}/>
-          <label for="star6" title="6">6 stars</label>
-          <input type="radio" id="star5" name="story-rating" value="5" checked={rating === 5}
-          onChange={handleRatingChange}/>
-          <label for="star5" title="5">5 stars</label>
-          <input type="radio" id="star4" name="story-rating" value="4" checked={rating === 4}
-          onChange={handleRatingChange}/>
-          <label for="star4" title="4">4 stars</label>
-          <input type="radio" id="star3" name="story-rating" value="3" checked={rating === 3}
-          onChange={handleRatingChange} />
-          <label for="star3" title="3">3 stars</label>
-          <input type="radio" id="star2" name="story-rating" value="2" checked={rating === 2}
-          onChange={handleRatingChange}/>
-          <label for="star2" title="2">2 stars</label>
-          <input type="radio" id="star1" name="story-rating" value="1" checked={rating === 1}
-          onChange={handleRatingChange} />
-          <label for="star1" title="1">1 star</label>
-        
-        <p>{rating}/10</p>
+         
+            <div>
+      <label htmlFor="story-rating">What rating would you give it out of 10?</label>
+      <br />
+      <div className="story-rating">
+        <StarRating rating={rating} onRatingChange={handleRatingChange} />
+      </div>
+      <button onClick={clearRating}>Clear Rating</button>
+      <p>{rating}/10</p>
+    </div>
           
-        </div>
-        <br />
         <div>
           <label htmlFor="privacy-selector">Make review private</label> <select 
           id="privacy"
@@ -141,11 +122,12 @@ const ReviewForm = ({fetchData, addUserStory}) => {
           <aside className="aside">Private reviews will only be seen by you</aside>
                  
           </div>
+          <br />
         <div className="form-button">
-        <button type="submit">Add Review</button>
+        <button type="submit" onClick={handleSubmit}>Add Review</button>
         </div>
-        </form>
-
+      
+        </section>
         </PageLayout>
      );
 }

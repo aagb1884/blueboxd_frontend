@@ -23,7 +23,7 @@ getUserStoryByUserReviews, getUserStoryByUserWatchlist, deleteUserStory } from "
 import { getUsers, createUser } from "./Services/user_services";
 import AboutPage from './pages/about-page';
 import ReviewForm from './Components/Forms/ReviewForm';
-import ReviewPage from './pages/review-page';
+import ReviewPage from './pages/review-page/review-page';
 import AddStory from './Components/Forms/AddStoryForm';
 import AddCompanion from './Components/Forms/AddCompanion';
 import AddCastCrew from './Components/Forms/AddCastCrew';
@@ -158,6 +158,7 @@ function App() {
             userStories={userStories}
             loading={loading}
             error={error}
+            loggedInUser={loggedInUser}
     />} />
     <Route path="/about" element={<AboutPage />} />
     <Route  path="/stories" 
@@ -178,8 +179,10 @@ function App() {
             />}
             />
     <Route path="/credits" element={<Credits />} />
+
     <Route path="/profile/:id"
-            element={<ProfilePage
+            element={<AuthenticationGuard
+            component={ProfilePage}
             loggedInUser={loggedInUser}
             userData={users}
             userStories={userStories}
@@ -187,8 +190,7 @@ function App() {
             setLoading={setLoading}
             setError={setError} 
             isLoading={isLoading}
-            setLoggedInUser={setLoggedInUser}
-      />} 
+            setLoggedInUser={setLoggedInUser}/>} 
       />
     <Route path="/reviews/:id"
             element={<ReviewPage

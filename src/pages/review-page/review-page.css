@@ -1,0 +1,38 @@
+.review-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50vh;
+    min-height: 90vh;
+}
+
+.review-page-title-date, .review-page-name-img-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.review-page-title-date {
+    align-items: center;
+}
+
+.name-img {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-page-username, .date-of-review {
+    font-size: small;
+}
+
+.review-page-story-title, .rating {
+    font-size: large;
+}
+
+.review {
+    min-height: 40vh;
+    min-width: 30vh;
+    max-width: 80vh;
+    border-radius: 5px;
+    background: rgba(168, 10, 79, 0.5);
+}

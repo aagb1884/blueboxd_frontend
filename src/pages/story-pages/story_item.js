@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const StoryItem = ({story, loggedInUser, addUserStory}) => {
+    const { isAuthenticated } = useAuth0();
 
     const doctorInfo = story.doctors.map((doctor, index) => {
         return <span>{doctor.name}
@@ -53,8 +55,10 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
             <li>{story.synopsis}</li>
             </div>
         </ul>
-
-            <div className="add-user-story-buttons">
+       
+            <div className="add-user-story-buttons-story-item">
+            {isAuthenticated && (
+                <>
                 <AddReview
                 loggedInUser={loggedInUser}
                 addUserStory={addUserStory}
@@ -66,11 +70,13 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
                 addUserStory={addUserStory}
                 storyID={story.id}
                 />
+                </>
+                 )}  
                 <Link to={`/stories/${story.id}`}>
                     <button className="story-buttons" >Read More</button>
                 </Link>
              </div>
-                
+       
         </div>
         
         

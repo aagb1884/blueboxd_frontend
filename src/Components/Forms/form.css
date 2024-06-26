@@ -18,7 +18,7 @@
 }
 
 .story-rating {
-    display: inline-block;
+    display: flex;
     height: 46px;
     justify-content: center;
 }
@@ -53,13 +53,18 @@
     color: #c59b08;
 }
 
-.review{
+/* .review{
     width: 145px;
     vertical-align: top;
     padding-bottom: 80px;
     word-wrap: break-word;
-}
+} */
 
+.review-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%
+}
 /* add story form */
 
 .companion-search-container{
@@ -199,4 +204,12 @@
 
   #remove-from-watchlist {
     margin: 5px;
+  }
+
+  .star {
+    background: radial-gradient(circle, rgba(214, 92, 145, 0.8) 17%, rgba(172, 52, 124, 0.5) 63%, rgba(1, 20, 33, 0.11) 100%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin: 0 2px;
   }
