@@ -55,7 +55,7 @@ const ReviewPage = ({setError, setLoading, isLoading}) => {
             <div className="name-img">
         
           <li>
-           <img id='user' 
+           <img id='user-avatar' 
            src={selectedReview.user.userImgURL ? selectedReview.user.userImgURL : '../images/default-image-url.png'}
            alt={`${selectedReview.user.display_name}'s avatar`} width="50" height="50" />
           </li>

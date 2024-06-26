@@ -32,9 +32,11 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     );
   };
 
+
   const getSelectedProfile = async (id) => {
+    
     try {
-      const response = await fetch(`${baseUsersURL}/${id}`);
+      const response = await fetch(baseUsersURL + '/' + id);
       if (!response.ok) {
         throw new Error('Failed to fetch profile');
       }
@@ -84,7 +86,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     const displayReviewedStories = reviewedStoriesData.length === 0 
     ? <p>No stories reviewed yet.</p>
     : reviewedStoriesData.map(reviewedStory => (
-      <div className="review" key = {reviewedStory.id}>
+      <div className="profile-review" key = {reviewedStory.id}>
         <ul>
              <div className="header-and-toggle">
                 <div>
@@ -100,7 +102,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
                  { visibleReviewIds.includes(reviewedStory.id) && (
                   <div>
                  
-                 <li className="review-text">{reviewedStory.review}</li>
+                 <li className="review-text"><div dangerouslySetInnerHTML={{__html: `${reviewedStory.review}` }} /></li>
                  </div>
                 )}
                 </ul>
@@ -160,7 +162,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
         <PageLayout>
        <div className="content-layout">
         <h1 id="page-title" className="content__title">
-          Profile Page
+        {selectedProfile.firstname} {selectedProfile.lastname}'s Profile
         </h1>
         <div className="content__body">
           <p id="page-description">
@@ -181,7 +183,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
                 className="profile__avatar"
               />
               <div className="profile__headline">
-                <h2 className="profile__title">{selectedProfile.firstname} {selectedProfile.lastname}</h2>
+                
                 <span className="profile__description">Username: {selectedProfile.display_name}</span>
                 {isAuthenticated && (
                 <span className="profile__description">Location: {selectedProfile.location}</span>

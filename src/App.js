@@ -60,8 +60,8 @@ function App() {
   const fetchData = () => {
         getUsers()
         .then(users => {
-          setLoggedInUser(users[1])
-          const userId = users[1].id
+          setLoggedInUser(users[0])
+          const userId = users[0].id
           Promise.all([getUsers(), getStories(), getDoctors(), getCompanions(), getPeople(), getCastAndCrew(), 
             getUserStories(), getUserStoryByUserId(userId), getUserStoryByUserReviews(userId), getUserStoryByUserWatchlist(userId)])
             .then(([usersData, storiesData, doctorsData, companionsData, peopleData, castAndCrewData, 

@@ -3,20 +3,18 @@ import { useAuth0 } from "@auth0/auth0-react";
 import './home.css';
 import { NavLink } from "react-router-dom";
 import { PageLoader } from "../../Components/Navigation/page_loader";
-import { useState } from "react";
-
 
 const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
-    const { isAuthenticated } = useAuth0();
-    const { user } = useAuth0();
+    const { isAuthenticated, user } = useAuth0();
 
     if (loading) {
         return <PageLoader />;
       }
     
-      if (error) {
-        return <h1 className="error-message">There was an error loading the Home Page. Please refresh.</h1>;
-      }
+      // if (error) {
+      //   console.log(error);
+      //   return <h1 className="error-message">There was an error loading the Home Page. Please refresh.</h1>;
+      // }
 
       //get reviews from users you're following
       const getFollowers = loggedInUser.following.map(userFollowing => {
@@ -160,7 +158,7 @@ const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
         <PageLayout>
             <section className="greeting">
                 {isAuthenticated && (
-                    <p>Hello {user.given_name}</p>
+                    <p className="greeting">Hello {user.given_name}</p>
                 )}
             </section>
 

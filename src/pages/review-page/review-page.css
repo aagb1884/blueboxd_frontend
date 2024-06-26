@@ -31,8 +31,17 @@
 
 .review {
     min-height: 40vh;
-    min-width: 30vh;
+    min-width: 70vh;
     max-width: 80vh;
     border-radius: 5px;
     background: rgba(168, 10, 79, 0.5);
+    padding: 10px;
+}
+
+.review li {
+    padding: 10px;
+}
+
+.review-text {
+    text-align: left;
 }

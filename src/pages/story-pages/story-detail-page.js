@@ -119,7 +119,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
           <div className="name-avatar">
           <li><NavLink to={`/profile/${user.id}`}>{displayName}</NavLink></li>
           <li>
-            {userImgUrl && <img id='user' src={userImgUrl} alt={`${displayName}'s avatar`} width="50" height="50" />}
+            {userImgUrl && <img id='user-avatar' src={userImgUrl} alt={`${displayName}'s avatar`} width="50" height="50" />}
           </li>
           </div>
           <li className="date-of-review">{new Date(creationOfReviewDateTime).toLocaleString()}</li>
@@ -134,7 +134,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
           </div>   
         </div>
           { visibleReviewIds.includes(reviewData.id) && (
-          <li className="review-text">{review}</li>
+          <li className="review-text"><div dangerouslySetInnerHTML={{__html: `${review}` }} /></li>
           )}
         </ul>
           
