@@ -3,6 +3,7 @@ import { useParams, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { baseUserStoryURL } from '../../Services/story_connection_services';
 import './review-page.css'
+import RenderReview from "../../tiptap/render-review";
 
 const ReviewPage = ({setError, setLoading, isLoading}) => {
     const [selectedReview, setSelectedReview] = useState(null);
@@ -42,17 +43,17 @@ const ReviewPage = ({setError, setLoading, isLoading}) => {
     return ( 
         <PageLayout>
           <section className="review-page">
-            <h1>Review Page</h1>
+            <h1>Review of <i><NavLink to={`/stories/${selectedReview.story.id}`}>{selectedReview.story.title} ({selectedReview.story.media})</NavLink></i></h1>
             <div className="review">
         <ul>
           <div className="review-page-title-date">
-          <li><NavLink to={`/stories/${selectedReview.story.id}`}>{selectedReview.story.title}</NavLink></li>
+          <li className="review-page-username"><NavLink to={`/profile/${selectedReview.user.id}`}>{selectedReview.user.display_name}</NavLink></li>
           <br/>
           <li className="date-of-review">{new Date(selectedReview.creationOfReviewDateTime).toLocaleString()}</li>
           </div>
           <div className="review-page-name-img-rating">
             <div className="name-img">
-          <li><NavLink to={`/profile/${selectedReview.user.id}`}>{selectedReview.user.display_name}</NavLink></li>
+        
           <li>
            <img id='user' 
            src={selectedReview.user.userImgURL ? selectedReview.user.userImgURL : '../images/default-image-url.png'}
@@ -61,7 +62,7 @@ const ReviewPage = ({setError, setLoading, isLoading}) => {
             </div>
           <li className="rating">{selectedReview.rating}/10</li>
           </div>
-          <li className="review-text">{selectedReview.review}</li>
+          <li className="review-text"><div dangerouslySetInnerHTML={{__html: `${selectedReview.review}` }} /></li>
         
         </ul>
       

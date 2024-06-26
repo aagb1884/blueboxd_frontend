@@ -67,6 +67,7 @@ const ReviewForm = ({fetchData, addUserStory}) => {
                 setRating(0);
                 setReviewPrivate(false);
                 fetchData();
+                console.log(savedUserStory.id)
                 setAlert({ type: 'success', message: 'Review saved successfully! Redirecting...' });
                 navigate(`/reviews/${savedUserStory.id}`);
               } catch (error) {

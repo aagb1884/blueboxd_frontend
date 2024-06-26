@@ -53,12 +53,12 @@
     color: #c59b08;
 }
 
-.review{
+/* .review{
     width: 145px;
     vertical-align: top;
     padding-bottom: 80px;
     word-wrap: break-word;
-}
+} */
 
 .review-form {
   display: flex;

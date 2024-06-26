@@ -111,7 +111,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
     const userImgUrl = user?.userImgURL || '../images/default-image-url.png';
   
     return (
-      <div className="review">
+      <div className="story-review">
       <li key={reviewData.id}>
         <ul>
         <div className="story-item-header-and-toggle">

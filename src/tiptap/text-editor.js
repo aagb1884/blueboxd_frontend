@@ -7,6 +7,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React, { useEffect } from 'react';
 
+
 const TextEditor = ({ setReview }) => {
     const editor = useEditor({
         extensions: [
@@ -18,10 +19,9 @@ const TextEditor = ({ setReview }) => {
                 orderedList: { keepMarks: true, keepAttributes: false },
             }),
         ],
-        content: `<h2>Add a review here.</h2>`,
         onUpdate: ({ editor }) => {
-            const json = editor.getJSON();
-            setReview(JSON.stringify(json));
+            const html = editor.getHTML();
+            setReview(html);
         },
     });
 

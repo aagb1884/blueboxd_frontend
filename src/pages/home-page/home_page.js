@@ -7,7 +7,6 @@ import { useState } from "react";
 
 
 const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
-  const [recentFollowerReviews, setRecentFollowerReviews] = useState([]);
     const { isAuthenticated } = useAuth0();
     const { user } = useAuth0();
 
