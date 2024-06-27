@@ -3,7 +3,7 @@ import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const StoryItem = ({story, loggedInUser, addUserStory}) => {
+const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
     const { isAuthenticated } = useAuth0();
 
     const doctorInfo = story.doctors.map((doctor, index) => {
@@ -12,12 +12,23 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
     })
     const companionInfo = story.companions.map((companion, index) => {
         return <li>
-        <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstname + companion.lastName}
+        <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstName + ' ' + companion.lastName}
         {index < story.companions.length - 1 && <span>, </span>}</span> 
         </li>
     })
 
-    const episodeText = story.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
+    const episodeText = story.noOfEpisodes === 1 ? ' Part' : ' Parts';
+
+    const ifStoryIsEpisodic = story.media === 'TV' | 'AUDIO' | 'COMIC' ?
+    ` (${story.noOfEpisodes} ${episodeText})` : '';
+  
+    const broadcastDateSelector = story.firstEpBroadcast === story.lastEpBroadcast 
+    ? `${story.firstEpBroadcast}` 
+    : `${story.firstEpBroadcast} - ${story.lastEpBroadcast}`;
+   
+    const releasedOrBroadcast = story.media === 'TV' ? 
+    `Originally broadcast: ${broadcastDateSelector}`: 
+    `Originally released: ${broadcastDateSelector}`
 
     const storyConnections = story.storyConnections;
 
@@ -48,9 +59,8 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
             
             <li>{doctorInfo}: {story.series}, Story {story.storyNumber}</li>
             <li><b>Companions:</b> {companionInfo}</li>
-            <li>Originally broadcast: {story.firstEpBroadcast == story.lastEpBroadcast ? story.firstEpBroadcast : story.firstEpBroadcast + ' - ' + story.lastEpBroadcast}
-            {' (' + story.noOfEpisodes + episodeText + ')'}</li>
-            <li></li>
+            <li>{releasedOrBroadcast}</li> 
+            <li>{ifStoryIsEpisodic}</li>
             <br />
             <li>{story.synopsis}</li>
             </div>
@@ -69,6 +79,7 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
                 loggedInUser={loggedInUser}
                 addUserStory={addUserStory}
                 storyID={story.id}
+                fetchData={fetchData}
                 />
                 </>
                  )}  

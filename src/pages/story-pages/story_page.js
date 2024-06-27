@@ -4,7 +4,7 @@ import SearchResults from '../search-results';
 import { NavLink } from 'react-router-dom';
 import { PageLoader } from '../../Components/Navigation/page_loader';
 
-const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
+const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
@@ -103,6 +103,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory}) => {
                 loggedInUser={loggedInUser}
                filteredStories={filteredStories}
                addUserStory={addUserStory}
+               fetchData={fetchData}
                />
                {loading && <PageLoader />}
                {error && <p>There was an error loading the stories.</p>}

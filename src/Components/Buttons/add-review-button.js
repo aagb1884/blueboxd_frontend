@@ -6,7 +6,7 @@ const AddReview = ({loggedInUser, storyID, storyTitle}) => {
         <NavLink
             to="/add_review"
             state={{ user: loggedInUser, storyID: storyID, title: storyTitle }}
-            classname="review-nav">
+            className="review-nav">
         <button className="story-buttons">Add Review</button>
         </NavLink>
      );

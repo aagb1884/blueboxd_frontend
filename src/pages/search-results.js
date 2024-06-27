@@ -2,13 +2,14 @@ import React from "react";
 import StoryItem from "./story-pages/story_item";
 import { NavLink } from "react-router-dom";
 
-const SearchResults = ({filteredStories, loggedInUser, addUserStory}) => {
+const SearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData}) => {
 
    const storyList = filteredStories.map((filteredStory, index) => {
     return <StoryItem 
     story={filteredStory}
     loggedInUser={loggedInUser} 
     addUserStory={addUserStory}
+    fetchData={fetchData}
     />})
 
     return ( 

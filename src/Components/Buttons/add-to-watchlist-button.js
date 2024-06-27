@@ -1,11 +1,11 @@
-const AddToWatchlist = ({loggedInUser, addUserStory, storyID}) => {
+const AddToWatchlist = ({loggedInUser, addUserStory, storyID, fetchData}) => {
 
-// console.log(loggedInUser)
-
-const watchlist = 'WATCHLIST';
-
+const findWatchlistStories = loggedInUser?.userStorie?.filter(watchlistStory => watchlistStory.type === 'WATCHLIST') || [];
+const checkIfOnWatchlist = findWatchlistStories.length > 0 &&  findWatchlistStories.some(watchlistStory => watchlistStory.story.id === storyID)
 
     function handleAddToWatchlist() {
+        
+if (!checkIfOnWatchlist) {
         addUserStory({
             story: {id: storyID},
             user: {id:3},
@@ -15,8 +15,14 @@ const watchlist = 'WATCHLIST';
             reviewPrivate: false,
             creationOfReviewDateTime: new Date().toISOString()
         })
+        console.log(checkIfOnWatchlist);
         alert("Story added to watchlist.")
+        fetchData()
     }
+    else {
+        alert("Story is already on watchlist.")
+    }
+}
 
     return ( 
         <button className="story-buttons" onClick={handleAddToWatchlist}> Add to Watch List</button>

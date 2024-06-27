@@ -5,7 +5,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { baseUsersURL, updateUser } from "../../Services/user_services";
 import './profile.css'
 
-const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedInUser, deleteUserStoryByID}) => {
+const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedInUser, deleteUserStoryByID, fetchData}) => {
   const [selectedProfile, setSelectedProfile] = useState(null)  
   const [isWatchlistVisible, setIsWatchListVisible] = useState(false);
   const [areReviewsVisible, setAreReviewsVisible] = useState(false);

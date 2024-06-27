@@ -168,6 +168,7 @@ function App() {
             error={error}
             loggedInUser={loggedInUser}
             addUserStory={addUserStory}
+            fetchData={fetchData}
             />} />
     <Route path="stories/:id" 
             element={<StoryDetailPage
@@ -176,6 +177,7 @@ function App() {
             setError={setError}
             loggedInUser={loggedInUser}
             addUserStory={addUserStory}
+            fetchData={fetchData}
             />}
             />
     <Route path="/credits" element={<Credits />} />
@@ -190,7 +192,8 @@ function App() {
             setLoading={setLoading}
             setError={setError} 
             isLoading={isLoading}
-            setLoggedInUser={setLoggedInUser}/>} 
+            setLoggedInUser={setLoggedInUser}
+            fetchData={fetchData}/>} 
       />
     <Route path="/reviews/:id"
             element={<ReviewPage

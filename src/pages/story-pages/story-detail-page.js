@@ -7,7 +7,7 @@ import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 import './story.css';
 
-const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUserStory}) => {   
+const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUserStory, fetchData}) => {   
    const [selectedStory, setSelectedStory] = useState(null);
    const [visibleReviewIds, setVisibleReviewIds] = useState([]);
    const { id } = useParams(); 
@@ -22,6 +22,8 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
     );
   };
 
+  console.log(loggedInUser);
+  
    const getSelectedStory = async (id) => {
       try {
         const response = await fetch(baseURLstories + '/' + id);
@@ -59,7 +61,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
 
   const storyCompanionInfo = selectedStory.companions.map((companion, index) => {
       return <li>
-      <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstname + companion.lastName}
+      <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstName + ' ' + companion.lastName}
       {index < selectedStory.companions.length - 1 && <span>, </span>}</span> 
       </li>
   })
@@ -143,8 +145,18 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
     );
   });
 
-  const episodeText = selectedStory.noOfEpisodes === 1 ? ' Episode' : ' Episodes';
+  const episodeText = selectedStory.noOfEpisodes === 1 ? ' Part' : ' Parts';
+
+  const ifStoryIsEpisodic = selectedStory.media === 'TV' | 'AUDIO' | 'COMIC' ?
+  ` (${selectedStory.noOfEpisodes} ${episodeText})` : '';
+
+  const broadcastDateSelector = selectedStory.firstEpBroadcast === selectedStory.lastEpBroadcast 
+  ? `${selectedStory.firstEpBroadcast}` 
+  : `${selectedStory.firstEpBroadcast} - ${selectedStory.lastEpBroadcast}`;
  
+  const releasedOrBroadcast = selectedStory.media === 'TV' ? 
+  `Originally broadcast: ${broadcastDateSelector}`: 
+  `Originally released: ${broadcastDateSelector}`
 
     return ( 
         <PageLayout>
@@ -166,9 +178,8 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
             
             <li>{storyDoctorInfo}: {selectedStory.series}, Story {selectedStory.storyNumber}</li>
             <li><b>Companions:</b> {storyCompanionInfo}</li>
-            <li>Originally broadcast: {selectedStory.firstEpBroadcast == selectedStory.lastEpBroadcast ? selectedStory.firstEpBroadcast : selectedStory.firstEpBroadcast + ' - ' + selectedStory.lastEpBroadcast}
-            {' (' + selectedStory.noOfEpisodes + episodeText + ')'}</li>
-            <li></li>
+            <li>{releasedOrBroadcast}</li> 
+            <li>{ifStoryIsEpisodic}</li>
             <br />
             <li>{selectedStory.synopsis}</li>
             </div>
@@ -200,6 +211,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
         loggedInUser={loggedInUser}
         addUserStory={addUserStory}
        storyID={selectedStory.id}
+       fetchData={fetchData}
         />
         </div>
         )}
