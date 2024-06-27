@@ -144,9 +144,7 @@ ul{
   justify-content: center;
 }
 
-#selected-story-logo {
-  min-width: 400px;
-}
+
 .cast-crew-info {
   display: flex;
   flex-direction: column;

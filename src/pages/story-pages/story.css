@@ -54,3 +54,7 @@
     border: solid 1px white;
     border-radius: 50px;
   }
+  #selected-story-logo {
+    min-width: 400px;
+    height: auto;
+  }

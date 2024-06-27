@@ -59,7 +59,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
 
   const storyCompanionInfo = selectedStory.companions.map((companion, index) => {
       return <li>
-      <span>{companion.firstName} {companion.lastName}
+      <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstname + companion.lastName}
       {index < selectedStory.companions.length - 1 && <span>, </span>}</span> 
       </li>
   })
@@ -152,7 +152,7 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
        <div className='story-detail'>
         <h3>{selectedStory.title} ({selectedStory.media})</h3>
         <div className="story-item-image-container">
-        <img src={`../${selectedStory.imgURL}`} id='selected-story-logo' alt="title_logo" width="175" height="200"/>
+        <img src={selectedStory.imgURL.startsWith('http') ? `${selectedStory.imgURL}`: `../${selectedStory.imgURL}`} id='selected-story-logo' alt="title_logo" width="175" height="200"/>
         </div>
         <p>{averageRating}</p>
         <div className="story-item-container"> 

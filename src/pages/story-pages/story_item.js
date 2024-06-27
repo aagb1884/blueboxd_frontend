@@ -12,7 +12,7 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
     })
     const companionInfo = story.companions.map((companion, index) => {
         return <li>
-        <span>{companion.firstName} {companion.lastName}
+        <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstname + companion.lastName}
         {index < story.companions.length - 1 && <span>, </span>}</span> 
         </li>
     })
@@ -38,7 +38,7 @@ const StoryItem = ({story, loggedInUser, addUserStory}) => {
         <div className="story-item-container"> 
         
         <div className="image-container">
-        <img src={`../${story.imgURL}`} alt="title_logo" width="175" height="200"/>
+        <img src={story.imgURL.startsWith('http') ? `${story.imgURL}`: `../${story.imgURL}`} alt="title_logo" width="175" height="200"/>
         </div>
         
         <div className="text-container">
