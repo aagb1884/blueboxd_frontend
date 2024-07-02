@@ -12,7 +12,7 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
     })
     const companionInfo = story.companions.map((companion, index) => {
         return <li>
-        <span>{companion.nickname.length > 0 ? companion.nickname : companion.firstName + ' ' + companion.lastName}
+        <span>{companion.nickname?.length > 0 ? companion.nickname : companion.firstName + ' ' + companion.lastName}
         {index < story.companions.length - 1 && <span>, </span>}</span> 
         </li>
     })
