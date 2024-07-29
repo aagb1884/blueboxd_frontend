@@ -4,7 +4,9 @@ import { NavLink } from "react-router-dom";
 
 const SearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData}) => {
 
-   const storyList = filteredStories.map((filteredStory, index) => {
+   const storyList = filteredStories
+   .sort((a, b) => new Date(a.firstEpBroadcast) - new Date(b.firstEpBroadcast)) 
+   .map((filteredStory, index) => {
     return <StoryItem 
     story={filteredStory}
     loggedInUser={loggedInUser} 

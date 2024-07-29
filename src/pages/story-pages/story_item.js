@@ -30,6 +30,8 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
     `Originally broadcast: ${broadcastDateSelector}`: 
     `Originally released: ${broadcastDateSelector}`
 
+    const storyNumber = story.storyNumber > 0 ? `Story ${story.storyNumber}` : '';
+
     const storyConnections = story.storyConnections;
 
     const reviews = storyConnections.filter(sc => sc.type === 'REVIEW');
@@ -57,7 +59,7 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
         <ul>
             <div className="story-column-1">
             
-            <li>{doctorInfo}: {story.series}, Story {story.storyNumber}</li>
+            <li>{doctorInfo}: {story.series}. {storyNumber}</li>
             <li><b>Companions:</b> {companionInfo}</li>
             <li>{releasedOrBroadcast}</li> 
             <li>{ifStoryIsEpisodic}</li>

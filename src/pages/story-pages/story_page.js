@@ -19,40 +19,42 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
             setFilterByMedia('All')
         };
 
-      
+        const toLowerCaseSafe = (str) => (str ? str.toLowerCase() : '');
 
           let filteredStories = stories;
           if (searchTerm.length > 0 || filterByMedia !== 'All' || (searchTerm.length > 0 && filterByMedia !== 'All')) {
             filteredStories = stories.filter((story) => {
-                const searchTermLower = searchTerm.toLowerCase();
+              const searchTermLower = toLowerCaseSafe(searchTerm);
 
                 const mediaMatch = filterByMedia === 'All' || filterByMedia === story.media;
                
                 const doctorMatch = story.doctors.some((doctor) => {
                     return (
-                     doctor.name.toLowerCase().includes(searchTermLower) ||
-                     doctor.mainActor.toLowerCase().includes(searchTermLower) 
+                      toLowerCaseSafe(doctor.name).includes(searchTermLower) ||
+                      toLowerCaseSafe(doctor.mainActor).includes(searchTermLower)
                     )
                 });
 
                 const companionMatch = story.companions.some((companion) => {
                     return (
-                    companion.firstName.toLowerCase().includes(searchTermLower) ||
-                    companion.lastName.toLowerCase().includes(searchTermLower) ||
-                    companion.mainActor.toLowerCase().includes(searchTermLower) 
+                      toLowerCaseSafe(companion.firstName).includes(searchTermLower) ||
+                      toLowerCaseSafe(companion.lastName).includes(searchTermLower) ||
+                      toLowerCaseSafe(companion.mainActor).includes(searchTermLower)
                     )
                 });
 
               return (
                 mediaMatch &&
-                (story.title.toLowerCase().includes(searchTermLower) ||
-                story.keywords.toLowerCase().includes(searchTermLower) ||
-                story.firstEpBroadcast.toLowerCase().includes(searchTermLower) ||
-                story.lastEpBroadcast.toLowerCase().includes(searchTermLower) ||
-                story.series.toLowerCase().includes(searchTermLower) ||
-                story.productionCode.toLowerCase().includes(searchTermLower) ||
-                doctorMatch ||
-                companionMatch )
+                (
+                  toLowerCaseSafe(story.title).includes(searchTermLower) ||
+                  toLowerCaseSafe(story.keywords).includes(searchTermLower) ||
+                  toLowerCaseSafe(story.firstEpBroadcast).includes(searchTermLower) ||
+                  toLowerCaseSafe(story.lastEpBroadcast).includes(searchTermLower) ||
+                  toLowerCaseSafe(story.series).includes(searchTermLower) ||
+                  toLowerCaseSafe(story.productionCode).includes(searchTermLower) ||
+                  doctorMatch ||
+                  companionMatch
+              )
                 
               );    
          
