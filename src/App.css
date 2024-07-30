@@ -141,9 +141,32 @@ ul{
 
 .story-detail-container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
+.story-navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 500px;
+  border-radius: 5px;
+  background-color: rgb(7,75,151, 0.4);
+}
+
+.loading-story-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#story-navigation-icon {
+  max-height: 50px;
+  display: flex;
+  flex-direction: column;
+}
 
 .cast-crew-info {
   display: flex;

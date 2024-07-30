@@ -95,6 +95,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                 <option value='Audio'>Audio</option>
                 <option value='Prose'>Prose</option>
                 <option value='Comic'>Comic</option>
+                <option value='Webcast'>Webcast</option>
                 <option value='Other'>Other</option>
                 </select>
                 <span className="focus"></span>

@@ -58,3 +58,10 @@
     min-width: 400px;
     height: auto;
   }
+
+  .story-column-1 {
+    width: 60%
+  }
+  .story-column-2 {
+  width: 40%;
+  }
