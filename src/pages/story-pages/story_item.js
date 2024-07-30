@@ -55,19 +55,16 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
         </div>
         
         <div className="text-container">
-        
-        <ul>
-            <div className="story-column-1">
-            
+        <div className="story-column-1">
+        <ul> 
             <li>{doctorInfo}: {story.series}. {storyNumber}</li>
             <li><b>Companions:</b> {companionInfo}</li>
             <li>{releasedOrBroadcast}</li> 
             <li>{ifStoryIsEpisodic}</li>
             <br />
             <li>{story.synopsis}</li>
-            </div>
         </ul>
-       
+        </div>
             <div className="add-user-story-buttons-story-item">
             {isAuthenticated && (
                 <>

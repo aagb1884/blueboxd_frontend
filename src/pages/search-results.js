@@ -23,11 +23,15 @@ const SearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData})
     fetchData={fetchData}
     />})
 
+    const hasMoreStories = storiesOnDisplay < filteredStories.length;
+
     return ( 
 
         <div className="search-results">
             {storyList}
-            <button onClick={handleShowMoreStories}>Load more</button>
+            {hasMoreStories && (
+                <button className="story-buttons" onClick={handleShowMoreStories}>Load More</button>
+            )}
             <p>If you cannot find the story you are looking for, logged-in users can add it <NavLink to="/add_story">here</NavLink>.</p>
         </div>
      );
