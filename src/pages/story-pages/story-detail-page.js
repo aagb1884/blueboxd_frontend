@@ -22,7 +22,6 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
     );
   };
 
-  console.log(loggedInUser);
   
    const getSelectedStory = async (id) => {
       try {
@@ -93,7 +92,9 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
     </NavLink> </p>
   ) : (
     <ul>
-      {selectedStory.castAndCrew.map((castCrewMember) => {
+      {selectedStory.castAndCrew
+      .sort((a, b) => b.role.localeCompare(a.role))
+      .map((castCrewMember) => {
         const { role, person } = castCrewMember;
   
         return (
@@ -223,6 +224,8 @@ const StoryDetailPage = ({setError, setLoading, isLoading, loggedInUser, addUser
           
         </section>
         </div>
+       
+        
         </section>
        
         </PageLayout>

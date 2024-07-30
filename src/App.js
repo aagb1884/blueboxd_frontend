@@ -56,7 +56,23 @@ function App() {
     fetchData();
   }, [isLoading]);
 
-  
+  useEffect(() => {
+    const handleScroll = () => {
+      const overlay = document.getElementById('overlay');
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const halfwayPoint = maxScroll / 2;
+      const scrollFraction = Math.min(scrollTop / halfwayPoint, 1);
+      overlay.style.opacity = scrollFraction;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const fetchData = () => {
         getUsers()
         .then(users => {
