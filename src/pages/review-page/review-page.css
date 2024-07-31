@@ -1,6 +1,7 @@
 .review-page {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     min-width: 50vh;
     min-height: 90vh;

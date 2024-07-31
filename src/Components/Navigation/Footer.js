@@ -16,6 +16,8 @@ const Footer = ({loggedInUser}) => {
             <br />
                 <NavLink to="/stories">Stories</NavLink>
             <br />
+                <NavLink to="/reviews">Reviews</NavLink>
+            <br />
                 <NavLink to="/credits">Credits</NavLink>  
         
                 </>
@@ -28,6 +30,8 @@ const Footer = ({loggedInUser}) => {
                     <NavLink to="/about">Read Me</NavLink> 
                     <br />
                     <NavLink to="/stories">Stories</NavLink>
+                    <br />
+                    <NavLink to="/reviews">Reviews</NavLink>
                     <br />
                     <NavLink to="/credits">Credits</NavLink>
                     <br />

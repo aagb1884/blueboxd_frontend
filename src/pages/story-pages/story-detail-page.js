@@ -6,7 +6,7 @@ import PageLayout from "../../Components/Navigation/page_layout";
 import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 import './story.css';
-import StoryNavigation from "../../Components/Navigation/StoryNavigation";
+import Navigation from "../../Components/Navigation/Navigation";
 
 const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUserStory, fetchData }) => {
     const [selectedStory, setSelectedStory] = useState(null);
@@ -58,7 +58,7 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
     }
 
     if (!selectedStory) {
-        return <div className="loading-story-page">No story loading, please move to another page... <StoryNavigation currentId={currentId}/> </div>       
+        return <div className="loading-story-page">No story loading, please move to another page... <Navigation currentId={currentId}/> </div>       
     }
 
     // Ensure nested properties are defined
@@ -225,7 +225,7 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                         </ul>
                     </section>
                 </div>
-                <StoryNavigation 
+                <Navigation 
                 currentId={currentId}
                 />
             </section>

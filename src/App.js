@@ -24,6 +24,7 @@ import { getUsers, createUser } from "./Services/user_services";
 import AboutPage from './pages/about-page';
 import ReviewForm from './Components/Forms/ReviewForm';
 import ReviewPage from './pages/review-page/review-page';
+import ReviewDetailPage from './pages/review-page/review-detail-page';
 import AddStory from './Components/Forms/AddStoryForm';
 import AddCompanion from './Components/Forms/AddCompanion';
 import AddCastCrew from './Components/Forms/AddCastCrew';
@@ -211,8 +212,17 @@ function App() {
             setLoggedInUser={setLoggedInUser}
             fetchData={fetchData}/>} 
       />
-    <Route path="/reviews/:id"
+    <Route path="/reviews"
             element={<ReviewPage
+              reviews={userStories}
+              loading={loading}
+              error={error}
+              loggedInUser={loggedInUser}
+              fetchData={fetchData}
+            />}
+    />
+    <Route path="/reviews/:id"
+            element={<ReviewDetailPage
             isLoading={isLoading}
             setLoading={setLoading}
             setError={setError} 

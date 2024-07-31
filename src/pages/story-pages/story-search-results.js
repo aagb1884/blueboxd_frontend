@@ -1,9 +1,9 @@
 import React from "react";
-import StoryItem from "./story-pages/story_item";
+import StoryItem from "./story_item";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-const SearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData}) => {
+const StorySearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData}) => {
 
     const [storiesOnDisplay, setStoriesonDisplay] = useState(20);
 
@@ -37,4 +37,4 @@ const SearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData})
      );
 }
  
-export default SearchResults;
+export default StorySearchResults;
