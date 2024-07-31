@@ -51,12 +51,14 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
     }, [isLoading]);
 
 //temp bodge to missing ids
-    if (currentId >= 343 && currentId < 356){
+    if (currentId >= 343 && currentId < 356) {
         navigate('/stories/356')
+    } else if (currentId < 1) {
+        navigate('/stories/1')
     }
 
     if (!selectedStory) {
-        return <div className="loading-story-page">Loading... <StoryNavigation currentId={currentId}/> </div>       
+        return <div className="loading-story-page">No story loading, please move to another page... <StoryNavigation currentId={currentId}/> </div>       
     }
 
     // Ensure nested properties are defined

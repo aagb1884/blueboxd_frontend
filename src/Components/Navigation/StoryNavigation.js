@@ -4,6 +4,7 @@ const StoryNavigation = ({currentId}) => {
 
     return ( 
         <div className="story-navigation">
+                    {currentId === 1 ? '' :
                     <NavLink to={`/stories/${currentId - 1}`}>
                         <img src="/images/left-arrow.png"
                             alt="move-to-previous-story"
@@ -11,7 +12,7 @@ const StoryNavigation = ({currentId}) => {
                             id="story-navigation-icon"
                         />
                         Previous
-                    </NavLink>
+                    </NavLink>}
                     <NavLink to={`/stories/`}>
                         <img src="/images/home.png"
                             alt="move-to-stories-page"
