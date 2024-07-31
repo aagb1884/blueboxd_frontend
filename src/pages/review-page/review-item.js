@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const ReviewItem = ({review}) => {
 
- const reviewExcerpt = review.review.substring(0, 75)
+const reviewExcerpt = review.review && review.review.length > 0 ? review.review.substring(0, 75) : "No review available.";
 
     return ( 
         <div className="story-review" key={review.id}>
