@@ -116,6 +116,25 @@ function App() {
   //   return null
   // }
 
+
+  const getReviews = () => {
+    return userStories.filter(r => r.type === 'REVIEW');
+}
+
+const getSortedArrayIds = (array) => {
+  const ids = array.map((array_item) => array_item.id);
+  
+  return ids.sort((a, b) => a - b);
+    };
+
+const reviewArray = getReviews();
+const reviewIds = getSortedArrayIds(reviewArray);
+const storyIds = getSortedArrayIds(stories);
+
+
+  
+  
+
   
   // CRUD functions
 
@@ -195,6 +214,7 @@ function App() {
             loggedInUser={loggedInUser}
             addUserStory={addUserStory}
             fetchData={fetchData}
+            storyIds={storyIds}
             />}
             />
     <Route path="/credits" element={<Credits />} />
@@ -226,6 +246,7 @@ function App() {
             isLoading={isLoading}
             setLoading={setLoading}
             setError={setError} 
+            reviewIds={reviewIds}
             />}
     />
     <Route

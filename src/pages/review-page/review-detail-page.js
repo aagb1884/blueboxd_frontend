@@ -6,14 +6,14 @@ import { baseUserStoryURL } from '../../Services/story_connection_services';
 import './review-page.css'
 import RenderReview from "../../tiptap/render-review";
 
-const ReviewDetailPage = ({setError, setLoading, isLoading}) => {
+const ReviewDetailPage = ({setError, setLoading, isLoading, reviewIds}) => {
     const [selectedReview, setSelectedReview] = useState(null);
     const { id } = useParams(); 
     const currentId = parseInt(id, 10);
     const navigate = useNavigate();
 
     if (currentId < 1) {
-      navigate('/stories/1')
+      navigate('/reviews/1')
   }
 
     const getSelectedReview = async (id) => {
@@ -31,20 +31,32 @@ const ReviewDetailPage = ({setError, setLoading, isLoading}) => {
            setLoading(false)
          }
       };
-  
+
       useEffect(() => {
         getSelectedReview(id);
       }, [id]); 
 
-      useEffect(() => {
-        if (isLoading) return;
-        getSelectedReview();
-      }, [isLoading]);
+    // useEffect(() => {
+    //     if (isLoading) return;
+
+    //     if (selectedReview === null || selectedReview.type === 'WATCHLIST' && reviewIds.includes(currentId)) {
+    //         const nextId = reviewIds.find(id => id > currentId);
+    //         if (nextId) {
+    //             navigate(`/reviews/${nextId}`);
+    //         } else {
+    //             navigate(`/reviews/${reviewIds[0]}`);
+    //         }
+    //     }
+    // }, [isLoading, selectedReview]);
 
 
-      if (!selectedReview) {
-        return <div className="loading-review-page">No review loading, please move to another page... <Navigation currentId={currentId}/> </div>       
+      if (!selectedReview || selectedReview.type === 'WATCHLIST') {
+        return <div className="loading-review-page">No review loading, please move to another page... <Navigation currentId={currentId} reviewIds={reviewIds} /> </div>       
     }
+
+    if (selectedReview === null) {
+      navigate(`/reviews/${currentId + 1}`)
+    } 
 
     return ( 
         <PageLayout>
@@ -76,6 +88,7 @@ const ReviewDetailPage = ({setError, setLoading, isLoading}) => {
         
         <Navigation 
           currentId={currentId}
+          reviewIds={reviewIds}
         />
     
         </section>

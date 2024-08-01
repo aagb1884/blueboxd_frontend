@@ -1,22 +1,35 @@
 import { NavLink, useLocation } from "react-router-dom";
 
-const Navigation = ({currentId}) => {
+const Navigation = ({currentId, reviewIds = [], storyIds = []}) => {
     const location = useLocation();
 
-    const isReviewsPath = location.pathname.includes('/reviews');
+    const currentReviewIndex = reviewIds.indexOf(currentId);
+    const previousReviewId = currentReviewIndex > 0 ? reviewIds[currentReviewIndex - 1] : null;
+    const nextReviewId = currentReviewIndex < reviewIds.length - 1 ? reviewIds[currentReviewIndex + 1] : null;
+    const firstReviewIdInArray = reviewIds[0]
+    const lastReviewIdInArray = reviewIds[reviewIds.length - 1]
+  
+
+    const currentStoryIndex = storyIds.indexOf(currentId);
+    const previousStoryId = currentStoryIndex > 0 ? storyIds[currentStoryIndex - 1] : null;
+    const nextStoryId = currentStoryIndex < storyIds.length - 1 ? storyIds[currentStoryIndex + 1] : null;
+    const firstStoryIdInArray = storyIds[0]
+    const lastStoryIdInArray = storyIds[storyIds.length - 1]
+
     const isStoriesPath = location.pathname.includes('/stories');
 
-    const previousLink = isStoriesPath ? `/stories/${currentId - 1}` : `/reviews/${currentId - 1}`;
-    const nextLink = isStoriesPath ? `/stories/${currentId + 1}` : `/reviews/${currentId + 1}`;
+    const previousLink = isStoriesPath ? `/stories/${previousStoryId}` : `/reviews/${previousReviewId}`;
+    const nextLink = isStoriesPath ? `/stories/${nextStoryId}` : `/reviews/${nextReviewId}`;
     const homeLink = isStoriesPath ? '/stories' : '/reviews';
     const homeTitle = isStoriesPath ? 'Return to Stories page' : 'Return to Reviews page';
     const homeText = isStoriesPath ? 'Stories' : 'Reviews';
-
-
+    const firstItemInArray = isStoriesPath ? firstStoryIdInArray : firstReviewIdInArray;
+    const lastItemInArray = isStoriesPath ? lastStoryIdInArray : lastReviewIdInArray;
+  
     return ( 
         <div className="navigation-component">
 
-            {currentId > 1 && (
+            {(currentId > firstItemInArray && currentId <= lastItemInArray) && (
                 <NavLink to={previousLink}>
                     <img
                         src="/images/left-arrow.png"
@@ -37,6 +50,7 @@ const Navigation = ({currentId}) => {
                     {homeText}
                 </NavLink>
                 
+            {currentId < lastItemInArray && (
                 <NavLink to={nextLink}>
                     <img
                         src="/images/right-arrow.png"
@@ -46,6 +60,7 @@ const Navigation = ({currentId}) => {
                     />
                     Next
                 </NavLink>
+                )}
                 </div>
      );
 }
