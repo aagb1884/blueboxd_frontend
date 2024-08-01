@@ -146,7 +146,7 @@ ul{
   align-items: center;
 }
 
-.story-navigation {
+.story-review-navigation {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -155,17 +155,26 @@ ul{
   background-color: rgb(7,75,151, 0.4);
 }
 
-.loading-story-page {
+.loading-story-page, .loading-review-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#story-navigation-icon {
+#navigation-icon {
   max-height: 50px;
   display: flex;
   flex-direction: column;
+}
+
+.navigation-component {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 500px;
+  background-color: rgb(1,8,57, 0.8);
+  border-radius: 5px;
 }
 
 .cast-crew-info {
@@ -219,6 +228,7 @@ ul{
   border: 2px solid rgba(1, 20, 33);
   min-width: 200px;
   height: 80px;
+  margin: 5px;
 }
 
 .story-reviews{

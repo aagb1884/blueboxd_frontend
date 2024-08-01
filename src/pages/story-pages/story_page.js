@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageLayout from "../../Components/Navigation/page_layout";
-import SearchResults from '../search-results';
+import StorySearchResults from './story-search-results';
 import { NavLink } from 'react-router-dom';
 import { PageLoader } from '../../Components/Navigation/page_loader';
 
@@ -102,7 +102,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                 </div>
                 
                 <div className='stories-search-results'>
-               <SearchResults 
+               <StorySearchResults 
                 loggedInUser={loggedInUser}
                filteredStories={filteredStories}
                addUserStory={addUserStory}

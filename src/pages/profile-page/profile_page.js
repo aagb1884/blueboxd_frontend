@@ -59,9 +59,9 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     getSelectedProfile();
   }, [isLoading]);
 
-    if (!selectedProfile || !loggedInUser) {
-      return <h2>Loading...</h2>;
-    }
+    // if (!selectedProfile || !loggedInUser) {
+    //   return <h2>Loading...</h2>;
+    // }
 
     const watchlistStoriesData = selectedProfile.userStories
     .filter(watchlistStory => watchlistStory.type === 'WATCHLIST')

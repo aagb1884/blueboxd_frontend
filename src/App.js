@@ -24,6 +24,7 @@ import { getUsers, createUser } from "./Services/user_services";
 import AboutPage from './pages/about-page';
 import ReviewForm from './Components/Forms/ReviewForm';
 import ReviewPage from './pages/review-page/review-page';
+import ReviewDetailPage from './pages/review-page/review-detail-page';
 import AddStory from './Components/Forms/AddStoryForm';
 import AddCompanion from './Components/Forms/AddCompanion';
 import AddCastCrew from './Components/Forms/AddCastCrew';
@@ -115,6 +116,25 @@ function App() {
   //   return null
   // }
 
+
+  const getReviews = () => {
+    return userStories.filter(r => r.type === 'REVIEW');
+}
+
+const getSortedArrayIds = (array) => {
+  const ids = array.map((array_item) => array_item.id);
+  
+  return ids.sort((a, b) => a - b);
+    };
+
+const reviewArray = getReviews();
+const reviewIds = getSortedArrayIds(reviewArray);
+const storyIds = getSortedArrayIds(stories);
+
+
+  
+  
+
   
   // CRUD functions
 
@@ -194,6 +214,7 @@ function App() {
             loggedInUser={loggedInUser}
             addUserStory={addUserStory}
             fetchData={fetchData}
+            storyIds={storyIds}
             />}
             />
     <Route path="/credits" element={<Credits />} />
@@ -211,11 +232,21 @@ function App() {
             setLoggedInUser={setLoggedInUser}
             fetchData={fetchData}/>} 
       />
-    <Route path="/reviews/:id"
+    <Route path="/reviews"
             element={<ReviewPage
+              reviews={userStories}
+              loading={loading}
+              error={error}
+              loggedInUser={loggedInUser}
+              fetchData={fetchData}
+            />}
+    />
+    <Route path="/reviews/:id"
+            element={<ReviewDetailPage
             isLoading={isLoading}
             setLoading={setLoading}
             setError={setError} 
+            reviewIds={reviewIds}
             />}
     />
     <Route
