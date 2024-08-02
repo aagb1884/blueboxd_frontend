@@ -16,6 +16,8 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
         {index < story.companions.length - 1 && <span>, </span>}</span> 
         </li>
     })
+    
+    
 
     const episodeText = story.noOfEpisodes === 1 ? ' Part' : ' Parts';
 
