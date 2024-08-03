@@ -1,0 +1,18 @@
+.search-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-filters {
+    border: 1px solid white;
+    margin: 5px;
+    border-style: double;
+    margin: 10px;
+    width: 90%;
+}
+
+.doctor-filter, .media-filter, .companion-filter {
+    margin: 5px;
+}

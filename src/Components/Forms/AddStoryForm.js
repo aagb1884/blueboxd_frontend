@@ -32,6 +32,7 @@ const AddStory = ({fetchData, addStory, doctorData, companionData}) => {
         { label: 'Film', value: "Film" },
         { label: 'Prose', value: "Prose" },
         { label: 'Comic', value: "Comic" },
+        { label: 'Webcast', value: "Webcast" },
         { label: 'Other', value: "Other" }
       ];
 

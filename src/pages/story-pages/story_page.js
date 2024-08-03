@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import PageLayout from "../../Components/Navigation/page_layout";
 import StorySearchResults from './story-search-results';
-import { NavLink } from 'react-router-dom';
 import { PageLoader } from '../../Components/Navigation/page_loader';
+import DoctorFilter from '../../Components/SearchComponents/DoctorFilter';
+import MediaFilter from '../../Components/SearchComponents/MediaFilter';
+import '../../Components/SearchComponents/search.css';
+import CompanionFilter from '../../Components/SearchComponents/CompanionFilter';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
+    const [filterByDoctor, setFilterByDoctor] = useState('All');
+    const [filterByCompanion, setFilterByCompanion] = useState('All');
 
         const handleSearch = (event) => {
             event.preventDefault();
@@ -16,35 +21,53 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
 
         const clearSearch = () => {
             setSearchTerm('');
-            setFilterByMedia('All')
+            setFilterByMedia('All');
+            setFilterByDoctor('All');
+            setFilterByCompanion('All')
         };
 
         const toLowerCaseSafe = (str) => (str ? str.toLowerCase() : '');
 
           let filteredStories = stories;
-          if (searchTerm.length > 0 || filterByMedia !== 'All' || (searchTerm.length > 0 && filterByMedia !== 'All')) {
+          if (searchTerm.length > 0 || filterByMedia !== 'All' || filterByDoctor !== 'All' || filterByCompanion !== 'All' ||
+             (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanion !== 'All')) {
             filteredStories = stories.filter((story) => {
+
+              // function handleSort(property) {
+              //   const sortedStories = [...filteredStories].sort((a,b) => {
+              //     return a.property > b.property ? 1: -1
+              //   })
+
+              // }
+
               const searchTermLower = toLowerCaseSafe(searchTerm);
 
-                const mediaMatch = filterByMedia === 'All' || filterByMedia === story.media;
-               
-                const doctorMatch = story.doctors.some((doctor) => {
-                    return (
-                      toLowerCaseSafe(doctor.name).includes(searchTermLower) ||
-                      toLowerCaseSafe(doctor.mainActor).includes(searchTermLower)
-                    )
-                });
+              const mediaMatch = filterByMedia === 'All' || filterByMedia === story.media;
 
-                const companionMatch = story.companions.some((companion) => {
-                    return (
-                      toLowerCaseSafe(companion.firstName).includes(searchTermLower) ||
-                      toLowerCaseSafe(companion.lastName).includes(searchTermLower) ||
-                      toLowerCaseSafe(companion.mainActor).includes(searchTermLower)
-                    )
-                });
+              const doctorFilterMatch = filterByDoctor === 'All' || 
+              story.doctors.some((doctor) => doctor.name === filterByDoctor);
+              
+              const companionFilterMatch = filterByCompanion === 'All' || 
+              story.companions.some((companion) => (`${companion.firstName} ${companion.primaryMedia}`) === filterByCompanion);
+
+              const doctorMatch = story.doctors.some((doctor) => {
+                  return (
+                    toLowerCaseSafe(doctor.name).includes(searchTermLower) ||
+                    toLowerCaseSafe(doctor.mainActor).includes(searchTermLower)
+                  )
+              });
+
+              const companionMatch = story.companions.some((companion) => {
+                  return (
+                    toLowerCaseSafe(companion.firstName).includes(searchTermLower) ||
+                    toLowerCaseSafe(companion.lastName).includes(searchTermLower) ||
+                    toLowerCaseSafe(companion.nickname).includes(searchTermLower) ||
+                    toLowerCaseSafe(companion.mainActor).includes(searchTermLower)
+                  )
+              });
 
               return (
-                mediaMatch &&
+                (mediaMatch && doctorFilterMatch && companionFilterMatch) &&
                 (
                   toLowerCaseSafe(story.title).includes(searchTermLower) ||
                   toLowerCaseSafe(story.keywords).includes(searchTermLower) ||
@@ -82,23 +105,21 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                 </button>
                 </div>
                 <div className='search-filters'>
-                <select
-                    value={filterByMedia}
-                    onChange={(e) => {
-                    setFilterByMedia(e.target.value);
-                    }}
-                className="custom-select"
-                aria-label="Filter Stories by Foamat">`
-                <option value='All'>Filter By Format</option>
-                <option value='TV'>TV</option>
-                <option value='Film'>Film</option>
-                <option value='Audio'>Audio</option>
-                <option value='Prose'>Prose</option>
-                <option value='Comic'>Comic</option>
-                <option value='Webcast'>Webcast</option>
-                <option value='Other'>Other</option>
-                </select>
-                <span className="focus"></span>
+                  <h4>Filters</h4>
+                  <DoctorFilter 
+                  filterByDoctor={filterByDoctor}
+                  setFilterByDoctor={setFilterByDoctor}
+                  />
+
+                  <CompanionFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+                
+                  <MediaFilter 
+                  filterByMedia={filterByMedia}
+                  setFilterByMedia={setFilterByMedia}
+                  />
                 </div>
                 
                 <div className='stories-search-results'>
@@ -112,8 +133,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                {error && <p>There was an error loading the stories.</p>}
                {!loading && !error && filteredStories.length === 0 && (
           <div>
-            <p>No results found.</p>
-            <p>If you cannot find the story you are looking for, logged-in users can add it <NavLink to="/add_story">here</NavLink>.</p>
+            <h2>No results found.</h2>
           </div>
           
         )}
