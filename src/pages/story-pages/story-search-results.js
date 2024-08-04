@@ -11,14 +11,6 @@ const StorySearchResults = ({filteredStories, loggedInUser, addUserStory, fetchD
         setStoriesonDisplay(prevStoriesOnDisplay => prevStoriesOnDisplay + 20)
     }
 
-
-    function handleSort(property, array) {
-        [...array].sort((a,b) => {
-          return a[property] > b[property] ? 1: -1
-        })
-
-      }
-
    const storyList = filteredStories
    .sort((a, b) => new Date(a.firstEpBroadcast) - new Date(b.firstEpBroadcast)) 
    .slice(0, storiesOnDisplay)

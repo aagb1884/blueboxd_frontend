@@ -18,8 +18,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
     const [filterByCompanion, setFilterByCompanion] = useState('All');
     const [showFilters, setShowFilters] = useState(false);
 
-        const toggleShowFilters = () => {
-          setShowFilters(!showFilters)
+        const toggleShowState = (set, state) => {
+          set(!state)
         }
 
         const handleSearch = (event) => {
@@ -115,7 +115,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   alt="toggle-view-button"
                   title="Hide/Expand View"
                   src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={toggleShowFilters} />
+                  onClick={() => toggleShowState(setShowFilters, showFilters)} />
                 </div>
                 {showFilters && (
                   <section className='all-filters'>
@@ -165,6 +165,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                filteredStories={filteredStories}
                addUserStory={addUserStory}
                fetchData={fetchData}
+               toggleShowState={toggleShowState}
                />
                {loading && <PageLoader />}
                {error && <p>There was an error loading the stories.</p>}
