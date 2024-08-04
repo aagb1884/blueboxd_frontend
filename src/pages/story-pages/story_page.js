@@ -5,7 +5,10 @@ import { PageLoader } from '../../Components/Navigation/page_loader';
 import DoctorFilter from '../../Components/SearchComponents/DoctorFilter';
 import MediaFilter from '../../Components/SearchComponents/MediaFilter';
 import '../../Components/SearchComponents/search.css';
-import CompanionFilter from '../../Components/SearchComponents/CompanionFilter';
+import CompanionTVFilter from '../../Components/SearchComponents/CompanionTVFilter';
+import CompanionProseFilter from '../../Components/SearchComponents/CompanionProseFilter';
+import CompanionAudioFilter from '../../Components/SearchComponents/CompanionAudioFilter';
+import CompanionComicsFilter from '../../Components/SearchComponents/CompanionComicsFilter';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
@@ -13,6 +16,11 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
     const [filterByMedia, setFilterByMedia] = useState('All');
     const [filterByDoctor, setFilterByDoctor] = useState('All');
     const [filterByCompanion, setFilterByCompanion] = useState('All');
+    const [showFilters, setShowFilters] = useState(false);
+
+        const toggleShowState = (set, state) => {
+          set(!state)
+        }
 
         const handleSearch = (event) => {
             event.preventDefault();
@@ -33,12 +41,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
              (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanion !== 'All')) {
             filteredStories = stories.filter((story) => {
 
-              // function handleSort(property) {
-              //   const sortedStories = [...filteredStories].sort((a,b) => {
-              //     return a.property > b.property ? 1: -1
-              //   })
-
-              // }
+            
 
               const searchTermLower = toLowerCaseSafe(searchTerm);
 
@@ -104,23 +107,57 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                     Clear Search
                 </button>
                 </div>
-                <div className='search-filters'>
-                  <h4>Filters</h4>
-                  <DoctorFilter 
-                  filterByDoctor={filterByDoctor}
-                  setFilterByDoctor={setFilterByDoctor}
-                  />
 
-                  <CompanionFilter 
-                  filterByCompanion={filterByCompanion}
-                  setFilterByCompanion={setFilterByCompanion}
-                  />
-                
+              <div className='search-filters'>
+                <div className='show-hide-filters'>
+              <h4>Filters</h4>
+                <img id="visible-toggle"
+                  alt="toggle-view-button"
+                  title="Hide/Expand View"
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                  onClick={() => toggleShowState(setShowFilters, showFilters)} />
+                </div>
+                {showFilters && (
+                  <section className='all-filters'>
+                  <div className='filters'>
                   <MediaFilter 
                   filterByMedia={filterByMedia}
                   setFilterByMedia={setFilterByMedia}
                   />
+
+                  <DoctorFilter 
+                  filterByDoctor={filterByDoctor}
+                  setFilterByDoctor={setFilterByDoctor}
+                  />
+                  </div>
+                  <h5>Companion Filters</h5>
+                  <aside>Companions are grouped according to the format they first appeared in.</aside>
+                  <div className='companion-filters'>
+                      
+                  <CompanionTVFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+
+                  <CompanionProseFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+
+                  <CompanionAudioFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+
+                  <CompanionComicsFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+                  </div>
+                  </section>
+                  )}
                 </div>
+              
                 
                 <div className='stories-search-results'>
                <StorySearchResults 
@@ -128,6 +165,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                filteredStories={filteredStories}
                addUserStory={addUserStory}
                fetchData={fetchData}
+               toggleShowState={toggleShowState}
                />
                {loading && <PageLoader />}
                {error && <p>There was an error loading the stories.</p>}

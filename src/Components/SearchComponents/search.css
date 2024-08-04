@@ -11,8 +11,37 @@
     border-style: double;
     margin: 10px;
     width: 90%;
+    
+}
+
+.show-hide-filters{ 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.filters{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid white;
+    justify-content: space-evenly;
+}
+
+.companion-filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .doctor-filter, .media-filter, .companion-filter {
     margin: 5px;
+}
+
+.custom-select {
+    font-family: Della Respira;
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    background: linear-gradient(90deg, rgb(162, 10, 101) 4%, rgba(1, 20, 33, 0.01) 100%);
 }
