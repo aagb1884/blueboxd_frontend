@@ -14,6 +14,13 @@
     
 }
 
+.show-hide-filters{ 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .filters{
     display: flex;
     flex-direction: row;
@@ -34,4 +41,7 @@
 .custom-select {
     font-family: Della Respira;
     margin: 5px;
+    padding: 5px;
+    color: white;
+    background: linear-gradient(90deg, rgb(162, 10, 101) 4%, rgba(1, 20, 33, 0.01) 100%);
 }

@@ -16,6 +16,11 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
     const [filterByMedia, setFilterByMedia] = useState('All');
     const [filterByDoctor, setFilterByDoctor] = useState('All');
     const [filterByCompanion, setFilterByCompanion] = useState('All');
+    const [showFilters, setShowFilters] = useState(false);
+
+        const toggleShowFilters = () => {
+          setShowFilters(!showFilters)
+        }
 
         const handleSearch = (event) => {
             event.preventDefault();
@@ -36,12 +41,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
              (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanion !== 'All')) {
             filteredStories = stories.filter((story) => {
 
-              // function handleSort(property) {
-              //   const sortedStories = [...filteredStories].sort((a,b) => {
-              //     return a.property > b.property ? 1: -1
-              //   })
-
-              // }
+            
 
               const searchTermLower = toLowerCaseSafe(searchTerm);
 
@@ -109,7 +109,16 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                 </div>
 
               <div className='search-filters'>
+                <div className='show-hide-filters'>
               <h4>Filters</h4>
+                <img id="visible-toggle"
+                  alt="toggle-view-button"
+                  title="Hide/Expand View"
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                  onClick={toggleShowFilters} />
+                </div>
+                {showFilters && (
+                  <section className='all-filters'>
                   <div className='filters'>
                   <MediaFilter 
                   filterByMedia={filterByMedia}
@@ -145,8 +154,10 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   setFilterByCompanion={setFilterByCompanion}
                   />
                   </div>
-                  
+                  </section>
+                  )}
                 </div>
+              
                 
                 <div className='stories-search-results'>
                <StorySearchResults 
