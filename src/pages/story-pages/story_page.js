@@ -5,7 +5,10 @@ import { PageLoader } from '../../Components/Navigation/page_loader';
 import DoctorFilter from '../../Components/SearchComponents/DoctorFilter';
 import MediaFilter from '../../Components/SearchComponents/MediaFilter';
 import '../../Components/SearchComponents/search.css';
-import CompanionFilter from '../../Components/SearchComponents/CompanionFilter';
+import CompanionTVFilter from '../../Components/SearchComponents/CompanionTVFilter';
+import CompanionProseFilter from '../../Components/SearchComponents/CompanionProseFilter';
+import CompanionAudioFilter from '../../Components/SearchComponents/CompanionAudioFilter';
+import CompanionComicsFilter from '../../Components/SearchComponents/CompanionComicsFilter';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
@@ -104,22 +107,45 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                     Clear Search
                 </button>
                 </div>
-                <div className='search-filters'>
-                  <h4>Filters</h4>
-                  <DoctorFilter 
-                  filterByDoctor={filterByDoctor}
-                  setFilterByDoctor={setFilterByDoctor}
-                  />
 
-                  <CompanionFilter 
-                  filterByCompanion={filterByCompanion}
-                  setFilterByCompanion={setFilterByCompanion}
-                  />
-                
+              <div className='search-filters'>
+              <h4>Filters</h4>
+                  <div className='filters'>
                   <MediaFilter 
                   filterByMedia={filterByMedia}
                   setFilterByMedia={setFilterByMedia}
                   />
+
+                  <DoctorFilter 
+                  filterByDoctor={filterByDoctor}
+                  setFilterByDoctor={setFilterByDoctor}
+                  />
+                  </div>
+                  <h5>Companion Filters</h5>
+                  <aside>Companions are grouped according to the format they first appeared in.</aside>
+                  <div className='companion-filters'>
+                      
+                  <CompanionTVFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+
+                  <CompanionProseFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+
+                  <CompanionAudioFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+
+                  <CompanionComicsFilter 
+                  filterByCompanion={filterByCompanion}
+                  setFilterByCompanion={setFilterByCompanion}
+                  />
+                  </div>
+                  
                 </div>
                 
                 <div className='stories-search-results'>

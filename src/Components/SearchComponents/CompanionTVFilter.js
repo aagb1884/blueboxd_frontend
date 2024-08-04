@@ -1,4 +1,4 @@
-const CompanionFilter = ({filterByCompanion, setFilterByCompanion}) => {
+const CompanionTVFilter = ({filterByCompanion, setFilterByCompanion}) => {
     return ( 
         <div className="companion-filter">
             
@@ -10,7 +10,7 @@ const CompanionFilter = ({filterByCompanion, setFilterByCompanion}) => {
                     }}
                 className="custom-select"
                 aria-label="Filter Stories by Companion">`
-                <option value='All'>Filter By Companion</option>
+                <option value='All'>Filter By Companion (TV)</option>
                 <option value='Susan TV'>Susan</option>
                 <option value='Ian TV'>Ian</option>
                 <option value='Barbara TV'>Barbara</option>
@@ -23,8 +23,10 @@ const CompanionFilter = ({filterByCompanion, setFilterByCompanion}) => {
                 <option value='Victoria TV'>Victoria</option>
                 <option value='Zoe TV'>Zoe</option>
                 <option value='Brigadier Alastair Gordon TV'>The Brigadier</option>
+                <option value='John TV'>Benton</option>
                 <option value='Liz TV'>Liz</option>
                 <option value='Jo TV'>Jo</option>
+                <option value='Mike TV'>Mike Yates</option>
                 <option value='Sarah Jane TV'>Sarah Jane</option>
                 <option value='Harry TV'>Harry</option>
                 <option value='Leela TV'>Leela</option>
@@ -57,4 +59,4 @@ const CompanionFilter = ({filterByCompanion, setFilterByCompanion}) => {
      );
 }
  
-export default CompanionFilter;
+export default CompanionTVFilter;
