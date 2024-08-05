@@ -28,10 +28,11 @@
     justify-content: space-evenly;
 }
 
-.companion-filters {
+.companion-filters, .antagonist-filters {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    border-bottom: 1px solid white;
 }
 
 .doctor-filter, .media-filter, .companion-filter {

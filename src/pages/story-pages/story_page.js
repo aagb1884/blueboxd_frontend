@@ -9,13 +9,18 @@ import CompanionTVFilter from '../../Components/SearchComponents/CompanionTVFilt
 import CompanionProseFilter from '../../Components/SearchComponents/CompanionProseFilter';
 import CompanionAudioFilter from '../../Components/SearchComponents/CompanionAudioFilter';
 import CompanionComicsFilter from '../../Components/SearchComponents/CompanionComicsFilter';
+import AntagonistTVFilter from '../../Components/SearchComponents/AntagonistTVFilter';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
     const [filterByDoctor, setFilterByDoctor] = useState('All');
-    const [filterByCompanion, setFilterByCompanion] = useState('All');
+    const [filterByCompanionTV, setFilterByCompanionTV] = useState('All');
+    const [filterByCompanionBooks, setFilterByCompanionBooks] = useState('All');
+    const [filterByCompanionAudio, setFilterByCompanionAudio] = useState('All');
+    const [filterByCompanionComics, setFilterByCompanionComics] = useState('All');
+    const [filterByAntagonistTV, setFilterByAntagonistTV] = useState('All')
     const [showFilters, setShowFilters] = useState(false);
 
         const toggleShowState = (set, state) => {
@@ -31,14 +36,23 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
             setSearchTerm('');
             setFilterByMedia('All');
             setFilterByDoctor('All');
-            setFilterByCompanion('All')
+            setFilterByCompanionTV('All');
+            setFilterByCompanionAudio('All');
+            setFilterByCompanionBooks('All');
+            setFilterByCompanionComics('All');
+            setFilterByAntagonistTV('All');
         };
 
         const toLowerCaseSafe = (str) => (str ? str.toLowerCase() : '');
 
           let filteredStories = stories;
-          if (searchTerm.length > 0 || filterByMedia !== 'All' || filterByDoctor !== 'All' || filterByCompanion !== 'All' ||
-             (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanion !== 'All')) {
+          if (searchTerm.length > 0 || filterByMedia !== 'All' || filterByDoctor !== 'All' || filterByCompanionTV !== 'All' ||
+            filterByCompanionBooks !== 'All' || filterByCompanionAudio !== 'All' || filterByCompanionComics !== 'All' ||
+            filterByAntagonistTV  !== 'All' ||
+             (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanionTV !== 'All' &&
+              filterByCompanionAudio !== 'All' && filterByCompanionBooks !== 'All' && filterByCompanionComics !== 'All' &&
+              filterByAntagonistTV !== 'All'
+             )) {
             filteredStories = stories.filter((story) => {
 
             
@@ -49,9 +63,18 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
 
               const doctorFilterMatch = filterByDoctor === 'All' || 
               story.doctors.some((doctor) => doctor.name === filterByDoctor);
-              
-              const companionFilterMatch = filterByCompanion === 'All' || 
-              story.companions.some((companion) => (`${companion.firstName} ${companion.primaryMedia}`) === filterByCompanion);
+
+              const companionFilterMatchTV = filterByCompanionTV === 'All' || 
+              story.companions.some((companion) => (`${companion.firstName} ${companion.primaryMedia}`) === filterByCompanionTV);
+              const companionFilterMatchAudio = filterByCompanionAudio === 'All' || 
+              story.companions.some((companion) => (`${companion.firstName} ${companion.primaryMedia}`) === filterByCompanionAudio);
+              const companionFilterMatchComics = filterByCompanionComics === 'All' || 
+              story.companions.some((companion) => (`${companion.firstName} ${companion.primaryMedia}`) === filterByCompanionComics);
+              const companionFilterMatchProse = filterByCompanionBooks === 'All' || 
+              story.companions.some((companion) => (`${companion.firstName} ${companion.primaryMedia}`) === filterByCompanionBooks);
+
+              const antagonistFilterMatchTV = filterByAntagonistTV === 'All' || 
+              story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistTV);
 
               const doctorMatch = story.doctors.some((doctor) => {
                   return (
@@ -70,7 +93,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
               });
 
               return (
-                (mediaMatch && doctorFilterMatch && companionFilterMatch) &&
+                (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio &&
+                  companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV
+                ) &&
                 (
                   toLowerCaseSafe(story.title).includes(searchTermLower) ||
                   toLowerCaseSafe(story.keywords).includes(searchTermLower) ||
@@ -135,24 +160,34 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   <div className='companion-filters'>
                       
                   <CompanionTVFilter 
-                  filterByCompanion={filterByCompanion}
-                  setFilterByCompanion={setFilterByCompanion}
+                  filterByCompanion={filterByCompanionTV}
+                  setFilterByCompanion={setFilterByCompanionTV}
                   />
 
                   <CompanionProseFilter 
-                  filterByCompanion={filterByCompanion}
-                  setFilterByCompanion={setFilterByCompanion}
+                  filterByCompanion={filterByCompanionBooks}
+                  setFilterByCompanion={setFilterByCompanionBooks}
                   />
 
                   <CompanionAudioFilter 
-                  filterByCompanion={filterByCompanion}
-                  setFilterByCompanion={setFilterByCompanion}
+                  filterByCompanion={filterByCompanionAudio}
+                  setFilterByCompanion={setFilterByCompanionAudio}
                   />
 
                   <CompanionComicsFilter 
-                  filterByCompanion={filterByCompanion}
-                  setFilterByCompanion={setFilterByCompanion}
+                  filterByCompanion={filterByCompanionComics}
+                  setFilterByCompanion={setFilterByCompanionComics}
                   />
+                  </div>
+                  <h5>Antagonist Filters</h5>
+                  <aside>Select from antagonists according to the format they first appeared in.</aside>
+                  <div className='antagonist-filters'>
+
+                    <AntagonistTVFilter 
+                    filterByAntagonistTV={filterByAntagonistTV}
+                    setFilterByAntagonistTV={setFilterByAntagonistTV}
+                    />
+
                   </div>
                   </section>
                   )}
