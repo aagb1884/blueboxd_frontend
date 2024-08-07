@@ -11,19 +11,35 @@ import CompanionAudioFilter from '../../Components/SearchComponents/CompanionAud
 import CompanionComicsFilter from '../../Components/SearchComponents/CompanionComicsFilter';
 import AntagonistTVFilter from '../../Components/SearchComponents/AntagonistTVFilter';
 import AntagonistEUFilter from '../../Components/SearchComponents/AntagonistEUFilter';
+import WriterTVFilter from '../../Components/SearchComponents/WriterTVFilter';
+import ShowrunnerFilter from '../../Components/SearchComponents/ShowrunnerFilter';
+import WriterAudioFilter from '../../Components/SearchComponents/WriterAudioFilter';
+import WriterProseFilter from '../../Components/SearchComponents/WriterProseFilter';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
     const [filterByDoctor, setFilterByDoctor] = useState('All');
+    //companion filters
     const [filterByCompanionTV, setFilterByCompanionTV] = useState('All');
     const [filterByCompanionBooks, setFilterByCompanionBooks] = useState('All');
     const [filterByCompanionAudio, setFilterByCompanionAudio] = useState('All');
     const [filterByCompanionComics, setFilterByCompanionComics] = useState('All');
+    //antagonist filters
     const [filterByAntagonistTV, setFilterByAntagonistTV] = useState('All')
     const [filterByAntagonistEU, setFilterByAntagonistEU] = useState('All')
-    const [showFilters, setShowFilters] = useState(false);
+    // cast and crew filters
+    const [filterByWriterProse, setFilterByWriterProse] = useState('All')
+    const [filterByWriterAudio, setFilterByWriterAudio] = useState('All')
+    const [filterByWriterTV, setFilterByWriterTV] = useState('All')
+    const [filterByShowrunnerTV, setFilterByShowrunnerTV] = useState('All')
+    
+    //show/hide filter components
+    const [showAllFilters, setShowAllFilters] = useState(false);
+    const [showCompanionFilters, setShowCompanionFilters] = useState(false);
+    const [showAntagonistFilters, setShowAntagonistFilters] = useState(false);
+    const [showCastCrewFilters, setShowCastCrewFilters] = useState(false);
 
         const toggleShowState = (set, state) => {
           set(!state)
@@ -44,6 +60,10 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
             setFilterByCompanionComics('All');
             setFilterByAntagonistTV('All');
             setFilterByAntagonistEU('All');
+            setFilterByWriterProse('All');
+            setFilterByWriterAudio('All');
+            setFilterByWriterTV('All');
+            setFilterByShowrunnerTV('All');
         };
 
         const toLowerCaseSafe = (str) => (str ? str.toLowerCase() : '');
@@ -51,10 +71,12 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
           let filteredStories = stories;
           if (searchTerm.length > 0 || filterByMedia !== 'All' || filterByDoctor !== 'All' || filterByCompanionTV !== 'All' ||
             filterByCompanionBooks !== 'All' || filterByCompanionAudio !== 'All' || filterByCompanionComics !== 'All' ||
-            filterByAntagonistTV  !== 'All' || filterByAntagonistEU !== 'All' ||
+            filterByAntagonistTV  !== 'All' || filterByAntagonistEU !== 'All' || filterByWriterAudio !== 'All' || filterByWriterTV!== 'All' || 
+            filterByWriterProse !== 'All' || filterByShowrunnerTV !== 'All' ||
              (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanionTV !== 'All' &&
               filterByCompanionAudio !== 'All' && filterByCompanionBooks !== 'All' && filterByCompanionComics !== 'All' &&
-              filterByAntagonistTV !== 'All' && filterByAntagonistEU !== 'All'
+              filterByAntagonistTV !== 'All' && filterByAntagonistEU !== 'All' && filterByWriterTV !== 'All' && filterByWriterAudio !== 'All' &&
+              filterByWriterProse !== 'All' && filterByShowrunnerTV !== 'All'
              )) {
             filteredStories = stories.filter((story) => {
 
@@ -81,6 +103,20 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
               const antagonistFilterMatchEU = filterByAntagonistEU === 'All' || 
               story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistEU);
 
+              const writerProseFilterMatch = filterByWriterProse === 'All' ||
+              story.castAndCrew && story.castAndCrew.length > 0 &&
+              story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByWriterProse);            
+              const writerAudioFilterMatch = filterByWriterAudio === 'All' ||
+              story.castAndCrew && story.castAndCrew.length > 0 &&
+              story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByWriterAudio);            
+              const writerTVFilterMatch = filterByWriterTV === 'All' ||
+              story.castAndCrew && story.castAndCrew.length > 0 &&
+              story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByWriterTV);            
+              const showrunnereFilterMatch = filterByShowrunnerTV === 'All' ||
+              story.castAndCrew && story.castAndCrew.length > 0 &&
+              story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByShowrunnerTV);            
+
+
               const doctorMatch = story.doctors.some((doctor) => {
                   return (
                     toLowerCaseSafe(doctor.name).includes(searchTermLower) ||
@@ -104,8 +140,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
 
 
               return (
-                (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio &&
-                  companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV && antagonistFilterMatchEU 
+                (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio && showrunnereFilterMatch &&
+                  writerTVFilterMatch && companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV && 
+                  antagonistFilterMatchEU && writerAudioFilterMatch && writerProseFilterMatch
                 ) &&
                 (
                   toLowerCaseSafe(story.title).includes(searchTermLower) ||
@@ -152,9 +189,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   alt="toggle-view-button"
                   title="Hide/Expand View"
                   src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={() => toggleShowState(setShowFilters, showFilters)} />
+                  onClick={() => toggleShowState(setShowAllFilters, showAllFilters)} />
                 </div>
-                {showFilters && (
+                {showAllFilters && (
                   <section className='all-filters'>
                   <div className='filters'>
                   <MediaFilter 
@@ -167,10 +204,20 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   setFilterByDoctor={setFilterByDoctor}
                   />
                   </div>
+                  <div className='show-hide-filters'>
                   <h5>Companion Filters</h5>
+                  
+                  <img id="visible-toggle"
+                  alt="toggle-view-button"
+                  title="Hide/Expand View"
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                  onClick={() => toggleShowState(setShowCompanionFilters, showCompanionFilters)} />
+                  </div>
+                  {showCompanionFilters && (
+                    <>
                   <aside>Companions are grouped according to the format they first appeared in.</aside>
                   <div className='companion-filters'>
-                      
+                  
                   <CompanionTVFilter 
                   filterByCompanion={filterByCompanionTV}
                   setFilterByCompanion={setFilterByCompanionTV}
@@ -190,11 +237,25 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   filterByCompanion={filterByCompanionComics}
                   setFilterByCompanion={setFilterByCompanionComics}
                   />
+                  
                   </div>
+                  </>
+                  )}
+                  
+                  <div className='show-hide-filters'>
                   <h5>Antagonist Filters</h5>
-                  <aside>Select from antagonists according to the format they first appeared in.</aside>
+                  <img id="visible-toggle"
+                  alt="toggle-view-button"
+                  title="Hide/Expand View"
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                  onClick={() => toggleShowState(setShowAntagonistFilters, showAntagonistFilters)} />
+                  </div>
+                  {showAntagonistFilters && (
+                    <div className='filter-border'>
+                    <aside>Some antagonists may appear in more than one filter.</aside>
+                  
                   <div className='antagonist-filters'>
-
+                  
                     <AntagonistTVFilter 
                     filterByAntagonistTV={filterByAntagonistTV}
                     setFilterByAntagonistTV={setFilterByAntagonistTV}
@@ -206,6 +267,43 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                     />
 
                   </div>
+                  </div>
+                  )}
+                   <div className='show-hide-filters'>
+                  <h5>Cast and Crew Filters</h5>
+                  <img id="visible-toggle"
+                  alt="toggle-view-button"
+                  title="Hide/Expand View"
+                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                  onClick={() => toggleShowState(setShowCastCrewFilters, showCastCrewFilters)} />
+                  </div>
+
+                  {showCastCrewFilters && (
+                  <div className='cast-crew-filters'>
+
+                    <ShowrunnerFilter
+                    filterByShowrunnerTV={filterByShowrunnerTV}
+                    setFilterByShowrunnerTV={setFilterByShowrunnerTV}
+                    />
+
+                    <div className='cast-crew-row'>
+                    <WriterTVFilter 
+                    filterByWriterTV={filterByWriterTV}
+                    setFilterByWriterTV={setFilterByWriterTV}
+                    />
+                    
+                    <WriterAudioFilter 
+                    filterByWriterAudio={filterByWriterAudio}
+                    setFilterByWriterAudio={setFilterByWriterAudio}
+                    />
+
+                    <WriterProseFilter 
+                    filterByWriterProse={filterByWriterProse}
+                    setFilterByWriterProse={setFilterByWriterProse}
+                    />  
+                    </div>
+                  </div>
+                  )}
                   </section>
                   )}
                 </div>
