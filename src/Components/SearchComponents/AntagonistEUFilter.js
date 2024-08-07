@@ -14,6 +14,7 @@ const AntagonistEUFilter = ({filterByAntagonistEU, setFilterByAntagonistEU}) => 
                 <option value='The Eminence AUDIO'>The Eminence</option>
                 <option value='Nimrod AUDIO'>Nimrod</option>
                 <option value='The Dalek Time Controller AUDIO'>The Dalek Time Controller</option>
+                <option value='Morbius TV'>Morbius</option>
                 <option value='Faction Paradox PROSE'>Faction Paradox</option>
                 <option value='Sabbath PROSE'>Sabbath</option>
                 <option value='The Threshold COMICS'>The Threshold</option>
