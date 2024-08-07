@@ -10,6 +10,7 @@ import CompanionProseFilter from '../../Components/SearchComponents/CompanionPro
 import CompanionAudioFilter from '../../Components/SearchComponents/CompanionAudioFilter';
 import CompanionComicsFilter from '../../Components/SearchComponents/CompanionComicsFilter';
 import AntagonistTVFilter from '../../Components/SearchComponents/AntagonistTVFilter';
+import AntagonistEUFilter from '../../Components/SearchComponents/AntagonistEUFilter';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
   
@@ -21,6 +22,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
     const [filterByCompanionAudio, setFilterByCompanionAudio] = useState('All');
     const [filterByCompanionComics, setFilterByCompanionComics] = useState('All');
     const [filterByAntagonistTV, setFilterByAntagonistTV] = useState('All')
+    const [filterByAntagonistEU, setFilterByAntagonistEU] = useState('All')
     const [showFilters, setShowFilters] = useState(false);
 
         const toggleShowState = (set, state) => {
@@ -41,6 +43,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
             setFilterByCompanionBooks('All');
             setFilterByCompanionComics('All');
             setFilterByAntagonistTV('All');
+            setFilterByAntagonistEU('All');
         };
 
         const toLowerCaseSafe = (str) => (str ? str.toLowerCase() : '');
@@ -48,14 +51,14 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
           let filteredStories = stories;
           if (searchTerm.length > 0 || filterByMedia !== 'All' || filterByDoctor !== 'All' || filterByCompanionTV !== 'All' ||
             filterByCompanionBooks !== 'All' || filterByCompanionAudio !== 'All' || filterByCompanionComics !== 'All' ||
-            filterByAntagonistTV  !== 'All' ||
+            filterByAntagonistTV  !== 'All' || filterByAntagonistEU !== 'All' ||
              (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanionTV !== 'All' &&
               filterByCompanionAudio !== 'All' && filterByCompanionBooks !== 'All' && filterByCompanionComics !== 'All' &&
-              filterByAntagonistTV !== 'All'
+              filterByAntagonistTV !== 'All' && filterByAntagonistEU !== 'All'
              )) {
             filteredStories = stories.filter((story) => {
 
-            
+              console.log(story.castAndCrew);
 
               const searchTermLower = toLowerCaseSafe(searchTerm);
 
@@ -75,6 +78,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
 
               const antagonistFilterMatchTV = filterByAntagonistTV === 'All' || 
               story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistTV);
+              const antagonistFilterMatchEU = filterByAntagonistEU === 'All' || 
+              story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistEU);
 
               const doctorMatch = story.doctors.some((doctor) => {
                   return (
@@ -92,9 +97,15 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   )
               });
 
+              const castAndCrewMatch = story.castAndCrew && story.castAndCrew.length > 0 &&
+              story.castAndCrew.some((crewMember) => {
+                  return toLowerCaseSafe(crewMember.person.name).includes(searchTermLower);
+              });
+
+
               return (
                 (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio &&
-                  companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV
+                  companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV && antagonistFilterMatchEU 
                 ) &&
                 (
                   toLowerCaseSafe(story.title).includes(searchTermLower) ||
@@ -104,7 +115,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                   toLowerCaseSafe(story.series).includes(searchTermLower) ||
                   toLowerCaseSafe(story.productionCode).includes(searchTermLower) ||
                   doctorMatch ||
-                  companionMatch
+                  companionMatch ||
+                  castAndCrewMatch
               )
                 
               );    
@@ -186,6 +198,11 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                     <AntagonistTVFilter 
                     filterByAntagonistTV={filterByAntagonistTV}
                     setFilterByAntagonistTV={setFilterByAntagonistTV}
+                    />
+
+                    <AntagonistEUFilter 
+                    filterByAntagonistEU={filterByAntagonistEU}
+                    setFilterByAntagonistEU={setFilterByAntagonistEU}
                     />
 
                   </div>
