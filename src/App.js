@@ -112,9 +112,10 @@ function App() {
     );
   }
 
-  // if(!user) {
-  //   return null
-  // }
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
 
 
   const getReviews = () => {
@@ -195,6 +196,7 @@ const storyIds = getSortedArrayIds(stories);
             loading={loading}
             error={error}
             loggedInUser={loggedInUser}
+            formatDate={formatDate}
     />} />
     <Route path="/about" element={<AboutPage />} />
     <Route  path="/stories" 
@@ -205,6 +207,7 @@ const storyIds = getSortedArrayIds(stories);
             loggedInUser={loggedInUser}
             addUserStory={addUserStory}
             fetchData={fetchData}
+            formatDate={formatDate}
             />} />
     <Route path="stories/:id" 
             element={<StoryDetailPage
@@ -215,6 +218,7 @@ const storyIds = getSortedArrayIds(stories);
             addUserStory={addUserStory}
             fetchData={fetchData}
             storyIds={storyIds}
+            formatDate={formatDate}
             />}
             />
     <Route path="/credits" element={<Credits />} />

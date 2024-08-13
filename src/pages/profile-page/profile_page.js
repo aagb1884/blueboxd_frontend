@@ -11,9 +11,9 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
   const [areReviewsVisible, setAreReviewsVisible] = useState(false);
   const [areFollowersVisible, setAreFollowersVisible] = useState(false);
   const [visibleReviewIds, setVisibleReviewIds] = useState([]);
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
   const { isAuthenticated } = useAuth0();
-  const { id } = useParams(); 
+  const { id } = useParams();   
 
   const toggleWatchlistVisibility = () => {
     setIsWatchListVisible(!isWatchlistVisible);
@@ -32,15 +32,14 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     );
   };
 
-
   const getSelectedProfile = async (id) => {
-    
     try {
-      const response = await fetch(baseUsersURL + '/' + id);
+      const response = await fetch(`${baseUsersURL}/${id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch profile');
       }
       const data = await response.json();
+      console.log('Fetched data:', data);
       setSelectedProfile(data);
     } catch (err) {
       console.log(err)
@@ -51,21 +50,18 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
   };
 
   useEffect(() => {
-    getSelectedProfile(id);
-  }, [id]); 
+    if (id) {
+      getSelectedProfile(id);
+    }
+  }, [id]);
 
-  useEffect(() => {
-    if (isLoading) return;
-    getSelectedProfile();
-  }, [isLoading]);
-
-    // if (!selectedProfile || !loggedInUser) {
-    //   return <h2>Loading...</h2>;
-    // }
+   if (!selectedProfile) {
+      return <h2>Loading...</h2>;
+    }
 
     const watchlistStoriesData = selectedProfile.userStories
-    .filter(watchlistStory => watchlistStory.type === 'WATCHLIST')
-    .sort((a, b) => a.story.id - b.story.id);
+    ?.filter(watchlistStory => watchlistStory.type === 'WATCHLIST')
+    .sort((a, b) => a.story.id - b.story.id) || [];
   
   const displayWatchlistStories = watchlistStoriesData.length === 0 
     ? <p>No stories in watchlist.</p> 
@@ -81,7 +77,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     ));
 
     const reviewedStoriesData = selectedProfile.userStories
-    .filter(reviewedStory => reviewedStory.type === "REVIEW")
+    .filter(reviewedStory => reviewedStory.type === "REVIEW") || [];
 
     const displayReviewedStories = reviewedStoriesData.length === 0 
     ? <p>No stories reviewed yet.</p>
@@ -244,17 +240,21 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
               <div className="watchlist-stories">
                 {displayWatchlistStories}
               </div>
-            )}</div>
+            )}
             <div className="user-reviews-container">
               <div className="header-and-toggle">
             <h3>{selectedProfile.firstname}'s Reviews</h3>
             <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleReviewsVisibility}/>
-            </div>
+              </div>
+              <div className="user-reviews">
             {areReviewsVisible && (
               <div className="reviewed-stories">
             {displayReviewedStories}
-            </div>
+              </div>
             )}
+            </div>
+            </div>
+            
             </div>
             </section> 
           </div>

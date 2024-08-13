@@ -15,8 +15,9 @@ import WriterTVFilter from '../../Components/SearchComponents/WriterTVFilter';
 import ShowrunnerFilter from '../../Components/SearchComponents/ShowrunnerFilter';
 import WriterAudioFilter from '../../Components/SearchComponents/WriterAudioFilter';
 import WriterProseFilter from '../../Components/SearchComponents/WriterProseFilter';
+import CreatorComicFilter from '../../Components/SearchComponents/CreatorComicFilter';
 
-const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData}) => {
+const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, formatDate}) => {
   
     const [searchTerm, setSearchTerm] = useState("");
     const [filterByMedia, setFilterByMedia] = useState('All');
@@ -27,13 +28,14 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
     const [filterByCompanionAudio, setFilterByCompanionAudio] = useState('All');
     const [filterByCompanionComics, setFilterByCompanionComics] = useState('All');
     //antagonist filters
-    const [filterByAntagonistTV, setFilterByAntagonistTV] = useState('All')
-    const [filterByAntagonistEU, setFilterByAntagonistEU] = useState('All')
+    const [filterByAntagonistTV, setFilterByAntagonistTV] = useState('All');
+    const [filterByAntagonistEU, setFilterByAntagonistEU] = useState('All');
     // cast and crew filters
-    const [filterByWriterProse, setFilterByWriterProse] = useState('All')
-    const [filterByWriterAudio, setFilterByWriterAudio] = useState('All')
-    const [filterByWriterTV, setFilterByWriterTV] = useState('All')
-    const [filterByShowrunnerTV, setFilterByShowrunnerTV] = useState('All')
+    const [filterByWriterProse, setFilterByWriterProse] = useState('All');
+    const [filterByWriterAudio, setFilterByWriterAudio] = useState('All');
+    const [filterByWriterTV, setFilterByWriterTV] = useState('All');
+    const [filterByShowrunnerTV, setFilterByShowrunnerTV] = useState('All');
+    const [filterByCreativeComics, setFilterByCreativeComics] = useState('All');
     
     //show/hide filter components
     const [showAllFilters, setShowAllFilters] = useState(false);
@@ -72,11 +74,11 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
           if (searchTerm.length > 0 || filterByMedia !== 'All' || filterByDoctor !== 'All' || filterByCompanionTV !== 'All' ||
             filterByCompanionBooks !== 'All' || filterByCompanionAudio !== 'All' || filterByCompanionComics !== 'All' ||
             filterByAntagonistTV  !== 'All' || filterByAntagonistEU !== 'All' || filterByWriterAudio !== 'All' || filterByWriterTV!== 'All' || 
-            filterByWriterProse !== 'All' || filterByShowrunnerTV !== 'All' ||
+            filterByWriterProse !== 'All' || filterByShowrunnerTV !== 'All' || filterByCreativeComics !== 'All' ||
              (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanionTV !== 'All' &&
               filterByCompanionAudio !== 'All' && filterByCompanionBooks !== 'All' && filterByCompanionComics !== 'All' &&
               filterByAntagonistTV !== 'All' && filterByAntagonistEU !== 'All' && filterByWriterTV !== 'All' && filterByWriterAudio !== 'All' &&
-              filterByWriterProse !== 'All' && filterByShowrunnerTV !== 'All'
+              filterByWriterProse !== 'All' && filterByShowrunnerTV !== 'All' && filterByCreativeComics !== 'All'
              )) {
             filteredStories = stories.filter((story) => {
 
@@ -112,9 +114,12 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
               const writerTVFilterMatch = filterByWriterTV === 'All' ||
               story.castAndCrew && story.castAndCrew.length > 0 &&
               story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByWriterTV);            
-              const showrunnereFilterMatch = filterByShowrunnerTV === 'All' ||
+              const showrunnerFilterMatch = filterByShowrunnerTV === 'All' ||
               story.castAndCrew && story.castAndCrew.length > 0 &&
               story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByShowrunnerTV);            
+              const comicCreativeFilter = filterByCreativeComics === 'All' ||
+              story.castAndCrew && story.castAndCrew.length > 0 &&
+              story.castAndCrew.some((crewMember) => (`${crewMember.person.name} ${crewMember.role}`) === filterByCreativeComics);            
 
 
               const doctorMatch = story.doctors.some((doctor) => {
@@ -140,9 +145,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
 
 
               return (
-                (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio && showrunnereFilterMatch &&
+                (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio && showrunnerFilterMatch &&
                   writerTVFilterMatch && companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV && 
-                  antagonistFilterMatchEU && writerAudioFilterMatch && writerProseFilterMatch
+                  antagonistFilterMatchEU && writerAudioFilterMatch && writerProseFilterMatch && comicCreativeFilter
                 ) &&
                 (
                   toLowerCaseSafe(story.title).includes(searchTermLower) ||
@@ -301,6 +306,10 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                     filterByWriterProse={filterByWriterProse}
                     setFilterByWriterProse={setFilterByWriterProse}
                     />  
+
+                    <CreatorComicFilter 
+                    filterByCreativeComics={filterByCreativeComics}
+                    setFilterByCreativeComics={setFilterByCreativeComics}/>
                     </div>
                   </div>
                   )}
@@ -316,6 +325,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData})
                addUserStory={addUserStory}
                fetchData={fetchData}
                toggleShowState={toggleShowState}
+               formatDate={formatDate}
                />
                {loading && <PageLoader />}
                {error && <p>There was an error loading the stories.</p>}

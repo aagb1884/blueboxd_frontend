@@ -4,43 +4,33 @@ import './home.css';
 import { NavLink } from "react-router-dom";
 import { PageLoader } from "../../Components/Navigation/page_loader";
 
-const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
+const HomePage = ({stories, userStories, loading, error, loggedInUser, formatDate}) => {
     const { isAuthenticated, user } = useAuth0();
 
     if (loading) {
         return <PageLoader />;
-      }
-    
-      // if (error) {
-      //   console.log(error);
-      //   return <h1 className="error-message">There was an error loading the Home Page. Please refresh.</h1>;
-      // }
-
-      //get reviews from users you're following
-      const getFollowers = loggedInUser.following.map(userFollowing => {
-        return userFollowing.id
-      })
-
-      const getReviewerIDs = userStories.map(userStory => {
-        return userStory.user.id
-      })
-
-      function haveCommonItems(arr1, arr2) {
-        const set1 = new Set(arr1);
-        const commonItems = arr2.filter(item => set1.has(item));
-        return commonItems
-      }
-
-      const getFilteredUserStories = (userStories, haveCommonItems) => {
-        return userStories.filter(userStory => 
-          haveCommonItems(getFollowers, getReviewerIDs).includes(userStory.user.id)
-        );
-      };
-      
-      const filteredUserStories = getFilteredUserStories(userStories, haveCommonItems);
+      }    
 
     const today = new Date()
     const todayWithoutTime = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    //get reviews from users you're following
+    const getFollowers = loggedInUser.following.map(userFollowing => userFollowing.id);
+    const getReviewerIDs = userStories.map(userStory => userStory.user.id);
+
+    function haveCommonItems(arr1, arr2) {
+      const set1 = new Set(arr1);
+      const commonItems = arr2.filter(item => set1.has(item));
+      return commonItems
+    }
+
+    const getFilteredUserStories = (userStories, haveCommonItems) => {
+      return userStories.filter(userStory => 
+        haveCommonItems(getFollowers, getReviewerIDs).includes(userStory.user.id)
+      );
+    };
+    
+    const filteredUserStories = getFilteredUserStories(userStories, haveCommonItems);
 
     const getRecentlyReviewedByFollowing = filteredUserStories
     .sort((a, b) => new Date(b.creationOfReviewDateTime) - new Date(a.creationOfReviewDateTime)) 
@@ -89,7 +79,9 @@ const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
                 <img alt="story_image" src={recentStory.imgURL} />
             </div>
             <p className="recent-date-of-broadcast">
-            Originally broadcast: {recentStory.firstEpBroadcast == recentStory.lastEpBroadcast ? recentStory.firstEpBroadcast : recentStory.firstEpBroadcast + ' - ' + recentStory.lastEpBroadcast}
+            Originally broadcast: {formatDate(recentStory.firstEpBroadcast) == formatDate(recentStory.lastEpBroadcast) 
+            ? formatDate(recentStory.firstEpBroadcast) 
+            : formatDate(recentStory.firstEpBroadcast) + ' - ' + formatDate(recentStory.lastEpBroadcast)}
             </p>
             <NavLink to={`/stories/${recentStory.id}`}>
                 <b>Read More...</b>
@@ -146,7 +138,7 @@ const HomePage = ({stories, userStories, loading, error, loggedInUser}) => {
                 <img alt="story_image" src={recentRelease.imgURL} />
             </div>
             <p className="date-of-release">
-            Released: {recentRelease.firstEpBroadcast == recentRelease.lastEpBroadcast ? recentRelease.firstEpBroadcast : recentRelease.firstEpBroadcast + ' - ' + recentRelease.lastEpBroadcast}
+            Released: {formatDate(recentRelease.firstEpBroadcast) == formatDate(recentRelease.lastEpBroadcast) ? formatDate(recentRelease.firstEpBroadcast) : formatDate(recentRelease.firstEpBroadcast) + ' - ' + formatDate(recentRelease.lastEpBroadcast)}
             </p>
             <NavLink to={`/stories/${recentRelease.id}`}>
                 <b>Read More...</b>

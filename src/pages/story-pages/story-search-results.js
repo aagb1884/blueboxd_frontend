@@ -3,7 +3,7 @@ import StoryItem from "./story_item";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
-const StorySearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData}) => {
+const StorySearchResults = ({filteredStories, loggedInUser, addUserStory, fetchData, formatDate}) => {
 
     const [storiesOnDisplay, setStoriesonDisplay] = useState(20);
 
@@ -21,6 +21,7 @@ const StorySearchResults = ({filteredStories, loggedInUser, addUserStory, fetchD
     loggedInUser={loggedInUser} 
     addUserStory={addUserStory}
     fetchData={fetchData}
+    formatDate={formatDate}
     />})
 
     const hasMoreStories = storiesOnDisplay < filteredStories.length;

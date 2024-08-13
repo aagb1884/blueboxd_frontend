@@ -3,7 +3,7 @@ import AddReview from "../../Components/Buttons/add-review-button";
 import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
+const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) => {
     const { isAuthenticated } = useAuth0();
 
     const doctorInfo = story.doctors.map((doctor, index) => {
@@ -24,10 +24,13 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData}) => {
     const ifStoryIsEpisodic = story.media === 'TV' | 'AUDIO' | 'COMIC' ?
     ` (${story.noOfEpisodes} ${episodeText})` : '';
   
-    const broadcastDateSelector = story.firstEpBroadcast === story.lastEpBroadcast 
-    ? `${story.firstEpBroadcast}` 
-    : `${story.firstEpBroadcast} - ${story.lastEpBroadcast}`;
-   
+    const formattedFirstEpDate = formatDate(story.firstEpBroadcast)
+    const formattedLastEpDate = formatDate(story.lastEpBroadcast)
+
+    const broadcastDateSelector = formattedFirstEpDate === formattedLastEpDate 
+    ? `${formattedFirstEpDate}` 
+    : `${formattedFirstEpDate} - ${formattedLastEpDate}`;
+
     const releasedOrBroadcast = story.media === 'TV' ? 
     `Originally broadcast: ${broadcastDateSelector}`: 
     `Originally released: ${broadcastDateSelector}`

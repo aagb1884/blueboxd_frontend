@@ -8,7 +8,7 @@ import AddToWatchlist from "../../Components/Buttons/add-to-watchlist-button";
 import './story.css';
 import Navigation from "../../Components/Navigation/Navigation";
 
-const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUserStory, fetchData, storyIds }) => {
+const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUserStory, fetchData, storyIds, formatDate }) => {
     const [selectedStory, setSelectedStory] = useState(null);
     const [visibleReviewIds, setVisibleReviewIds] = useState([]);
     const { id } = useParams();
@@ -155,9 +155,12 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
     const ifStoryIsEpisodic = (selectedStory.media === 'TV' || selectedStory.media === 'AUDIO' || selectedStory.media === 'COMIC') ?
         ` (${selectedStory.noOfEpisodes} ${episodeText})` : '';
 
-    const broadcastDateSelector = selectedStory.firstEpBroadcast === selectedStory.lastEpBroadcast
-        ? `${selectedStory.firstEpBroadcast}`
-        : `${selectedStory.firstEpBroadcast} - ${selectedStory.lastEpBroadcast}`;
+    const formattedFirstEpDate = formatDate(selectedStory.firstEpBroadcast)
+    const formattedLastEpDate = formatDate(selectedStory.lastEpBroadcast)
+
+    const broadcastDateSelector = formattedFirstEpDate === formattedLastEpDate
+        ? `${formattedFirstEpDate}`
+        : `${formattedFirstEpDate} - ${formattedLastEpDate}`;
 
     const releasedOrBroadcast = selectedStory.media === 'TV' ?
         `Originally broadcast: ${broadcastDateSelector}` :
