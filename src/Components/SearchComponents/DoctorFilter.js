@@ -24,7 +24,7 @@ const DoctorFilter = ({filterByDoctor, setFilterByDoctor}) => {
                 <option value='Twelfth Doctor'>Twelfth Doctor (Peter Capaldi)</option>
                 <option value='Thirteenth Doctor'>Thirteenth Doctor (Jodie Whittaker)</option>
                 <option value='Fourteenth Doctor'>Fourteenth Doctor (David Tennant)</option>
-                <option value='Fifteeth Doctor'>Fifteenth Doctor (Ncuti Gatwa)</option>
+                <option value='Fifteenth Doctor'>Fifteenth Doctor (Ncuti Gatwa)</option>
                 <option value='Unbound Doctor'>Unbound Doctor (Various)</option>
                 <option value='War Doctor'>War Doctor (John Hurt)</option>
                 <option value='Fugitive Doctor'>Fugitive Doctor (Jo Martin)</option>
