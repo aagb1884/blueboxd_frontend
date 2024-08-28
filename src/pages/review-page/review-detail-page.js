@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { baseUserStoryURL } from '../../Services/story_connection_services';
 import './review-page.css'
 import RenderReview from "../../tiptap/render-review";
+import EditReview from "../../Components/Buttons/edit-review-button";
 
 const ReviewDetailPage = ({setError, setLoading, isLoading, reviewIds}) => {
     const [selectedReview, setSelectedReview] = useState(null);
@@ -85,7 +86,9 @@ const ReviewDetailPage = ({setError, setLoading, isLoading, reviewIds}) => {
         </ul>
       
           </div>
-        
+        <EditReview 
+        existingReview={selectedReview}
+        />
         <Navigation 
           currentId={currentId}
           reviewIds={reviewIds}

@@ -8,14 +8,16 @@ import StarRating from "../star_rating";
 const ReviewForm = ({fetchData, addUserStory}) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { storyID, title } = location.state || {}
+    const { storyID, title, existingReview, existingRating } = location.state || {}
     const [user, setUser] = useState("");
-    const [review, setReview] = useState("");
-    const [rating, setRating] = useState(0);
+    const [review, setReview] = useState(existingReview || "");
+    const [rating, setRating] = useState(existingRating || 0);
     const [reviewPrivate, setReviewPrivate] = useState(false);
 
     const [alert, setAlert] = useState({ type: '', message: '' });
-
+  
+    console.log(existingReview);
+  
     const privacyOptions = [
         { label: 'Public', value: false },
         { label: 'Private', value: true }
@@ -28,11 +30,6 @@ const ReviewForm = ({fetchData, addUserStory}) => {
     
       }, [storyID, navigate]);
 
-  
-  
-      // const handleReviewChange = (e) => {
-      //   setReview(e.target.value);
-      // };
 
       const handleRatingChange = (newRating) => {
         setRating(parseInt(newRating));
@@ -74,24 +71,14 @@ const ReviewForm = ({fetchData, addUserStory}) => {
               }
       };
 
-      console.log(review);
-
     return ( 
         <PageLayout>
           <section className="review-form">
             <h2>You are reviewing <i>{title}</i></h2>
             <div>
          
-          {/* <textarea
-          type="text"
-          id="review"
-          name="review"
-          value={review}
-          onChange={handleReviewChange}
-          className="review"
-          required
-            /> */}
-          <TextEditor setReview={setReview} />
+    
+          <TextEditor review={review} setReview={setReview} />
           </div>
           <br />
          

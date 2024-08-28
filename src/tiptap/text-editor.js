@@ -5,10 +5,10 @@ import TextStyle from '@tiptap/extension-text-style';
 import TextAlign from '@tiptap/extension-text-align';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 
-const TextEditor = ({ setReview }) => {
+const TextEditor = ({ setReview, review }) => {
     const editor = useEditor({
         extensions: [
             Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -19,6 +19,7 @@ const TextEditor = ({ setReview }) => {
                 orderedList: { keepMarks: true, keepAttributes: false },
             }),
         ],
+        content: review,
         onUpdate: ({ editor }) => {
             const html = editor.getHTML();
             setReview(html);
