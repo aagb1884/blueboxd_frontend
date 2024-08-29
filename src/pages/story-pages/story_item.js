@@ -16,8 +16,6 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
         {index < story.companions.length - 1 && <span>, </span>}</span> 
         </li>
     })
-    
-    
 
     const episodeText = story.noOfEpisodes === 1 ? ' Part' : ' Parts';
 
@@ -34,6 +32,8 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
     const releasedOrBroadcast = story.media === 'TV' ? 
     `Originally broadcast: ${broadcastDateSelector}`: 
     `Originally released: ${broadcastDateSelector}`
+
+    const seriesInfo = story.subSeries ? `${story.series}: ${story.subSeries}` : `${story.series}`
 
     const storyNumber = story.storyNumber > 0 ? `Story ${story.storyNumber}` : '';
 
@@ -62,7 +62,7 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
         <div className="text-container">
         <div className="story-column-1">
         <ul> 
-            <li>{doctorInfo}: {story.series}. {storyNumber}</li>
+            <li>{doctorInfo}: {seriesInfo}. {storyNumber}</li>
             <li><b>Companions:</b> {companionInfo}</li>
             <li>{releasedOrBroadcast}</li> 
             <li>{ifStoryIsEpisodic}</li>

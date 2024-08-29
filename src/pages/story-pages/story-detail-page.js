@@ -50,6 +50,9 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
         getSelectedStory();
     }, [isLoading]);
 
+    console.log(selectedStory);
+    
+
 //temp bodge to missing ids
     if (currentId >= 343 && currentId < 356) {
         navigate('/stories/356')
@@ -151,6 +154,8 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
         );
     });
 
+    const seriesInfo = selectedStory.subSeries ? `${selectedStory.series}: ${selectedStory.subSeries}` : `${selectedStory.series}`
+
     const episodeText = selectedStory.noOfEpisodes === 1 ? ' Part' : ' Parts';
     const ifStoryIsEpisodic = (selectedStory.media === 'TV' || selectedStory.media === 'AUDIO' || selectedStory.media === 'COMIC') ?
         ` (${selectedStory.noOfEpisodes} ${episodeText})` : '';
@@ -180,7 +185,7 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                             <div className="story-column-1">
                             <ul>
                                
-                                    <li>{storyDoctorInfo}: {selectedStory.series}, Story {selectedStory.storyNumber}</li>
+                                    <li>{storyDoctorInfo}: {seriesInfo}, Story {selectedStory.storyNumber}</li>
                                     <li><b>Companions:</b> {storyCompanionInfo}</li>
                                     <li>{releasedOrBroadcast}</li>
                                     <li>{ifStoryIsEpisodic}</li>

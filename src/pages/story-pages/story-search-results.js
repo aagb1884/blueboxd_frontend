@@ -11,8 +11,18 @@ const StorySearchResults = ({filteredStories, loggedInUser, addUserStory, fetchD
         setStoriesonDisplay(prevStoriesOnDisplay => prevStoriesOnDisplay + 20)
     }
 
-   const storyList = filteredStories
-   .sort((a, b) => new Date(a.firstEpBroadcast) - new Date(b.firstEpBroadcast)) 
+    const sortedStories = filteredStories.sort((a, b) => {
+        
+        const dateComparison = new Date(a.firstEpBroadcast) - new Date(b.firstEpBroadcast);
+        
+        if (dateComparison !== 0) {
+            return dateComparison;
+        } else {
+            return a.storyNumber - b.storyNumber;
+        }
+    });
+
+   const storyList = sortedStories
    .slice(0, storiesOnDisplay)
    .map((filteredStory, index) => {
     return <StoryItem 
