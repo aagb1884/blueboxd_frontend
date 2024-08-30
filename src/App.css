@@ -17,6 +17,18 @@ button:hover, a:hover{
 
 #blue-box-logo{
   max-height: 90px;
+  -webkit-animation: fadeoutin 4s linear infinite forwards;
+    animation: fadeoutin 4s linear infinite forwards;
+}
+
+@-webkit-keyframes fadeoutin {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes fadeoutin {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 header {
@@ -32,8 +44,8 @@ header {
   background: linear-gradient(90deg, rgba(168, 10, 79, 0.008) 1%, rgb(162, 10, 101) 4%, rgba(1, 20, 33, 0.01) 100%);
   text-align: center;
   z-index: 1000; 
+  
 }
-
 
 .header-login-buttons{
   margin: 20px;
@@ -70,9 +82,13 @@ header {
   padding: 20px;
 }
 
+.image-container {
+  display: flex;
+  justify-content: center;
+}
 .image-container img {
   display: block;
-  max-width: 312px;
+  max-width: 400px;
   /* max-height: 400px; */
   width: auto;
   height: auto;
@@ -81,6 +97,7 @@ header {
 
 .text-container{
   display: flex;
+  justify-content: center;
  flex-grow: 3;
  font-size: larger;
  line-height: 1.5;
@@ -123,6 +140,11 @@ ul{
   flex: 3;
 }
 
+.story-item {
+  display: flex;
+  flex-direction: column;
+}
+
 .story-detail{
   justify-content: center;
   padding: 10px;
@@ -130,7 +152,7 @@ ul{
 
 .story-item-container {
   display: flex;
-  flex-direction: grid;
+  
   grid-template-columns: auto auto;
   margin-left: auto;
   margin-right: auto;
@@ -226,8 +248,9 @@ ul{
   font: inherit;
   border-radius: 5px;
   border: 2px solid rgba(1, 20, 33);
-  min-width: 200px;
-  height: 80px;
+  min-width: 180px;
+  width: auto;
+  min-height: 80px;
   margin: 5px;
 }
 

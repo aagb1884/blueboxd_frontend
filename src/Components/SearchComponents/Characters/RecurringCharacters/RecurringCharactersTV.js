@@ -1,4 +1,4 @@
-const RecurringCharacterFilter = ({filterByRecurringCharacter, setFilterByRecurringCharacter}) => {    
+const RecurringCharacterFilterTV = ({filterByRecurringCharacter, setFilterByRecurringCharacter}) => {    
     
     return ( 
         <div className="recurringCharacter-filter">
@@ -10,11 +10,11 @@ const RecurringCharacterFilter = ({filterByRecurringCharacter, setFilterByRecurr
                 }}
             className="custom-select"
             aria-label="Filter Stories by Recurring Character">`
-            <option value='All'>Filter By Recurring Character</option>
+            <option value='All'>Filter By Recurring Character (TV)</option>
             <option value='Madame Vastra TV'>Madame Vastra</option>
             <option value='Jenny Flint TV'>Jenny Flint</option>
             <option value='Strax TV'>Strax</option>
-            {/* <option value='Ashildr/Me TV'>Ashildr/Me</option>
+            <option value='Ashildr/Me TV'>Ashildr/Me</option>
             <option value='Harriet Jones TV'>Harriet Jones</option>
             <option value='Kate Lethbridge-Stewart TV'>Kate Lethbridge-Stewart</option>
             <option value='Petronella Osgood TV'>Petronella Osgood</option>
@@ -34,7 +34,7 @@ const RecurringCharacterFilter = ({filterByRecurringCharacter, setFilterByRecurr
             <option value='The General TV'>The General</option>
             <option value='Borusa TV'>Borusa</option>
             <option value='Trinity Wells TV'>Trinity Wells</option>
-            <option value='Rassilon TV'>Rassilon</option> */}
+            <option value='Rassilon TV'>Rassilon</option>
            
         </select>
             <span className="focus"></span>
@@ -42,4 +42,4 @@ const RecurringCharacterFilter = ({filterByRecurringCharacter, setFilterByRecurr
  );
 }
  
-export default RecurringCharacterFilter;
+export default RecurringCharacterFilterTV;

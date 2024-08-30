@@ -10,12 +10,17 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
         return <span>{doctor.name}
         {index < story.doctors.length - 1 && <span>, </span>}</span> 
     })
-    const companionInfo = story.companions.map((companion, index) => {
-        return <li>
-        <span>{companion.nickname?.length > 0 ? companion.nickname : companion.firstName + ' ' + companion.lastName}
-        {index < story.companions.length - 1 && <span>, </span>}</span> 
+
+    const companionInfo = story.companions.length > 0 
+    ? story.companions.map((companion, index) => (
+        <li key={index}>
+          <span>{companion.nickname?.length > 0 ? companion.nickname : `${companion.firstName} ${companion.lastName}`}</span>
+          {index < story.companions.length - 1 && <span>, </span>}
         </li>
-    })
+      ))
+    : 'No regular companion(s).';
+
+
 
     const episodeText = story.noOfEpisodes === 1 ? ' Part' : ' Parts';
 
@@ -53,17 +58,18 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
         <section className='story-item'>
         <h3>{story.title} ({story.media})</h3>
         <p>{averageRating} </p>
-        <div className="story-item-container"> 
-        
         <div className="image-container">
         <img src={story.imgURL.startsWith('http') ? `${story.imgURL}`: `../${story.imgURL}`} alt="title_logo" width="175" height="200"/>
         </div>
+        <div className="story-item-container"> 
         
         <div className="text-container">
         <div className="story-column-1">
         <ul> 
             <li>{doctorInfo}: {seriesInfo}. {storyNumber}</li>
+            <br />
             <li><b>Companions:</b> {companionInfo}</li>
+            <br />
             <li>{releasedOrBroadcast}</li> 
             <li>{ifStoryIsEpisodic}</li>
             <br />

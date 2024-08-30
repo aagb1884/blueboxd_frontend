@@ -29,10 +29,15 @@
     justify-content: space-evenly;
 }
 
-.companion-filters, .antagonist-filters, .cast-crew-row {
+.companion-filters, .antagonist-filters, .rec-character-filters, .cast-crew-row, .series-filters-rows {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+.series-filters {
+    display: flex;
+    flex-direction: column;
 }
 
 .cast-crew-filters {

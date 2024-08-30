@@ -16,11 +16,12 @@ import ShowrunnerFilter from '../../Components/SearchComponents/Creators-Writers
 import WriterAudioFilter from '../../Components/SearchComponents/Creators-Writers/WriterAudioFilter';
 import WriterProseFilter from '../../Components/SearchComponents/Creators-Writers/WriterProseFilter';
 import CreatorComicFilter from '../../Components/SearchComponents/Creators-Writers/CreatorComicFilter';
-import RecurringCharacterFilter from '../../Components/SearchComponents/Characters/RecurringCharacters/RecurringCharacters';
+import RecurringCharacterFilterTV from '../../Components/SearchComponents/Characters/RecurringCharacters/RecurringCharactersTV';
 import TVSeriesFilter from '../../Components/SearchComponents/Series/TVSeriesFilter';
 import ProseSeriesFilter from '../../Components/SearchComponents/Series/ProseSeriesFilter';
 import AudioSeriesFilter from '../../Components/SearchComponents/Series/AudioSeriesFilter';
 import ComicSeriesFilter from '../../Components/SearchComponents/Series/ComicSeriesFilter';
+import RecurringCharacterFilterEU from '../../Components/SearchComponents/Characters/RecurringCharacters/RecurringCharacersEU';
 
 const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, formatDate}) => {
   
@@ -45,6 +46,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
     const [filterByAntagonistEU, setFilterByAntagonistEU] = useState('All');
     //recurringCharacterFilters
     const [filterByRecurringCharacterTV, setFilterByRecurringCharacterTV] = useState('All');
+    const [filterByRecurringCharacterEU, setFilterByRecurringCharacterEU] = useState('All');
 
     // cast and crew filters
     const [filterByWriterProse, setFilterByWriterProse] = useState('All');
@@ -84,7 +86,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
             setFilterByWriterAudio('All');
             setFilterByWriterTV('All');
             setFilterByShowrunnerTV('All');
+            setFilterByCreativeComics('All');
             setFilterByRecurringCharacterTV('All');
+            setFilterByRecurringCharacterEU('All');
             setFilterBySeriesTV('All');
             setFilterBySeriesProse('All');
             setFilterBySeriesComics('All');
@@ -98,12 +102,12 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
             filterByCompanionBooks !== 'All' || filterByCompanionAudio !== 'All' || filterByCompanionComics !== 'All' ||
             filterByAntagonistTV  !== 'All' || filterByAntagonistEU !== 'All' || filterByWriterAudio !== 'All' || filterByWriterTV!== 'All' || 
             filterByWriterProse !== 'All' || filterByShowrunnerTV !== 'All' || filterByCreativeComics !== 'All' || filterByRecurringCharacterTV !== 'All' ||
-            filterBySeriesTV !== 'All' || filterBySeriesProse !== 'All' || filterBySeriesAudio !== 'All' || filterBySeriesComics !== 'All' ||
+            filterByRecurringCharacterEU !== 'All' ||  filterBySeriesTV !== 'All' || filterBySeriesProse !== 'All' || filterBySeriesAudio !== 'All' || filterBySeriesComics !== 'All' ||
              (searchTerm.length > 0 && filterByMedia !== 'All' && filterByDoctor !== 'All' && filterByCompanionTV !== 'All' &&
               filterByCompanionAudio !== 'All' && filterByCompanionBooks !== 'All' && filterByCompanionComics !== 'All' &&
               filterByAntagonistTV !== 'All' && filterByAntagonistEU !== 'All' && filterByWriterTV !== 'All' && filterByWriterAudio !== 'All' &&
               filterByWriterProse !== 'All' && filterByShowrunnerTV !== 'All' && filterByCreativeComics !== 'All' && filterByRecurringCharacterTV !== 'All'
-              && filterBySeriesTV !== 'All' && filterBySeriesProse !== 'All' && filterBySeriesAudio !== 'All' && filterBySeriesComics !== 'All'
+              && filterByRecurringCharacterEU !== 'All' && filterBySeriesTV !== 'All' && filterBySeriesProse !== 'All' && filterBySeriesAudio !== 'All' && filterBySeriesComics !== 'All'
              )) {
             filteredStories = stories.filter((story) => {
 
@@ -136,9 +140,10 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
               story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistEU);
 
               const recurringCharacterFilterMatchTV = filterByRecurringCharacterTV === 'All' || 
-              story.recurringCharacters.some((character) => (`${character.name} ${character.primaryMedia}`) === filterByRecurringCharacterTV);
-              // const antagonistFilterMatchEU = filterByAntagonistEU === 'All' || 
-              // story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistEU);
+              story.recurringCharacters.some((character) => (`${character.name} ${character.primaryMedia}`) === filterByRecurringCharacterEU);
+              const recurringCharacterFilterMatchEU = filterByRecurringCharacterEU === 'All' || 
+              story.recurringCharacters.some((character) => (`${character.name} ${character.primaryMedia}`) === filterByRecurringCharacterEU);
+
 
               const writerProseFilterMatch = filterByWriterProse === 'All' ||
               story.castAndCrew && story.castAndCrew.length > 0 &&
@@ -188,7 +193,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                 (mediaMatch && doctorFilterMatch && companionFilterMatchTV && companionFilterMatchAudio && showrunnerFilterMatch &&
                   writerTVFilterMatch && companionFilterMatchProse && companionFilterMatchComics && antagonistFilterMatchTV && 
                   antagonistFilterMatchEU && writerAudioFilterMatch && writerProseFilterMatch && comicCreativeFilter && recurringCharacterFilterMatchTV
-                  && tvSeriesMatch && audioSeriesMatch && proseSeriesMatch && comicSeriesMatch) &&
+                  && recurringCharacterFilterMatchEU && tvSeriesMatch && audioSeriesMatch && proseSeriesMatch && comicSeriesMatch) &&
                 (
                   toLowerCaseSafe(story.title).includes(searchTermLower) ||
                   toLowerCaseSafe(story.keywords).includes(searchTermLower) ||
@@ -245,19 +250,27 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                   filterByMedia={filterByMedia}
                   setFilterByMedia={setFilterByMedia}
                   />
+                  <DoctorFilter 
+                  filterByDoctor={filterByDoctor}
+                  setFilterByDoctor={setFilterByDoctor}
+                  />
                   </div>
 
                   <div className='show-hide-filters'>
                   <h5>Filter By Series</h5>
                   
+                 
                   <img id="visible-toggle"
                   alt="toggle-view-button"
                   title="Hide/Expand View"
                   src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
                   onClick={() => toggleShowState(setShowSeriesFilters, showSeriesFilters)} />
                   </div>
+
                   {showSeriesFilters && (
-                    <>
+                    <div className='series-filters'>
+
+                    <div className='series-filters-rows'>
                     <TVSeriesFilter 
                     filterBySeries={filterBySeriesTV}
                     setFilterBySeries={setFilterBySeriesTV}
@@ -266,6 +279,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                     filterBySeries={filterBySeriesAudio}
                     setFilterBySeries={setFilterBySeriesAudio}
                     />
+                    </div>
+
+                    <div className='series-filters-rows'>
                     <ProseSeriesFilter 
                     filterBySeries={filterBySeriesProse}
                     setFilterBySeries={setFilterBySeriesProse}
@@ -274,7 +290,9 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                     filterBySeries={filterBySeriesComics}
                     setFilterBySeries={setFilterBySeriesComics}
                     />
-                    </>
+                    </div>
+
+                    </div>
                   )}
 
                   <div className='show-hide-filters'>
@@ -288,17 +306,20 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                   </div>
                   {showCharacterFilters && (
                   <>
+                  <div className='rec-character-filters'>
 
-                  <DoctorFilter 
-                  filterByDoctor={filterByDoctor}
-                  setFilterByDoctor={setFilterByDoctor}
-                  />
-
-                  <RecurringCharacterFilter
+                  <RecurringCharacterFilterTV
                   filterByRecurringCharacter={filterByRecurringCharacterTV}
                   setFilterByRecurringCharacter={setFilterByRecurringCharacterTV}
                   />
-                  
+
+                  <RecurringCharacterFilterEU 
+                  filterByRecurringCharacter={filterByRecurringCharacterEU}
+                  setFilterByRecurringCharacter={setFilterByRecurringCharacterEU}
+                  />
+
+                  </div>
+
                   <div className='show-hide-filters'>
                   <h5>Companion Filters</h5>
                   

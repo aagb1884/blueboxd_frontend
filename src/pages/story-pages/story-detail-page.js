@@ -74,13 +74,57 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
         <span key={index}>{doctor.name}{index < doctors.length - 1 && <span>, </span>}</span>
     ));
 
-    const storyCompanionInfo = companions.map((companion, index) => (
+    // see if there is a way to get 'Companions' in bold as part of this.
+    const storyCompanionInfo = selectedStory.companions.length > 0 
+    ? (
+        <>
+        <br/>
+        <b>Companions:</b>
+        <ul>
+        {selectedStory.companions.map((companion, index) => (
         <li key={index}>
-            <span>{companion.nickname ? companion.nickname : companion.firstName + ' ' + companion.lastName}
-                {index < companions.length - 1 && <span>, </span>}
-            </span>
+          <span>{companion.nickname?.length > 0 ? companion.nickname : `${companion.firstName} ${companion.lastName}`}</span>
+          {index < selectedStory.companions.length - 1 && <span>, </span>}
         </li>
-    ));
+      ))}
+      </ul>
+      </>
+    )
+    : '';
+
+    const storyRecurringCharacters = selectedStory.recurringCharacters.length > 0 
+    ? (
+        <>
+        <br />
+        <b>Recurring Characters:</b>
+        <ul>
+            {selectedStory.recurringCharacters.map((character, index) => (
+                    <li key={index}>
+                <span>{character.name}</span>
+          {index < selectedStory.recurringCharacters.length - 1 && <span>, </span>}
+        </li>
+            ))}
+        </ul>
+        </>
+    )
+    : '';
+
+    const storyAntagonists = selectedStory.antagonists.length > 0 
+    ? (
+        <>
+        <br />
+        <b>Recurring Antagonists:</b>
+        <ul>
+            {selectedStory.antagonists.map((antagonist, index) => (
+                    <li key={index}>
+                <span>{antagonist.name}</span>
+          {index < selectedStory.antagonists.length - 1 && <span>, </span>}
+        </li>
+            ))}
+        </ul>
+        </>
+    )
+    : '';
 
     // average rating
     const reviews = storyConnections.filter(sc => sc.type === 'REVIEW');
@@ -175,7 +219,7 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
         <PageLayout>
             <section className='story-detail-container'>
                 <div className='story-detail'>
-                    <h3>{selectedStory.title} ({selectedStory.media})</h3>
+                    <h2>{selectedStory.title} ({selectedStory.media})</h2>
                     <div className="story-item-image-container">
                         <img src={selectedStory.imgURL.startsWith('http') ? `${selectedStory.imgURL}` : `../${selectedStory.imgURL}`} id='selected-story-logo' alt="title_logo" width="175" height="200" />
                     </div>
@@ -186,7 +230,10 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                             <ul>
                                
                                     <li>{storyDoctorInfo}: {seriesInfo}, Story {selectedStory.storyNumber}</li>
-                                    <li><b>Companions:</b> {storyCompanionInfo}</li>
+                                    <li>{storyCompanionInfo}</li>
+                                    <li>{storyAntagonists}</li>
+                                    <li>{storyRecurringCharacters}</li>
+                                    <br />
                                     <li>{releasedOrBroadcast}</li>
                                     <li>{ifStoryIsEpisodic}</li>
                                     <br />
@@ -201,6 +248,7 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                                     <li>{storyCastCrewInfo} </li>
                                     <br />
                                     <li>{selectedStory.productionCode ? 'Production Code: ' + selectedStory.productionCode : ''}</li>
+                                    <br/>
                                     <li>{selectedStory.releases ? 'Releases: ' + selectedStory.releases : ''}</li>
                                     <br/>
                                     <li><a href={selectedStory.wikiLink}>TARDIS Wiki</a></li>
@@ -209,6 +257,7 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                             </div>
                         </div>
                     </div>
+            
                     {isAuthenticated && (
                         <div className="add-user-story-buttons">
                             <AddReview
