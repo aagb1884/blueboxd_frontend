@@ -196,9 +196,10 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                 </li>
             </div>
         );
-    });
+    }); 
 
     const seriesInfo = selectedStory.subSeries ? `${selectedStory.series}: ${selectedStory.subSeries}` : `${selectedStory.series}`
+    const storyNoInfo = selectedStory.storyNumber ? `, Story ${selectedStory.storyNumber}` : '';
 
     const episodeText = selectedStory.noOfEpisodes === 1 ? ' Part' : ' Parts';
     const ifStoryIsEpisodic = (selectedStory.media === 'TV' || selectedStory.media === 'AUDIO' || selectedStory.media === 'COMIC') ?
@@ -229,7 +230,8 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                             <div className="story-column-1">
                             <ul>
                                
-                                    <li>{storyDoctorInfo}: {seriesInfo}, Story {selectedStory.storyNumber}</li>
+                                    <li>{storyDoctorInfo}</li> 
+                                    <li>{seriesInfo} {storyNoInfo}</li>
                                     <li>{storyCompanionInfo}</li>
                                     <li>{storyAntagonists}</li>
                                     <li>{storyRecurringCharacters}</li>

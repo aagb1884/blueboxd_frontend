@@ -19,9 +19,7 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
         </li>
       ))
     : 'No regular companion(s).';
-
-
-
+  
     const episodeText = story.noOfEpisodes === 1 ? ' Part' : ' Parts';
 
     const ifStoryIsEpisodic = story.media === 'TV' | 'AUDIO' | 'COMIC' ?
@@ -66,7 +64,8 @@ const StoryItem = ({story, loggedInUser, addUserStory, fetchData, formatDate}) =
         <div className="text-container">
         <div className="story-column-1">
         <ul> 
-            <li>{doctorInfo}: {seriesInfo}. {storyNumber}</li>
+            <li>{doctorInfo}</li>
+            <li>{seriesInfo}. {storyNumber}</li>
             <br />
             <li><b>Companions:</b> {companionInfo}</li>
             <br />

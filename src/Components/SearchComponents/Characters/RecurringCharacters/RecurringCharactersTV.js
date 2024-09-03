@@ -35,7 +35,6 @@ const RecurringCharacterFilterTV = ({filterByRecurringCharacter, setFilterByRecu
             <option value='Borusa TV'>Borusa</option>
             <option value='Trinity Wells TV'>Trinity Wells</option>
             <option value='Rassilon TV'>Rassilon</option>
-           
         </select>
             <span className="focus"></span>
     </div>

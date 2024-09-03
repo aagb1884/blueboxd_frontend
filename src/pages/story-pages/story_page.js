@@ -140,7 +140,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
               story.antagonists.some((antagonist) => (`${antagonist.name} ${antagonist.primaryMedia}`) === filterByAntagonistEU);
 
               const recurringCharacterFilterMatchTV = filterByRecurringCharacterTV === 'All' || 
-              story.recurringCharacters.some((character) => (`${character.name} ${character.primaryMedia}`) === filterByRecurringCharacterEU);
+              story.recurringCharacters.some((character) => (`${character.name} ${character.primaryMedia}`) === filterByRecurringCharacterTV);
               const recurringCharacterFilterMatchEU = filterByRecurringCharacterEU === 'All' || 
               story.recurringCharacters.some((character) => (`${character.name} ${character.primaryMedia}`) === filterByRecurringCharacterEU);
 

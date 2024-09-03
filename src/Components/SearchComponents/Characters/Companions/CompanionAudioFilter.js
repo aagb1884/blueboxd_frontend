@@ -29,6 +29,10 @@ const CompanionAudioFilter = ({filterByCompanion, setFilterByCompanion}) => {
                 <option value='Mags AUDIO'>Mags</option>
                 <option value='Marcipor AUDIO'>Marc</option>
                 <option value='Joe AUDIO'>Joe</option>
+                <option value='Lucie AUDIO'>Lucie Miller</option>
+                <option value='Tamsin AUDIO'>Tamsin Drew</option>
+                <option value='Molly AUDIO'>Molly O'Sullivan</option>
+                <option value='Helen AUDIO'>Helen Sinclair</option>
                
                 </select>
                 <span className="focus"></span>
