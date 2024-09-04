@@ -184,8 +184,8 @@ const StoryDetailPage = ({ setError, setLoading, isLoading, loggedInUser, addUse
                                 <li className="rating"><b>{rating}/10</b></li>
                                 <img id="visible-toggle"
                                     alt="toggle-view-button"
-                                    title="Hide/Expand View"
-                                    src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                                    title={visibleReviewIds.includes(reviewData.id) ? "Hide" : "Expand"}                  
+                                    src={visibleReviewIds.includes(reviewData.id) ? "../images/arrow_up.png" : "../images/arrow_down.png"}     
                                     onClick={() => toggleIndividualReviewVisibility(reviewData.id)} />
                             </div>
                         </div>

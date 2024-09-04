@@ -4,6 +4,7 @@ import React, {useState, useEffect} from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { baseUsersURL, updateUser } from "../../Services/user_services";
 import './profile.css'
+import { PageLoader } from "../../Components/Navigation/page_loader";
 
 const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedInUser, deleteUserStoryByID, fetchData}) => {
   const [selectedProfile, setSelectedProfile] = useState(null)  
@@ -32,6 +33,8 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
     );
   };
 
+  
+
   const getSelectedProfile = async (id) => {
     try {
       const response = await fetch(`${baseUsersURL}/${id}`);
@@ -56,7 +59,7 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
   }, [id]);
 
    if (!selectedProfile) {
-      return <h2>Loading...</h2>;
+      return <PageLoader />;
     }
 
     const watchlistStoriesData = selectedProfile.userStories
@@ -92,7 +95,8 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
                 </div>
                   <img id="visible-toggle" 
                   alt="toggle-view-button" 
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png" 
+                 title={visibleReviewIds.includes(reviewedStory.id) ? "Hide" : "Expand"}   
+                  src={visibleReviewIds.includes(reviewedStory.id) ? "../images/arrow_up.png" : "../images/arrow_down.png"}
                   onClick={() => toggleIndividualReviewVisibility(reviewedStory.id)}/>
                  </div>
                  { visibleReviewIds.includes(reviewedStory.id) && (
@@ -208,7 +212,11 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
       <div className="user-following-container">
               <div className="header-and-toggle">
               <h3>{selectedProfile.firstname} is following</h3>
-              <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleFollowersVisibility}/>
+              <img id="visible-toggle" 
+              alt="toggle-view-button" 
+              title={areFollowersVisible ? "Hide" : "Expand"}   
+              src={areFollowersVisible ? "../images/arrow_up.png" : "../images/arrow_down.png"}
+              onClick={toggleFollowersVisibility}/>
               </div>
               <div className="following-users">
               {selectedProfile.following.length === 0 ? (
@@ -234,7 +242,11 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
             <div className="user-watchlist-container">
               <div className="header-and-toggle">
             <h3>{selectedProfile.firstname}'s Watchlist </h3>
-            <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleWatchlistVisibility}/>
+            <img id="visible-toggle" 
+            alt="toggle-view-button" 
+            title={isWatchlistVisible ? "Hide" : "Expand"}   
+            src={isWatchlistVisible ? "../images/arrow_up.png" : "../images/arrow_down.png"}
+            onClick={toggleWatchlistVisibility}/>
               </div>
               {isWatchlistVisible && (
               <div className="watchlist-stories">
@@ -244,7 +256,11 @@ const ProfilePage = ({setLoggedInUser, setLoading, setError, isLoading, loggedIn
             <div className="user-reviews-container">
               <div className="header-and-toggle">
             <h3>{selectedProfile.firstname}'s Reviews</h3>
-            <img id="visible-toggle" alt="toggle-view-button" src="../images/3209209_arrow_direction_down_triangle_up_icon.png" onClick={toggleReviewsVisibility}/>
+            <img id="visible-toggle" 
+            alt="toggle-view-button" 
+            title={areReviewsVisible ? "Hide" : "Expand"}   
+            src={areReviewsVisible ? "../images/arrow_up.png" : "../images/arrow_down.png"}
+            onClick={toggleReviewsVisibility}/>
               </div>
               <div className="user-reviews">
             {areReviewsVisible && (

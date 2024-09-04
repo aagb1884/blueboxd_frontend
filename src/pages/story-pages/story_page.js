@@ -221,6 +221,7 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
             <h1>All the stories. In the end.</h1>
             <section className="search-page">
          <h4>Search for specific stories.</h4>
+         <i>Some search results may contain spoilers.</i>
             <p>Results will appear as you type.</p>
             <div className='search-function'>
                <input  id="search" 
@@ -239,8 +240,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
               <h4>Filters</h4>
                 <img id="visible-toggle"
                   alt="toggle-view-button"
-                  title="Hide/Expand View"
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
+                  title={showAllFilters ? "Hide" : "Expand"}
+                  src={showAllFilters ? "../images/arrow_up.png" : "../images/arrow_down.png"}
                   onClick={() => toggleShowState(setShowAllFilters, showAllFilters)} />
                 </div>
                 {showAllFilters && (
@@ -262,9 +263,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                  
                   <img id="visible-toggle"
                   alt="toggle-view-button"
-                  title="Hide/Expand View"
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={() => toggleShowState(setShowSeriesFilters, showSeriesFilters)} />
+                  title={showSeriesFilters ? "Hide" : "Expand"}
+                  src={showSeriesFilters ? "../images/arrow_up.png" : "../images/arrow_down.png"}                  onClick={() => toggleShowState(setShowSeriesFilters, showSeriesFilters)} />
                   </div>
 
                   {showSeriesFilters && (
@@ -300,12 +300,12 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                   
                   <img id="visible-toggle"
                   alt="toggle-view-button"
-                  title="Hide/Expand View"
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={() => toggleShowState(setShowCharacterFilters, showCharacterFilters)} />
+                  title={showCharacterFilters ? "Hide" : "Expand"}
+                  src={showCharacterFilters ? "../images/arrow_up.png" : "../images/arrow_down.png"}                  onClick={() => toggleShowState(setShowCharacterFilters, showCharacterFilters)} />
                   </div>
                   {showCharacterFilters && (
                   <>
+                  <aside>Some characters may appear in more than one filter. Some results may be spoilers.</aside>
                   <div className='rec-character-filters'>
 
                   <RecurringCharacterFilterTV
@@ -325,9 +325,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                   
                   <img id="visible-toggle"
                   alt="toggle-view-button"
-                  title="Hide/Expand View"
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={() => toggleShowState(setShowCompanionFilters, showCompanionFilters)} />
+                  title={showCompanionFilters ? "Hide" : "Expand"}     
+                  src={showCompanionFilters ? "../images/arrow_up.png" : "../images/arrow_down.png"}                  onClick={() => toggleShowState(setShowCompanionFilters, showCompanionFilters)} />
                   </div>
                   {showCompanionFilters && (
                     <>
@@ -362,9 +361,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                   <h5>Antagonist Filters</h5>
                   <img id="visible-toggle"
                   alt="toggle-view-button"
-                  title="Hide/Expand View"
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={() => toggleShowState(setShowAntagonistFilters, showAntagonistFilters)} />
+                  title={showAntagonistFilters ? "Hide" : "Expand"}                  
+                  src={showAntagonistFilters ? "../images/arrow_up.png" : "../images/arrow_down.png"}                  onClick={() => toggleShowState(setShowAntagonistFilters, showAntagonistFilters)} />
                   </div>
                   {showAntagonistFilters && (
                     <div className='filter-border'>
@@ -392,9 +390,8 @@ const Story = ({stories, loading, error, loggedInUser, addUserStory, fetchData, 
                   <h5>Cast and Crew Filters</h5>
                   <img id="visible-toggle"
                   alt="toggle-view-button"
-                  title="Hide/Expand View"
-                  src="../images/3209209_arrow_direction_down_triangle_up_icon.png"
-                  onClick={() => toggleShowState(setShowCastCrewFilters, showCastCrewFilters)} />
+                  title={showCastCrewFilters ? "Hide" : "Expand"}                  
+                  src={showCastCrewFilters ? "../images/arrow_up.png" : "../images/arrow_down.png"}                  onClick={() => toggleShowState(setShowCastCrewFilters, showCastCrewFilters)} />
                   </div>
 
                   {showCastCrewFilters && (

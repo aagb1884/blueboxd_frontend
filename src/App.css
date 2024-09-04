@@ -17,8 +17,8 @@ button:hover, a:hover{
 
 #blue-box-logo{
   max-height: 90px;
-  -webkit-animation: fadeoutin 4s linear infinite forwards;
-    animation: fadeoutin 4s linear infinite forwards;
+  -webkit-animation: fadeoutin 4s 4 linear forwards;
+    animation: fadeoutin 4s 4 linear forwards;
 }
 
 @-webkit-keyframes fadeoutin {
